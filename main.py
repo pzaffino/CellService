@@ -4,7 +4,7 @@ import os
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QAction, QFileDialog
 from PyQt5.QtCore import QFile
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon, QPixmap
 import PyQt5.uic
 
 class CellService(QMainWindow):
@@ -17,7 +17,7 @@ class CellService(QMainWindow):
         path = os.path.join(os.path.dirname(__file__), "form.ui")
         ui_file = QFile(path)
         ui_file.open(QFile.ReadOnly)
-        loader = PyQt5.uic.loadUi(ui_file)
+        loader = PyQt5.uic.loadUi(ui_file, self)
         ui_file.close()
 
     def create_menu(self):
@@ -31,9 +31,11 @@ class CellService(QMainWindow):
         fileMenu.addAction(openAction)
 
     def openCall(self):
-        print('Open')
-        file_name = QFileDialog.getOpenFileName(self, 'Open File')
+        print('Open RGB Image')
+        file_name = QFileDialog.getOpenFileName(self, 'Open RGB Image')
         if file_name:
+            RGB_pixmap = QPixmap(file_name[0])
+            self.RGB_QLabel.setPixmap(RGB_pixmap)
             print(file_name)
 
 if __name__ == "__main__":
