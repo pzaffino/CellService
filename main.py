@@ -33,17 +33,34 @@ class CellService(QMainWindow):
         openAction.triggered.connect(self.openCall)
         fileMenu.addAction(openAction)
 
+    def set_image(self, np_array, qt_label, channel):
+
+        if channel == "rgb":
+            image = np_array
+        elif channel == "red":
+            image = np.zeros((np_array.shape[0], np_array.shape[1], 3), dtype=np.uint8)
+            image[:,:,0] = np_array
+        elif channel == "green":
+            image = np.zeros((np_array.shape[0], np_array.shape[1], 3), dtype=np.uint8)
+            image[:,:,1] = np_array
+        elif channel == "blue":
+            image = np.zeros((np_array.shape[0], np_array.shape[1], 3), dtype=np.uint8)
+            image[:,:,2] = np_array
+
+        qt_image = QImage(image.data, image.shape[1], image.shape[0], image.strides[0], QImage.Format_RGB888)
+        qt_label.setPixmap(QPixmap.fromImage(qt_image))
+
     def openCall(self):
         # see https://gist.github.com/smex/5287589
         print('Open RGB Image')
         file_name = QFileDialog.getOpenFileName(self, 'Open RGB Image')
 
         if file_name:
-            print(file_name[0])
             self.RGB_image = skimage.io.imread(file_name[0]).astype(np.uint8)
-
-            RGB_QImage = QImage(self.RGB_image.data, self.RGB_image.shape[1], self.RGB_image.shape[0], self.RGB_image.strides[0], QImage.Format_RGB888)
-            self.RGB_QLabel.setPixmap(QPixmap.fromImage(RGB_QImage))
+            self.set_image(self.RGB_image, self.RGB_QLabel, "rgb")
+            self.set_image(self.RGB_image[:,:,0], self.Red_QLabel, "red")
+            self.set_image(self.RGB_image[:,:,1], self.Green_QLabel, "green")
+            self.set_image(self.RGB_image[:,:,2], self.Blue_QLabel, "blue")
 
 if __name__ == "__main__":
     app = QApplication([])
