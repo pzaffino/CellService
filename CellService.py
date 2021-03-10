@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QGridLayout, QLabel, QAction, QFileDialog, QMenuBar, QMainWindow
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QGridLayout, QLabel, QAction, QFileDialog, QMenuBar, QMainWindow, QDesktopWidget
 from PyQt5.QtGui import QIcon, QPixmap, QImage, qRgb
 
 import numpy as np
@@ -27,39 +28,43 @@ class CellService(QMainWindow):
         self.setWindowTitle("CellService")
         self.create_menu()
 
-        init_size = 512
+        init_size = 128
 
         # RGB
         self.RGB_QLabel = QLabel(self)
-        self.RGB_QLabel.setStyleSheet("border: 2px solid black;")
+        self.RGB_QLabel.setStyleSheet("border: 3px solid black;")
         self.RGB_QLabel.setScaledContents(True)
         grid.addWidget(self.RGB_QLabel, 0,0)
         self.RGB_QLabel.resize(init_size, init_size)
 
         # RED
         self.Red_QLabel = QLabel(self)
-        self.Red_QLabel.setStyleSheet("border: 2px solid red;")
+        self.Red_QLabel.setStyleSheet("border: 3px solid red;")
         self.Red_QLabel.setScaledContents(True)
         grid.addWidget(self.Red_QLabel, 0,1)
         self.Red_QLabel.resize(init_size, init_size)
 
         # GREEN
         self.Green_QLabel = QLabel(self)
-        self.Green_QLabel.setStyleSheet("border: 2px solid green;")
+        self.Green_QLabel.setStyleSheet("border: 3px solid green;")
         self.Green_QLabel.setScaledContents(True)
         grid.addWidget(self.Green_QLabel, 1,0)
         self.Green_QLabel.resize(init_size, init_size)
 
         # BLUE
         self.Blue_QLabel = QLabel(self)
-        self.Blue_QLabel.setStyleSheet("border: 2px solid blue;")
+        self.Blue_QLabel.setStyleSheet("border: 3px solid blue;")
         self.Blue_QLabel.setScaledContents(True)
         grid.addWidget(self.Blue_QLabel, 1,1)
         self.Blue_QLabel.resize(init_size, init_size)
 
         # Show the window
-        self.resize(1024,1024)
+        self.maximize_window()
         self.show()
+
+    def maximize_window(self):
+        screen = QDesktopWidget().screenGeometry()
+        self.setFixedSize(screen.height()*1.2, screen.height()*0.9)
 
     def create_menu(self):
         mainMenu = self.menuBar()
@@ -86,13 +91,14 @@ class CellService(QMainWindow):
             image[:,:,2] = np_array
 
         qt_image = QImage(image.data, image.shape[1], image.shape[0], image.strides[0], QImage.Format_RGB888)
-        qt_label.setPixmap(QPixmap.fromImage(qt_image))
+        qt_pixmap = QPixmap.fromImage(qt_image)#.scaled(128, 128, Qt.KeepAspectRatio, Qt.FastTransformation)
+        qt_label.setPixmap(qt_pixmap)
+        self.maximize_window()
 
     def openCall(self):
         # see https://gist.github.com/smex/5287589
         print('Open RGB Image')
         file_name = QFileDialog.getOpenFileName(self, 'Open RGB Image')
-
 
         if file_name:
             self.RGB_image = skimage.io.imread(file_name[0]).astype(np.uint8)
