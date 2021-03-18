@@ -6,6 +6,8 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QGridLayout, QLabel, QAction, QFileDialog, QMenuBar, QMainWindow, QDesktopWidget, QMessageBox
 from PyQt5.QtGui import QIcon, QPixmap, QImage, qRgb
 
+import CellService_analysis
+
 import numpy as np
 import skimage.io
 
@@ -68,6 +70,8 @@ class CellService(QMainWindow):
 
     def create_menu(self):
         mainMenu = self.menuBar()
+
+        # File menu
         fileMenu = mainMenu.addMenu("File")
 
         # Open (single) RGB image
@@ -82,6 +86,16 @@ class CellService(QMainWindow):
         openSingleChannelsAction.setStatusTip('Open a new RGB image by selecting different channels')
         openSingleChannelsAction.triggered.connect(self.openSingleChannelsCall)
         fileMenu.addAction(openSingleChannelsAction)
+
+        # Analysis menu
+        analysisMenu = mainMenu.addMenu("Analysis")
+        self.intensityAnalysis = CellService_analysis.CellServiceIntensityAnalysis(self)
+
+        # Intensity analysis
+        intensityAnalysisAction = QAction('&Intensity analysis', self)
+        intensityAnalysisAction.setStatusTip("Execute intensity analysis")
+        intensityAnalysisAction.triggered.connect(self.intensityAnalysis.show)
+        analysisMenu.addAction(intensityAnalysisAction)
 
     def set_image(self, np_array, qt_label, channel):
 
