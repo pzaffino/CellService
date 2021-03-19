@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QGridLayout, QLa
 from PyQt5.QtGui import QIcon, QPixmap, QImage, qRgb
 
 import CellService_analysis
+import CellService_processing
 
 import numpy as np
 import skimage.io
@@ -15,6 +16,15 @@ class CellService(QMainWindow):
 
     def __init__(self):
         super(CellService, self).__init__()
+
+        self.red_image = None
+        self.green_image = None
+        self.blue_image = None
+
+        self.red_mask = None
+        self.green_mask = None
+        self.blue_mask = None
+
         self.initUI()
 
     def initUI(self):
@@ -86,6 +96,16 @@ class CellService(QMainWindow):
         openSingleChannelsAction.setStatusTip('Open a new RGB image by selecting different channels')
         openSingleChannelsAction.triggered.connect(self.openSingleChannelsCall)
         fileMenu.addAction(openSingleChannelsAction)
+
+        # Processing menu
+        processingMenu = mainMenu.addMenu("Processing")
+        self.binaryProcessing = CellService_processing.CellServiceBinaryProcessing(self)
+
+        # Binarization processing
+        binaryProcessingAction = QAction('&Binarize image', self)
+        binaryProcessingAction.setStatusTip("Binarize image")
+        binaryProcessingAction.triggered.connect(self.binaryProcessing.show)
+        processingMenu.addAction(binaryProcessingAction)
 
         # Analysis menu
         analysisMenu = mainMenu.addMenu("Analysis")
