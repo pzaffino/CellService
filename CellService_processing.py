@@ -33,20 +33,20 @@ class CellServiceBinaryProcessing(QWidget):
 
     def binarizeImage(self, img, thr):
         mask = np.zeros_like(img, dtype=np.uint8)
-        mask[img>=thr]=255
+        mask[img>=thr]=1
         return mask
 
     def runIntensityBinarization(self):
 
         if self.redRadioButton.isChecked():
             self.parent.red_mask = self.binarizeImage(self.parent.red_image, int(self.QLineThreshold.text()))
-            self.parent.set_image(self.parent.red_mask, self.parent.Red_QLabel, "red")
+            self.parent.set_image(self.parent.red_mask, self.parent.Red_QLabel, "red", mask=True)
         elif self.greenRadioButton.isChecked():
             self.parent.green_mask = self.binarizeImage(self.parent.green_image, int(self.QLineThreshold.text()))
-            self.parent.set_image(self.parent.green_mask, self.parent.Green_QLabel, "green")
+            self.parent.set_image(self.parent.green_mask, self.parent.Green_QLabel, "green", mask=True)
         elif self.blueRadioButton.isChecked():
             self.parent.blue_mask = self.binarizeImage(self.parent.blue_image, int(self.QLineThreshold.text()))
-            self.parent.set_image(self.parent.blue_mask, self.parent.Blue_QLabel, "blue")
+            self.parent.set_image(self.parent.blue_mask, self.parent.Blue_QLabel, "blue", mask=True)
         else:
             pass
 

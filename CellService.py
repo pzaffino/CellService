@@ -117,7 +117,11 @@ class CellService(QMainWindow):
         intensityAnalysisAction.triggered.connect(self.intensityAnalysis.show)
         analysisMenu.addAction(intensityAnalysisAction)
 
-    def set_image(self, np_array, qt_label, channel):
+    def set_image(self, np_array, qt_label, channel, mask=False):
+
+        # If the image is not set (None) do nothing
+        if np_array is None:
+           return
 
         if channel == "rgb":
             image = np_array
@@ -131,16 +135,20 @@ class CellService(QMainWindow):
             image = np.zeros((np_array.shape[0], np_array.shape[1], 3), dtype=np.uint8)
             image[:,:,2] = np_array
 
+        # if it is a binary mask, scale it to 0-255
+        if mask:
+            image = image*255
+
         qt_image = QImage(image.data, image.shape[1], image.shape[0], image.strides[0], QImage.Format_RGB888)
         qt_pixmap = QPixmap.fromImage(qt_image)
         qt_label.setPixmap(qt_pixmap)
         self.maximize_window()
 
     def set_all_images(self):
-        self.set_image(self.rgb_image, self.RGB_QLabel, "rgb")
-        self.set_image(self.red_image, self.Red_QLabel, "red")
-        self.set_image(self.green_image, self.Green_QLabel, "green")
-        self.set_image(self.blue_image, self.Blue_QLabel, "blue")
+        self.set_image(self.rgb_image, self.RGB_QLabel, "rgb", mask=False)
+        self.set_image(self.red_image, self.Red_QLabel, "red", mask=False)
+        self.set_image(self.green_image, self.Green_QLabel, "green", mask=False)
+        self.set_image(self.blue_image, self.Blue_QLabel, "blue", mask=False)
 
     def openRGBCall(self):
         # see https://gist.github.com/smex/5287589
@@ -156,24 +164,38 @@ class CellService(QMainWindow):
     def openSingleChannelsCall(self):
         # RED
         red_channel_file_name = QFileDialog.getOpenFileName(self, 'Open red channel')
-        if red_channel_file_name:
+        if red_channel_file_name[0]:
             self.red_image = skimage.io.imread(red_channel_file_name[0])[:,:,0].astype(np.uint8)
-        else:
-            return
 
         # GREEN
         green_channel_file_name = QFileDialog.getOpenFileName(self, 'Open green channel')
-        if green_channel_file_name:
+        if green_channel_file_name[0]:
             self.green_image = skimage.io.imread(green_channel_file_name[0])[:,:,1].astype(np.uint8)
-        else:
-            return
 
         # BLUE
         blue_channel_file_name = QFileDialog.getOpenFileName(self, 'Open blue channel')
-        if blue_channel_file_name:
+        if blue_channel_file_name[0]:
             self.blue_image = skimage.io.imread(blue_channel_file_name[0])[:,:,2].astype(np.uint8)
+
+        # Manage if the user do not open three channels
+        # Figure out image shape (even if a single image has been open)
+        if self.red_image is not None:
+            matrix_shape = self.red_image.shape
+        elif self.green_image is not None:
+            matrix_shape = self.green_image.shape
+        elif self.blue_image is not None:
+            matrix_shape = self.blue_image.shape
         else:
+            self.error_message("Any image opened!")
             return
+
+        # if a channel was not open create zeros matrix
+        if self.red_image is None:
+            self.red_image = np.zeros(matrix_shape, dtype=np.uint8)
+        if self.green_image is None:
+            self.green_image = np.zeros(matrix_shape, dtype=np.uint8)
+        if self.blue_image is None:
+            self.blue_image = np.zeros(matrix_shape, dtype=np.uint8)
 
         # Check image shape (must be equal)
         if self.red_image.shape != self.green_image.shape or self.red_image.shape != self.blue_image.shape or self.green_image.shape != self.blue_image.shape:
