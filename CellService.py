@@ -8,6 +8,7 @@ from PyQt5.QtGui import QIcon, QPixmap, QImage, qRgb
 
 import CellService_analysis
 import CellService_processing
+import Analisys_cellService
 
 import numpy as np
 import skimage.io
@@ -97,26 +98,31 @@ class CellService(QMainWindow):
         openSingleChannelsAction.triggered.connect(self.openSingleChannelsCall)
         fileMenu.addAction(openSingleChannelsAction)
 
-        # Processing menu
-        processingMenu = mainMenu.addMenu("Processing")
-        self.binaryProcessing = CellService_processing.CellServiceBinaryProcessing(self)
-
         # Binarization processing
-        binaryProcessingAction = QAction('&Binarize image', self)
-        binaryProcessingAction.setStatusTip("Binarize image")
-        binaryProcessingAction.triggered.connect(self.binaryProcessing.show)
-        processingMenu.addAction(binaryProcessingAction)
+        self.third_title = mainMenu.addMenu("Image Processing")
+        # add first choice 
+        self.firstChoiceThirdMenu = QAction("Image binarization")
+        self.firstChoiceThirdMenu.triggered.connect(self.window2)
+        self.third_title.addAction(self.firstChoiceThirdMenu)
 
         # Analysis menu
         analysisMenu = mainMenu.addMenu("Analysis")
-        self.intensityAnalysis = CellService_analysis.CellServiceIntensityAnalysis(self)
+        #self.intensityAnalysis = CellService_analysis.CellServiceIntensityAnalysis(self)
 
         # Intensity analysis
-        intensityAnalysisAction = QAction('&Intensity analysis', self)
+        intensityAnalysisAction = QAction('&Similarity analysis', self)
         intensityAnalysisAction.setStatusTip("Execute intensity analysis")
-        intensityAnalysisAction.triggered.connect(self.intensityAnalysis.show)
+        intensityAnalysisAction.triggered.connect(self.analisysWindow)
         analysisMenu.addAction(intensityAnalysisAction)
-
+    
+    def window2(self):
+        self.intensityAnalysis = CellService_processing.CellServiceBinaryProcessing(self)
+        self.intensityAnalysis.show()
+        
+    def analisysWindow(self):
+        self.analysis = Analisys_cellService.Ui_Analisys_cellService(self)
+        self.analysis.show()
+        
     def set_image(self, np_array, qt_label, channel, mask=False):
 
         # If the image is not set (None) do nothing
@@ -139,8 +145,8 @@ class CellService(QMainWindow):
         if mask:
             image = image*255
 
-        qt_image = QImage(image.data, image.shape[1], image.shape[0], image.strides[0], QImage.Format_RGB888)
-        qt_pixmap = QPixmap.fromImage(qt_image)
+        self.qt_image = QImage(image.data, image.shape[1], image.shape[0], image.strides[0], QImage.Format_RGB888)
+        qt_pixmap = QPixmap.fromImage(self.qt_image)
         qt_label.setPixmap(qt_pixmap)
         self.maximize_window()
 
