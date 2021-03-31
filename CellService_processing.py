@@ -34,42 +34,34 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.gridLayoutWidget.setGeometry(QtCore.QRect(340, 120,1000, 700))
         self.principal_layout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.principal_layout.setContentsMargins(0, 0, 0, 0)
+        
+        self.Original_Label = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.Original_Label.setStyleSheet("border: 2px solid red")
+        self.Original_Label.setScaledContents(True)
+        self.principal_layout.addWidget(self.Original_Label, 0, 0, 1, 1)
         self.Filtred_Label = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.Filtred_Label.setTabletTracking(True)
         self.Filtred_Label.setStyleSheet("border: 2px solid red")
-        self.Filtred_Label.setFrameShape(QtWidgets.QFrame.Panel)
-        self.Filtred_Label.setLineWidth(2)
         self.Filtred_Label.setScaledContents(True)
         self.principal_layout.addWidget(self.Filtred_Label, 1, 0, 1, 1)
+        
+        self.Original_Label1 = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.Original_Label1.setStyleSheet("border: 2px solid green")
+        self.Original_Label1.setScaledContents(True)
+        self.principal_layout.addWidget(self.Original_Label1, 0, 1, 1, 1)
+        self.Filtred_Label1 = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.Filtred_Label1.setStyleSheet("border: 2px solid green")
+        self.Filtred_Label1.setScaledContents(True)
+        self.principal_layout.addWidget(self.Filtred_Label1, 1, 1, 1, 1)
+        
         self.Original_Label2 = QtWidgets.QLabel(self.gridLayoutWidget)
         self.Original_Label2.setStyleSheet("border: 2px solid blue")
         self.Original_Label2.setScaledContents(True)
         self.principal_layout.addWidget(self.Original_Label2, 0, 3, 1, 1)
-        self.Original_Label = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.Original_Label.setTabletTracking(True)
-        self.Original_Label.setStyleSheet("border: 2px solid red")
-        self.Original_Label.setFrameShape(QtWidgets.QFrame.Panel)
-        self.Original_Label.setLineWidth(2)
-        self.Original_Label.setScaledContents(True)
-        self.principal_layout.addWidget(self.Original_Label, 0, 0, 1, 1)
         self.Filtred_Label2 = QtWidgets.QLabel(self.gridLayoutWidget)
         self.Filtred_Label2.setStyleSheet("border: 2px solid blue")
         self.Filtred_Label2.setScaledContents(True)
         self.principal_layout.addWidget(self.Filtred_Label2, 1, 3, 1, 1)
-        self.Filtred_Label1 = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.Filtred_Label1.setStyleSheet("border: 2px solid green")
-        self.Filtred_Label1.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.Filtred_Label1.setFrameShadow(QtWidgets.QFrame.Plain)
-        self.Filtred_Label1.setLineWidth(2)
-        self.Filtred_Label1.setScaledContents(True)
-        self.principal_layout.addWidget(self.Filtred_Label1, 1, 1, 1, 1)
-        self.Original_Label1 = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.Original_Label1.setStyleSheet("border: 2px solid green")
-        self.Original_Label1.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.Original_Label1.setFrameShadow(QtWidgets.QFrame.Plain)
-        self.Original_Label1.setLineWidth(2)
-        self.Original_Label1.setScaledContents(True)
-        self.principal_layout.addWidget(self.Original_Label1, 0, 1, 1, 1)
+        
         
         self.radioRed = QtWidgets.QRadioButton(self.principal_widget)
         self.radioRed.setStyleSheet("font: 10pt \"Varela\";\n" "color: red;")
@@ -106,8 +98,6 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.binary_edit.setText("Binarize")
         self.fontSizeSpinBox = QtWidgets.QDoubleSpinBox(self.binary_widget)
         self.fontSizeSpinBox.setGeometry(QtCore.QRect(20, 70, 91, 31))
-        self.fontSizeSpinBox.setTabletTracking(True)
-        self.fontSizeSpinBox.setAutoFillBackground(False)
         self.fontSizeSpinBox.setStyleSheet("background-color: rgb(255, 255, 255);\n"
             "    border-radius: 10px;\n"
             "    font: bold 14px;\n"
@@ -118,8 +108,6 @@ class CellServiceBinaryProcessing(QMainWindow):
         self.fontSizeSpinBox.setMaximum(255.0)
         self.fontSizeSpinBox2 = QtWidgets.QDoubleSpinBox(self.binary_widget)
         self.fontSizeSpinBox2.setGeometry(QtCore.QRect(20, 130, 91, 31))
-        self.fontSizeSpinBox2.setTabletTracking(True)
-        self.fontSizeSpinBox2.setAutoFillBackground(False)
         self.fontSizeSpinBox2.setStyleSheet("background-color: rgb(255, 255, 255);\n"
             "    border-radius: 10px;\n"
             "    font: bold 14px;\n"
@@ -239,8 +227,6 @@ class CellServiceBinaryProcessing(QMainWindow):
             "color: rgb(19, 82, 255);")
         self.Raggio = QtWidgets.QDoubleSpinBox(self.segmentation_widget_2)
         self.Raggio.setGeometry(QtCore.QRect(30, 60, 91, 31))
-        self.Raggio.setTabletTracking(True)
-        self.Raggio.setAutoFillBackground(False)
         self.Raggio.setStyleSheet("background-color: rgb(255, 255, 255);\n"
             "    border-radius: 10px;\n"
             "    font: bold 14px;\n"
@@ -286,8 +272,6 @@ class CellServiceBinaryProcessing(QMainWindow):
     def menuBar(self):
         self.menubar = QtWidgets.QMenuBar()
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1128, 26))
-        self.menubar.setTabletTracking(False)
-        self.menubar.setFocusPolicy(QtCore.Qt.NoFocus)
         self.menubar.setStyleSheet("background-color: rgb(255, 253, 253);\n"
             "selection-color: rgb(128, 183, 255);\n"
             "color: rgb(71, 71, 71);")
