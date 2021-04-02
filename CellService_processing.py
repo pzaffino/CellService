@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import (QCheckBox, QBoxLayout,QFileDialog, QWidget, QMainWi
 from PyQt5.QtGui import QPixmap, QIcon, QFont, QImage
 from PyQt5 import QtWidgets
 from PyQt5 import QtGui, QtCore
-from PyQt5.QtCore import Qt, pyqtSlot
+from PyQt5.QtCore import Qt, pyqtSlot, QRect
 import skimage.io
 import skimage.morphology
 import numpy as np
@@ -14,6 +14,7 @@ class CellServiceBinaryProcessing(QMainWindow):
     
     def __init__(self, parent):
         super().__init__()
+        
         
         self.parent = parent
         self.setWindowTitle("Processing")
@@ -29,52 +30,53 @@ class CellServiceBinaryProcessing(QMainWindow):
     def setupUi(self):
         self.resize(1128, 820)
         self.principal_widget = QtWidgets.QWidget()
-        self.principal_widget.setStyleSheet("background-color: rgb(244, 244, 244);\n" "")
+        self.principal_widget.setStyleSheet("background-color:qradialgradient(spread:reflect, cx:0.5, cy:0.494318, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(135, 200, 255, 255), stop:1 rgba(255, 255, 255, 255)) ;\n")
+        #self.principal_widget.setStyleSheet("background-color: rgb(244, 244, 244);\n" "")
         self.gridLayoutWidget = QtWidgets.QWidget(self.principal_widget)
         self.gridLayoutWidget.setGeometry(QtCore.QRect(340, 120,1000, 700))
         self.principal_layout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.principal_layout.setContentsMargins(0, 0, 0, 0)
         
         self.Original_Label = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.Original_Label.setStyleSheet("border: 2px solid red")
+        self.Original_Label.setStyleSheet("border-radius: 10px;\n" "border: 3px solid red")
         self.Original_Label.setScaledContents(True)
         self.principal_layout.addWidget(self.Original_Label, 0, 0, 1, 1)
         self.Filtred_Label = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.Filtred_Label.setStyleSheet("border: 2px solid red")
+        self.Filtred_Label.setStyleSheet("border-radius: 10px;\n" "border: 3px solid red")
         self.Filtred_Label.setScaledContents(True)
         self.principal_layout.addWidget(self.Filtred_Label, 1, 0, 1, 1)
         
         self.Original_Label1 = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.Original_Label1.setStyleSheet("border: 2px solid green")
+        self.Original_Label1.setStyleSheet("border-radius: 10px;\n" "border: 3px solid green")
         self.Original_Label1.setScaledContents(True)
         self.principal_layout.addWidget(self.Original_Label1, 0, 1, 1, 1)
         self.Filtred_Label1 = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.Filtred_Label1.setStyleSheet("border: 2px solid green")
+        self.Filtred_Label1.setStyleSheet("border-radius: 10px;\n" "border: 3px solid green")
         self.Filtred_Label1.setScaledContents(True)
         self.principal_layout.addWidget(self.Filtred_Label1, 1, 1, 1, 1)
         
         self.Original_Label2 = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.Original_Label2.setStyleSheet("border: 2px solid blue")
+        self.Original_Label2.setStyleSheet("border-radius: 10px;\n" "border: 3px solid blue")
         self.Original_Label2.setScaledContents(True)
         self.principal_layout.addWidget(self.Original_Label2, 0, 3, 1, 1)
         self.Filtred_Label2 = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.Filtred_Label2.setStyleSheet("border: 2px solid blue")
+        self.Filtred_Label2.setStyleSheet("border-radius: 10px;\n" "border: 3px solid blue")
         self.Filtred_Label2.setScaledContents(True)
         self.principal_layout.addWidget(self.Filtred_Label2, 1, 3, 1, 1)
         
         
         self.radioRed = QtWidgets.QRadioButton(self.principal_widget)
-        self.radioRed.setStyleSheet("font: 10pt \"Varela\";\n" "color: red;")
+        self.radioRed.setStyleSheet("background-color: white;" "border-radius: 10px;\n" "font: 10pt \"Varela\";\n" "color: red;")
         self.radioRed.setChecked(True)
         self.radioRed.setText("Red Image")
         self.radioRed.setGeometry(QtCore.QRect(430, 60, 121, 31))
         self.radioGreen = QtWidgets.QRadioButton(self.principal_widget)
         self.radioGreen.setText("Green Image")
         self.radioGreen.setGeometry(QtCore.QRect(750, 60, 131, 31))
-        self.radioGreen.setStyleSheet("font: 10pt \"Varela\";\n" "color: green;")
+        self.radioGreen.setStyleSheet("background-color: white;" "border-radius: 10px;\n" "font: 10pt \"Varela\";\n" "color: green;")
         self.radioBlue = QtWidgets.QRadioButton(self.principal_widget)
         self.radioBlue.setGeometry(QtCore.QRect(1100, 60, 121, 31))
-        self.radioBlue.setStyleSheet("font: 10pt \"Varela\";\n" "color: blue;")
+        self.radioBlue.setStyleSheet("background-color: white;" "border-radius: 10px;\n" "font: 10pt \"Varela\";\n" "color: blue;")
         self.radioBlue.setText("Blue Image")
         
         self.setCentralWidget(self.principal_widget)
@@ -283,6 +285,15 @@ class CellServiceBinaryProcessing(QMainWindow):
     def maximize_window(self):
         screen = QDesktopWidget().screenGeometry()
         self.setFixedSize(int(screen.height()*1.3), int(screen.height()*0.9))
+        y=int(screen.height()*0.7)
+        x=int(screen.height()*0.9)
+        position2=int(screen.height()*0.07)
+        position1=int(screen.height()*0.35)
+        self.gridLayoutWidget.setGeometry(QRect(position1, position2, x, y))
+        self.gridLayoutWidget.setFixedSize(x,y)
+        self.radioRed.setGeometry(QtCore.QRect(position1+100, position2-40, 121, 31))
+        self.radioGreen.setGeometry(QtCore.QRect((position1*2)+50, position2-40, 121, 31))
+        self.radioBlue.setGeometry(QtCore.QRect((position1*2)+380, position2-40, 121, 31))
     
     def set_all_images(self):
         self.parent.set_image(self.parent.red_image, self.Original_Label, "red", mask=False)
@@ -435,6 +446,11 @@ class CellServiceBinaryProcessing(QMainWindow):
             self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True)
             self.Label_Save.setText("Don't forget to save image!")
     
+    def set_all_mask(self):
+        self.parent.set_image(self.parent.red_mask, self.parent.Red_QLabel, "red", mask=True)
+        self.parent.set_image(self.parent.green_mask, self.parent.Green_QLabel, "green", mask=True)
+        self.parent.set_image(self.parent.blue_mask, self.parent.Blue_QLabel, "blue", mask=True)
+    
     def save(self):
         if(self.mask_red is not None):
             self.parent.red_mask = self.mask_red
@@ -442,4 +458,5 @@ class CellServiceBinaryProcessing(QMainWindow):
             self.parent.green_mask = self.mask_green
         if(self.mask_blue is not None):
             self.parent.blue_mask = self.mask_blue
+        self.set_all_mask()
         self.Label_Save.setText("SAVED IMAGES! IF YOU WANT TO CHANGE THE IMAGES, REMEMBER TO REPEAT THE BINARIZATION")
