@@ -2,11 +2,10 @@
 
 import sys
 from copy import deepcopy
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import QRect
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QGridLayout, QLabel, QAction, QFileDialog, QMenuBar, QMainWindow, QDesktopWidget, QMessageBox
-from PyQt5.QtGui import QIcon, QPixmap, QImage, qRgb
+from PyQt5.QtGui import QIcon, QPixmap, QImage, QFont
 
-import CellService_analysis
 import CellService_processing
 import Analisys_cellService
 
@@ -29,99 +28,121 @@ class CellService(QMainWindow):
         self.initUI()
 
     def initUI(self):
-
-        # Create widgent and layout
-        self.centralWidget = QWidget()
-        self.setCentralWidget(self.centralWidget)
-        grid = QGridLayout()
-        self.centralWidget.setLayout(grid)
-
-        # Define title, menu and other init stuff
-        self.move(20, 20)
         self.setWindowTitle("CellService")
-        self.create_menu()
-
-        init_size = 128
-
-        # RGB
-        self.RGB_QLabel = QLabel(self)
-        self.RGB_QLabel.setStyleSheet("border: 3px solid black;")
+        self.centralwidget = QWidget()
+        self.centralwidget.setStyleSheet("background-color: qradialgradient(spread:reflect, cx:0.5, cy:0.494318, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(135, 200, 255, 255), stop:1 rgba(255, 255, 255, 255));\n")
+        self.gridLayoutWidget = QWidget(self.centralwidget)
+        self.principal_layout = QGridLayout(self.gridLayoutWidget)
+        self.gridLayoutWidget.setStyleSheet("background-color: white;\n" "border-radius: 10px;\n")
+        self.setCentralWidget(self.centralwidget)
+        
+        self.RGB_QLabel = QLabel(self.gridLayoutWidget)
+        self.RGB_QLabel.setTabletTracking(True)
+        self.RGB_QLabel.setStyleSheet("background-color: rgb(255, 255, 255);\n" "    border-radius: 10px;\n" "border: 3px solid black")
         self.RGB_QLabel.setScaledContents(True)
-        grid.addWidget(self.RGB_QLabel, 0,0)
-        self.RGB_QLabel.resize(init_size, init_size)
-
-        # RED
-        self.Red_QLabel = QLabel(self)
-        self.Red_QLabel.setStyleSheet("border: 3px solid red;")
+        self.principal_layout.addWidget(self.RGB_QLabel, 0, 0, 1, 1)
+        
+        self.Red_QLabel = QLabel(self.gridLayoutWidget)
+        self.Red_QLabel.setTabletTracking(True)
+        self.Red_QLabel.setStyleSheet("background-color: rgb(255, 255, 255);\n" "border-radius: 10px;\n" "border: 3px solid red")
         self.Red_QLabel.setScaledContents(True)
-        grid.addWidget(self.Red_QLabel, 0,1)
-        self.Red_QLabel.resize(init_size, init_size)
-
-        # GREEN
-        self.Green_QLabel = QLabel(self)
-        self.Green_QLabel.setStyleSheet("border: 3px solid green;")
+        self.principal_layout.addWidget(self.Red_QLabel, 0, 1, 1, 1)
+        
+        self.Green_QLabel = QLabel(self.gridLayoutWidget)
+        self.Green_QLabel.setStyleSheet("background-color: rgb(255, 255, 255);\n" "border-radius: 10px;\n" "border: 3px solid green")
         self.Green_QLabel.setScaledContents(True)
-        grid.addWidget(self.Green_QLabel, 1,0)
-        self.Green_QLabel.resize(init_size, init_size)
-
-        # BLUE
-        self.Blue_QLabel = QLabel(self)
-        self.Blue_QLabel.setStyleSheet("border: 3px solid blue;")
+        self.principal_layout.addWidget(self.Green_QLabel, 1, 0, 1, 1)
+        
+        self.Blue_QLabel = QLabel(self.gridLayoutWidget)
+        self.Blue_QLabel.setStyleSheet("background-color: rgb(255, 255, 255);\n" "border-radius: 10px;\n" "border: 3px solid blue")
         self.Blue_QLabel.setScaledContents(True)
-        grid.addWidget(self.Blue_QLabel, 1,1)
-        self.Blue_QLabel.resize(init_size, init_size)
-
-        # Show the window
+        self.principal_layout.addWidget(self.Blue_QLabel, 1, 1, 1, 1)
+        
+        self.Analysis = QPushButton(self.centralwidget)
+        self.Analysis.setText("Analysis")
+        self.Analysis.setStyleSheet("background-color: rgb(128, 183, 255);\n"
+            "border-radius: 10px;\n"
+            "font: bold 14px;\n"
+            "padding: 6px;\n"
+            "font: 10pt \"Varela\";\n"
+            "color: rgb(255, 255, 255);")
+        self.Analysis.clicked.connect(self.analysis)
+        
+        self.Processing = QPushButton(self.centralwidget)
+        self.Processing.setText("Processing")
+        self.Processing.setStyleSheet("background-color: rgb(128, 183, 255);\n"
+            "    border-radius: 10px;\n"
+            "    font: bold 14px;\n"
+            "    padding: 6px;\n"
+            "font: 10pt \"Varela\";\n"
+            "color: rgb(255, 255, 255);")
+        self.Processing.clicked.connect(self.processing)
+        
+        self.menuBar()
         self.maximize_window()
         self.show()
-
-    def maximize_window(self):
-        screen = QDesktopWidget().screenGeometry()
-        self.setFixedSize(int(screen.height()*1.2), int(screen.height()*0.9))
-
-    def create_menu(self):
-        mainMenu = self.menuBar()
-
-        # File menu
-        fileMenu = mainMenu.addMenu("File")
-
-        # Open (single) RGB image
+    
+    def menuBar(self):
+        self.menubar = QMenuBar()
+        self.menubar.setGeometry(QRect(0, 0, 900, 37))
+        self.menubar.setStyleSheet("background-color: qradialgradient(spread:reflect, cx:0, cy:0.494318, radius:1.5, fx:0.5, fy:0.5, stop:0 rgba(135, 200, 255, 255), stop:1 rgba(255, 255, 255, 255));\n"
+            "selection-color: rgb(128, 183, 255);\n"
+            "color: white;")
+        self.menubar.setObjectName("menubar")
+        self.menuFile = self.menubar.addMenu("File")
+        font = QFont()
+        font.setFamily("Varela")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.menuFile.setFont(font)
+        self.menuFile.setAutoFillBackground(False)
+        self.menuFile.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+            "    border-radius: 10px;\n"
+            "    font: bold 14px;\n"
+            "    padding: 6px;\n"
+            "font: 10pt \"Varela\";\n"
+            "color: blue;")
+        self.menuFile.setToolTipsVisible(False)
+        self.menuFile.setTitle("Add Image")
+        self.setMenuBar(self.menubar)
+        
         openRGBAction = QAction(QIcon('open.png'), '&Open RGB image', self)
         openRGBAction.setShortcut('Ctrl+O')
         openRGBAction.setStatusTip('Open a new RGB image')
+        font = QFont()
+        font.setBold(True)
+        font.setWeight(75)
+        openRGBAction.setFont(font)
         openRGBAction.triggered.connect(self.openRGBCall)
-        fileMenu.addAction(openRGBAction)
-
-        # Open single channels RGB image
+        self.menuFile.addAction(openRGBAction)
+        
         openSingleChannelsAction = QAction(QIcon('open.png'), '&Open single channels image', self)
         openSingleChannelsAction.setStatusTip('Open a new RGB image by selecting different channels')
+        openSingleChannelsAction.setFont(font)
         openSingleChannelsAction.triggered.connect(self.openSingleChannelsCall)
-        fileMenu.addAction(openSingleChannelsAction)
-
-        # Binarization processing
-        self.third_title = mainMenu.addMenu("Image Processing")
-        # add first choice 
-        self.firstChoiceThirdMenu = QAction("Image binarization")
-        self.firstChoiceThirdMenu.triggered.connect(self.window2)
-        self.third_title.addAction(self.firstChoiceThirdMenu)
-
-        # Analysis menu
-        analysisMenu = mainMenu.addMenu("Analysis")
-        #self.intensityAnalysis = CellService_analysis.CellServiceIntensityAnalysis(self)
-
-        # Intensity analysis
-        intensityAnalysisAction = QAction('&Similarity analysis', self)
-        intensityAnalysisAction.setStatusTip("Execute intensity analysis")
-        intensityAnalysisAction.triggered.connect(self.analisysWindow)
-        analysisMenu.addAction(intensityAnalysisAction)
+        self.menuFile.addAction(openSingleChannelsAction)
+        
     
-    def window2(self):
+    def processing(self):
         self.intensityAnalysis = CellService_processing.CellServiceBinaryProcessing(self)
         self.intensityAnalysis.show()
         
-    def analisysWindow(self):
+    def analysis(self):
         self.analysis = Analisys_cellService.Ui_Analisys_cellService(self)
         self.analysis.show()
+    
+    def maximize_window(self):
+        screen = QDesktopWidget().screenGeometry()
+        self.setFixedSize(int(screen.height()*1.2), int(screen.height()*0.9))
+        y=int(screen.height()*0.75)
+        x=int(screen.height()*1)
+        position=int(screen.height()*0.08)
+        self.gridLayoutWidget.setGeometry(QRect(position, position, x, y))
+        self.gridLayoutWidget.setFixedSize(x,y)
+        self.Analysis.setGeometry(QRect(int(screen.height()*0.65), 20, 271, 41))
+        self.Processing.setGeometry(QRect(int(screen.height()*0.20), 20, 231, 41))
         
     def set_image(self, np_array, qt_label, channel, mask=False):
 
