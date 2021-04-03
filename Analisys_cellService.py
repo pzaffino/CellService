@@ -11,7 +11,7 @@ from skimage import filters
 from scipy import ndimage
 
 class Ui_Analisys_cellService(QMainWindow):
-    
+        
     def __init__(self, parent):
         super().__init__()
         
@@ -19,79 +19,83 @@ class Ui_Analisys_cellService(QMainWindow):
         
         self.setupUi()
         
-        self.set_numberWidget()       
-        
         self.set_biologicalWidget()
         
-        self.set_similarityWidget()
+        self.set_overlapWidget()
         
-        self.set_menuBar()
+        self.set_numberIslands()
+        
+        self.set_intensityWidget()
+        
     
     def setupUi(self):
         # set the window's style
         self.setObjectName("Analisys_cellService")
-        self.resize(946, 754)
+        self.resize(1150, 738)
         self.setWindowTitle("Analisys")
         
         # set principa widget's style
         self.principal_widget = QtWidgets.QWidget()
-        self.principal_widget.setStyleSheet("background-color: rgb(244, 244, 244);\n""")
+        self.principal_widget.setStyleSheet("background-color: rgb(244, 244, 244)")
         self.principal_widget.setObjectName("principal_widget")
         
-        # set grid widget
+        # set grid layout
         self.gridLayoutWidget = QtWidgets.QWidget(self.principal_widget)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(230, 10, 681, 681))
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(240, 20, 651, 651))
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
         
-        # set grid layout
+        # set principal layout
         self.principal_layout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.principal_layout.setContentsMargins(0, 0, 0, 0)
         self.principal_layout.setObjectName("principal_layout")
         
         # set RED Label and add the label to grid layout
+        self.RGB_Label = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.RGB_Label.setTabletTracking(True)
+        self.RGB_Label.setStyleSheet("border: 2px solid red")
+        self.RGB_Label.setFrameShape(QtWidgets.QFrame.Panel)
+        self.RGB_Label.setLineWidth(2)
+        self.RGB_Label.setText("")
+        self.RGB_Label.setScaledContents(True)
+        self.RGB_Label.setObjectName("RGB_Label")
+        self.principal_layout.addWidget(self.RGB_Label, 0, 0, 1, 1)
+        
+        # set BLUE Label and add the label to grid layout
+        self.BLUE_Label = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.BLUE_Label.setStyleSheet("border: 2px solid black")
+        self.BLUE_Label.setText("")
+        self.BLUE_Label.setScaledContents(True)
+        self.BLUE_Label.setObjectName("BLUE_Label")
+        self.principal_layout.addWidget(self.BLUE_Label, 1, 1, 1, 1)
+        
+        # set GREEN Label and add the label to grid layout
+        self.GREEN_Label = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.GREEN_Label.setStyleSheet("border: 2px solid blue")
+        self.GREEN_Label.setText("")
+        self.GREEN_Label.setScaledContents(True)
+        self.GREEN_Label.setObjectName("GREEN_Label")
+        self.principal_layout.addWidget(self.GREEN_Label, 1, 0, 1, 1)
+        
+        # set RED Label and add the label to grid layout
         self.RED_Label = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.RED_Label.setTabletTracking(True)
-        self.RED_Label.setStyleSheet("border: 2px solid red")
-        self.RED_Label.setFrameShape(QtWidgets.QFrame.Panel)
+        self.RED_Label.setStyleSheet("border: 2px solid green")
+        self.RED_Label.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.RED_Label.setFrameShadow(QtWidgets.QFrame.Plain)
         self.RED_Label.setLineWidth(2)
         self.RED_Label.setText("")
         self.RED_Label.setScaledContents(True)
         self.RED_Label.setObjectName("RED_Label")
-        self.principal_layout.addWidget(self.RED_Label, 0, 0, 1, 1)
-        
-        # set BLUE Label and add the label to grid layout
-        self.RGB_Label = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.RGB_Label.setStyleSheet("border: 2px solid black")
-        self.RGB_Label.setText("")
-        self.RGB_Label.setScaledContents(True)
-        self.RGB_Label.setObjectName("RGB_Label")
-        self.principal_layout.addWidget(self.RGB_Label, 1, 1, 1, 1)
-        
-        # set GREEN Label and add the label to grid layout
-        self.BLUE_Label = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.BLUE_Label.setStyleSheet("border: 2px solid blue")
-        self.BLUE_Label.setText("")
-        self.BLUE_Label.setScaledContents(True)
-        self.BLUE_Label.setObjectName("BLUE_Label")
-        self.principal_layout.addWidget(self.BLUE_Label, 1, 0, 1, 1)
-        
-        # set RED Label and add the label to grid layout
-        self.GREEN_Label = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.GREEN_Label.setStyleSheet("border: 2px solid green")
-        self.GREEN_Label.setText("")
-        self.GREEN_Label.setScaledContents(True)
-        self.GREEN_Label.setObjectName("GREEN_Label")
-        self.principal_layout.addWidget(self.GREEN_Label, 0, 1, 1, 1)
+        self.principal_layout.addWidget(self.RED_Label, 0, 1, 1, 1)
         
     def set_biologicalWidget(self):
         self.biological_widget = QtWidgets.QWidget(self.principal_widget)
-        self.biological_widget.setGeometry(QtCore.QRect(20, 310, 171, 211))
+        self.biological_widget.setGeometry(QtCore.QRect(20, 400, 191, 261))
         self.biological_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-radius: 30px;")
+"border-radius: 35px;")
         self.biological_widget.setObjectName("biological_widget")
         self.biological_widget.setGraphicsEffect(self.applyShadow())
         self.red_buttonBC = QtWidgets.QPushButton(self.biological_widget)
-        self.red_buttonBC.setGeometry(QtCore.QRect(10, 40, 41, 41))
+        self.red_buttonBC.setGeometry(QtCore.QRect(10, 60, 41, 41))
         self.red_buttonBC.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.red_buttonBC.setStyleSheet("QPushButton {\n"
 "     background-color: rgb(255, 255, 255);\n"
@@ -103,24 +107,20 @@ class Ui_Analisys_cellService(QMainWindow):
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
-"QPushButton::hover {\n"
-"    background-color: rgb(204, 204, 204);\n"
-"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}")
         self.red_buttonBC.setGraphicsEffect(self.applyShadow())
-        self.red_buttonBC.setText("")
         self.red_buttonBC.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED image biological contents</span></p></body></html>")
         self.red_buttonBC.setStatusTip("RED image biological contents")
+        self.red_buttonBC.setText("")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap("icon bio.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.red_buttonBC.setIcon(icon)
         self.red_buttonBC.setIconSize(QtCore.QSize(60, 35))
         self.red_buttonBC.setObjectName("red_buttonBC")
-        self.red_buttonBC.clicked.connect(self.set_biologicalRED)
         self.green_buttonBC = QtWidgets.QPushButton(self.biological_widget)
-        self.green_buttonBC.setGeometry(QtCore.QRect(10, 100, 41, 41))
+        self.green_buttonBC.setGeometry(QtCore.QRect(10, 130, 41, 41))
         self.green_buttonBC.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.green_buttonBC.setStyleSheet("QPushButton {\n"
 "     background-color: rgb(255, 255, 255);\n"
@@ -132,24 +132,20 @@ class Ui_Analisys_cellService(QMainWindow):
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
-"QPushButton::hover {\n"
-"    background-color: rgb(204, 204, 204);\n"
-"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}")
         self.green_buttonBC.setGraphicsEffect(self.applyShadow())
+        self.green_buttonBC.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">GREEN image biological contents</span></p></body></html>")
+        self.green_buttonBC.setStatusTip("GREEN image biological contents")
         self.green_buttonBC.setText("")
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap("icon bio 3.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.green_buttonBC.setIcon(icon1)
         self.green_buttonBC.setIconSize(QtCore.QSize(60, 35))
         self.green_buttonBC.setObjectName("green_buttonBC")
-        self.green_buttonBC.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">GREEN image biological contents</span></p></body></html>")
-        self.green_buttonBC.setStatusTip("GREEN image biological contents")
-        self.green_buttonBC.clicked.connect(self.set_biologicalGREEN)
         self.blue_buttonBC = QtWidgets.QPushButton(self.biological_widget)
-        self.blue_buttonBC.setGeometry(QtCore.QRect(10, 160, 41, 41))
+        self.blue_buttonBC.setGeometry(QtCore.QRect(10, 200, 41, 41))
         self.blue_buttonBC.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.blue_buttonBC.setStyleSheet("QPushButton {\n"
 "    background-color: rgb(255, 255, 255);\n"
@@ -161,56 +157,41 @@ class Ui_Analisys_cellService(QMainWindow):
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
-"QPushButton::hover {\n"
-"    background-color: rgb(204, 204, 204);\n"
-"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
+"    border-style: inset;\n"
 "}")
         self.blue_buttonBC.setGraphicsEffect(self.applyShadow())
+        self.blue_buttonBC.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">BLUE image biological contents</span></p></body></html>")
+        self.blue_buttonBC.setStatusTip("BLUE image biological contents")
         self.blue_buttonBC.setText("")
-        self.blue_buttonBC.clicked.connect(self.set_biologicalBLUE)
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap("icon bio 2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.blue_buttonBC.setIcon(icon2)
         self.blue_buttonBC.setIconSize(QtCore.QSize(60, 35))
         self.blue_buttonBC.setObjectName("blue_buttonBC")
-        self.blue_buttonBC.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">BLUE image biological contents</span></p></body></html>")
-        self.blue_buttonBC.setStatusTip("BLUE image biological contents")
-
         self.Red_PercentBC_edit = QtWidgets.QLineEdit(self.biological_widget)
-        self.Red_PercentBC_edit.setGeometry(QtCore.QRect(70, 50, 71, 31))
+        self.Red_PercentBC_edit.setGeometry(QtCore.QRect(60, 70, 81, 31))
         self.Red_PercentBC_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
-"    border-radius: 10px;\n"
+"    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "font: 10pt \"Varela\";\n"
 "color: rgb(255, 255, 255);")
         self.Red_PercentBC_edit.setReadOnly(True)
         self.Red_PercentBC_edit.setObjectName("Red_PercentBC_edit")
-        self.Green_PercentBC_edit = QtWidgets.QLineEdit(self.biological_widget)
-        self.Green_PercentBC_edit.setGeometry(QtCore.QRect(70, 110, 71, 31))
-        self.Green_PercentBC_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
-"    border-radius: 10px;\n"
-"    font: bold 14px;\n"
-"    padding: 6px;\n"
-"font: 10pt \"Varela\";\n"
-"color: rgb(255, 255, 255);")
-        self.Green_PercentBC_edit.setReadOnly(True)
-        self.Green_PercentBC_edit.setObjectName("Green_PercentBC_edit")
         self.Blue_PercentBC_edit = QtWidgets.QLineEdit(self.biological_widget)
-        self.Blue_PercentBC_edit.setGeometry(QtCore.QRect(70, 170, 71, 31))
+        self.Blue_PercentBC_edit.setGeometry(QtCore.QRect(60, 210, 81, 31))
         self.Blue_PercentBC_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
-"    border-radius: 10px;\n"
+"    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "font: 10pt \"Varela\";\n"
 "color: rgb(255, 255, 255);")
         self.Blue_PercentBC_edit.setReadOnly(True)
         self.Blue_PercentBC_edit.setObjectName("Blue_PercentBC_edit")
-
         self.compensate_edit2 = QtWidgets.QLineEdit(self.biological_widget)
-        self.compensate_edit2.setGeometry(QtCore.QRect(0, 20, 171, 16))
+        self.compensate_edit2.setGeometry(QtCore.QRect(0, 20, 191, 16))
         self.compensate_edit2.setStyleSheet("background-color: rgb(19, 82, 255);\n"
 "\n"
 "    font: bold 14px;\n"
@@ -220,168 +201,60 @@ class Ui_Analisys_cellService(QMainWindow):
         self.compensate_edit2.setText("")
         self.compensate_edit2.setReadOnly(True)
         self.compensate_edit2.setObjectName("compensate_edit2")
+        self.red_biological_title = QtWidgets.QLineEdit(self.biological_widget)
+        self.red_biological_title.setGeometry(QtCore.QRect(60, 50, 121, 20))
+        self.red_biological_title.setStyleSheet("font: 8pt \"Arial\";\n"
+"color: rgb(19, 82, 255);")
+        self.red_biological_title.setReadOnly(True)
+        self.red_biological_title.setObjectName("red_biological_title")
+        self.red_biological_title.setText("Red biological contents")
+        self.blue_biological_title = QtWidgets.QLineEdit(self.biological_widget)
+        self.blue_biological_title.setGeometry(QtCore.QRect(60, 190, 121, 20))
+        self.blue_biological_title.setStyleSheet("font: 8pt \"Arial\";\n"
+"color: rgb(19, 82, 255);")
+        self.blue_biological_title.setReadOnly(True)
+        self.blue_biological_title.setObjectName("blue_biological_title")
+        self.blue_biological_title.setText("Blue biological contents")
+        self.Green_PercentBC_edit = QtWidgets.QLineEdit(self.biological_widget)
+        self.Green_PercentBC_edit.setGeometry(QtCore.QRect(60, 140, 81, 31))
+        self.Green_PercentBC_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
+"    border-radius: 15px;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"font: 10pt \"Varela\";\n"
+"color: rgb(255, 255, 255);")
+        self.Green_PercentBC_edit.setText("")
+        self.Green_PercentBC_edit.setReadOnly(True)
+        self.Green_PercentBC_edit.setObjectName("Green_PercentBC_edit")
+        self.green_biological_title = QtWidgets.QLineEdit(self.biological_widget)
+        self.green_biological_title.setGeometry(QtCore.QRect(60, 120, 131, 20))
+        self.green_biological_title.setStyleSheet("font: 8pt \"Arial\";\n"
+"color: rgb(19, 82, 255);")
+        self.green_biological_title.setReadOnly(True)
+        self.green_biological_title.setObjectName("green_biological_title")
+        self.green_biological_title.setText("Green biological contents")
         self.biological_edit = QtWidgets.QLineEdit(self.biological_widget)
-        self.biological_edit.setGeometry(QtCore.QRect(0, 0, 171, 31))
+        self.biological_edit.setGeometry(QtCore.QRect(0, 0, 191, 31))
         self.biological_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
 "border-radius:15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 13pt \"Varela\" bold;\n"
+"font: 13pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.biological_edit.setAlignment(QtCore.Qt.AlignCenter)
         self.biological_edit.setReadOnly(True)
         self.biological_edit.setObjectName("biological_edit")
         self.biological_edit.setText("Biological contents")
-        
-    def set_numberWidget(self):
-        self.number_widget = QtWidgets.QWidget(self.principal_widget)
-        self.number_widget.setGeometry(QtCore.QRect(20, 530, 171, 171))
-        self.number_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-radius: 30px;")
-        self.number_widget.setObjectName("number_widget")
-        #self.number_widget.setGraphicsEffect(self.applyShadow())
-        self.number_cells_edit = QtWidgets.QLineEdit(self.number_widget)
-        self.number_cells_edit.setGeometry(QtCore.QRect(70, 40, 71, 31))
-        self.number_cells_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
-"    border-radius: 10px;\n"
-"    font: bold 14px;\n"
-"    padding: 6px;\n"
-"font: 10pt \"Varela\";\n"
-"color: rgb(255, 255, 255);")
-        self.number_cells_edit.setReadOnly(True)
-        self.number_cells_edit.setObjectName("number_cells_edit")
-        self.compensate_edit3 = QtWidgets.QLineEdit(self.number_widget)
-        self.compensate_edit3.setGeometry(QtCore.QRect(0, 20, 171, 16))
-        self.compensate_edit3.setStyleSheet("background-color: rgb(19, 82, 255);\n"
-"\n"
-"    font: bold 14px;\n"
-"    padding: 6px;\n"
-"font: 14pt \"Varela\" bold;\n"
-"color: rgb(255, 255, 255);")
-        self.compensate_edit3.setText("")
-        self.compensate_edit3.setReadOnly(True)
-        self.compensate_edit3.setObjectName("compensate_edit3")
-        self.numbers_edit = QtWidgets.QLineEdit(self.number_widget)
-        self.numbers_edit.setGeometry(QtCore.QRect(0, 0, 171, 31))
-        self.numbers_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
-"border-radius:15px;\n"
-"    font: bold 14px;\n"
-"    padding: 6px;\n"
-"font: 14pt \"Varela\" bold;\n"
-"color: rgb(255, 255, 255);")
-        self.numbers_edit.setAlignment(QtCore.Qt.AlignCenter)
-        self.numbers_edit.setReadOnly(True)
-        self.numbers_edit.setObjectName("numbers_edit")
-        self.numbers_edit.setText('Numbers of cells')
-        self.number_button = QtWidgets.QPushButton(self.number_widget)
-        self.number_button.setGeometry(QtCore.QRect(20, 40, 31, 31))
-        self.number_button.setFocusPolicy(QtCore.Qt.StrongFocus)
-        self.number_button.setStyleSheet("QPushButton {\n"
-"    background-color: rgb(255, 255, 255);\n"
-"    border-style: outset;\n"
-"    border: 2px;\n"
-"    border-width: 1px;\n"
-"    border-radius: 15px;\n"
-"    font: bold 14px;\n"
-"    padding: 6px;\n"
-"}\n"
-"QPushButton::hover {\n"
-"    background-color: rgb(204, 204, 204);\n"
-"}"
-"QPushButton:pressed {\n"
-"    background-color: rgb(180, 180, 180);\n"
-"}")
-        self.number_button.clicked.connect(self.set_number_RED)
-        self.number_button.setGraphicsEffect(self.applyShadow())
-        self.number_button.setText("")
-        icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("icon n.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.number_button.setIcon(icon3)
-        self.number_button.setIconSize(QtCore.QSize(40, 30))
-        self.number_button.setObjectName("number_button")
-        self.number_cells_edit_2 = QtWidgets.QLineEdit(self.number_widget)
-        self.number_cells_edit_2.setGeometry(QtCore.QRect(70, 80, 71, 31))
-        self.number_cells_edit_2.setStyleSheet("background-color: rgb(128, 183, 255);\n"
-"    border-radius: 10px;\n"
-"    font: bold 14px;\n"
-"    padding: 6px;\n"
-"font: 10pt \"Varela\";\n"
-"color: rgb(255, 255, 255);")
-        self.number_cells_edit_2.setReadOnly(True)
-        self.number_cells_edit_2.setObjectName("number_cells_edit_2")
-        self.number_cells_edit_3 = QtWidgets.QLineEdit(self.number_widget)
-        self.number_cells_edit_3.setGeometry(QtCore.QRect(70, 120, 71, 31))
-        self.number_cells_edit_3.setStyleSheet("background-color: rgb(128, 183, 255);\n"
-"    border-radius: 10px;\n"
-"    font: bold 14px;\n"
-"    padding: 6px;\n"
-"font: 10pt \"Varela\";\n"
-"color: rgb(255, 255, 255);")
-        self.number_cells_edit_3.setReadOnly(True)
-        self.number_cells_edit_3.setObjectName("number_cells_edit_3")
-        self.number_button_2 = QtWidgets.QPushButton(self.number_widget)
-        self.number_button_2.setGeometry(QtCore.QRect(20, 80, 31, 31))
-        self.number_button_2.setFocusPolicy(QtCore.Qt.StrongFocus)
-        self.number_button_2.setStyleSheet("QPushButton {\n"
-"    background-color: rgb(255, 255, 255);\n"
-"    border-style: outset;\n"
-"    border: 2px;\n"
-"    border-width: 1px;\n"
-"    border-radius: 15px;\n"
-"    font: bold 14px;\n"
-"    padding: 6px;\n"
-"}\n"
-"QPushButton::hover {\n"
-"    background-color: rgb(204, 204, 204);\n"
-"}"
-"QPushButton:pressed {\n"
-"    background-color: rgb(180, 180, 180);\n"
-"}")
-        self.number_button_2.clicked.connect(self.set_number_GREEN)
-        self.number_button_2.setGraphicsEffect(self.applyShadow())
-        self.number_button_2.setText("")
-        self.number_button_2.setIcon(icon3)
-        self.number_button_2.setIconSize(QtCore.QSize(40, 30))
-        self.number_button_2.setObjectName("number_button_2")
-        self.number_button_3 = QtWidgets.QPushButton(self.number_widget)
-        self.number_button_3.setGeometry(QtCore.QRect(20, 120, 31, 31))
-        self.number_button_3.setFocusPolicy(QtCore.Qt.StrongFocus)
-        self.number_button_3.setStyleSheet("QPushButton {\n"
-"    background-color: rgb(255, 255, 255);\n"
-"    border-style: outset;\n"
-"    border: 2px;\n"
-"    border-width: 1px;\n"
-"    border-radius: 15px;\n"
-"    font: bold 14px;\n"
-"    padding: 6px;\n"
-"}\n"
-"QPushButton::hover {\n"
-"    background-color: rgb(204, 204, 204);\n"
-"}"
-"QPushButton:pressed {\n"
-"    background-color: rgb(180, 180, 180);\n"
-"}")
-        self.number_button_3.clicked.connect(self.set_number_BLUE)
-        self.number_button_3.setGraphicsEffect(self.applyShadow())
-        self.number_button_3.setText("")
-        self.number_button_3.setIcon(icon3)
-        self.number_button_3.setIconSize(QtCore.QSize(40, 30))
-        self.number_button_3.setObjectName("number_button_3")
-        self.similarity_widget = QtWidgets.QWidget(self.principal_widget)
-        self.similarity_widget.setGeometry(QtCore.QRect(20, 10, 171, 281))
-        self.similarity_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-radius: 30px;")
-        self.similarity_widget.setObjectName("similarity_widget")
     
-    def set_similarityWidget(self):
+    def set_overlapWidget(self):
         self.similarity_widget = QtWidgets.QWidget(self.principal_widget)
-        self.similarity_widget.setGeometry(QtCore.QRect(20, 10, 171, 281))
+        self.similarity_widget.setGeometry(QtCore.QRect(20, 40, 191, 331))
         self.similarity_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-radius: 30px;")
-        self.similarity_widget.setObjectName("similarity_widget")
+"border-radius: 35px;")
         self.similarity_widget.setGraphicsEffect(self.applyShadow())
+        self.similarity_widget.setObjectName("similarity_widget")
         self.red_blue_buttonS = QtWidgets.QPushButton(self.similarity_widget)
-        self.red_blue_buttonS.setGeometry(QtCore.QRect(10, 40, 41, 41))
+        self.red_blue_buttonS.setGeometry(QtCore.QRect(10, 60, 41, 41))
         self.red_blue_buttonS.setMouseTracking(True)
         self.red_blue_buttonS.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.red_blue_buttonS.setToolTipDuration(-1)
@@ -396,25 +269,21 @@ class Ui_Analisys_cellService(QMainWindow):
 "    padding: 6px;\n"
 "}\n"
 "\n"
-"QPushButton::hover {\n"
-"    background-color: rgb(204, 204, 204);\n"
-"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}\n"
 "")
         self.red_blue_buttonS.setGraphicsEffect(self.applyShadow())
         self.red_blue_buttonS.setText("")
-        self.red_blue_buttonS.clicked.connect(self.similarity_buttonRB)
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap("icon 1.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.red_blue_buttonS.setIcon(icon5)
+        icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap("icon 1.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.red_blue_buttonS.setIcon(icon3)
         self.red_blue_buttonS.setIconSize(QtCore.QSize(60, 35))
         self.red_blue_buttonS.setObjectName("red_blue_buttonS")
-        self.red_blue_buttonS.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED and BLUE similarity</span></p></body></html>")
-        self.red_blue_buttonS.setStatusTip("RED and BLUE similarity")
+        self.red_blue_buttonS.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED and BLUE overlap</span></p></body></html>")
+        self.red_blue_buttonS.setStatusTip("RED and BLUE overlap")
         self.red_green_buttonS = QtWidgets.QPushButton(self.similarity_widget)
-        self.red_green_buttonS.setGeometry(QtCore.QRect(10, 100, 41, 41))
+        self.red_green_buttonS.setGeometry(QtCore.QRect(10, 130, 41, 41))
         self.red_green_buttonS.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.red_green_buttonS.setToolTipDuration(-1)
         self.red_green_buttonS.setStyleSheet("QPushButton {\n"
@@ -427,24 +296,20 @@ class Ui_Analisys_cellService(QMainWindow):
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
-"QPushButton::hover {\n"
-"    background-color: rgb(204, 204, 204);\n"
-"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}")
         self.red_green_buttonS.setGraphicsEffect(self.applyShadow())
+        self.red_green_buttonS.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED and GREEN overlap</span></p></body></html>")
+        self.red_green_buttonS.setStatusTip("RED and GREEN overlap")
         self.red_green_buttonS.setText("")
-        self.red_green_buttonS.clicked.connect(self.similarity_buttonRG)
-        icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap("icon 2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.red_green_buttonS.setIcon(icon6)
+        icon4 = QtGui.QIcon()
+        icon4.addPixmap(QtGui.QPixmap("icon 2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.red_green_buttonS.setIcon(icon4)
         self.red_green_buttonS.setIconSize(QtCore.QSize(60, 35))
         self.red_green_buttonS.setObjectName("red_green_buttonS")
-        self.red_green_buttonS.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED and GREEN similarity</span></p></body></html>")
-        self.red_green_buttonS.setStatusTip("RED and GREEN similarity")
         self.blue_green_buttonS = QtWidgets.QPushButton(self.similarity_widget)
-        self.blue_green_buttonS.setGeometry(QtCore.QRect(10, 160, 41, 41))
+        self.blue_green_buttonS.setGeometry(QtCore.QRect(10, 200, 41, 41))
         self.blue_green_buttonS.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.blue_green_buttonS.setStyleSheet("QPushButton {\n"
 "    background-color: rgb(255, 255, 255);\n"
@@ -456,24 +321,21 @@ class Ui_Analisys_cellService(QMainWindow):
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
-"QPushButton::hover {\n"
-"    background-color: rgb(204, 204, 204);\n"
-"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
+"    border-style: inset;\n"
 "}")
         self.blue_green_buttonS.setGraphicsEffect(self.applyShadow())
         self.blue_green_buttonS.setText("")
-        self.blue_green_buttonS.clicked.connect(self.similarity_buttonGB)
-        icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap("icon 3.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.blue_green_buttonS.setIcon(icon7)
+        icon5 = QtGui.QIcon()
+        icon5.addPixmap(QtGui.QPixmap("icon 3.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.blue_green_buttonS.setIcon(icon5)
         self.blue_green_buttonS.setIconSize(QtCore.QSize(60, 35))
         self.blue_green_buttonS.setObjectName("blue_green_buttonS")
-        self.blue_green_buttonS.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">GREEN and BLUE similarity</span></p></body></html>")
-        self.blue_green_buttonS.setStatusTip("GREEN and BLUE similarity")
+        self.blue_green_buttonS.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">GREEN and BLUE overlap</span></p></body></html>")
+        self.blue_green_buttonS.setStatusTip("GREEN and BLUE overlap")
         self.total_buttonS = QtWidgets.QPushButton(self.similarity_widget)
-        self.total_buttonS.setGeometry(QtCore.QRect(10, 220, 41, 41))
+        self.total_buttonS.setGeometry(QtCore.QRect(10, 270, 41, 41))
         self.total_buttonS.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.total_buttonS.setStyleSheet("QPushButton {\n"
 "    background-color: rgb(255, 255, 255);\n"
@@ -481,30 +343,25 @@ class Ui_Analisys_cellService(QMainWindow):
 "    border: 2px;\n"
 "    border-width: 1px;\n"
 "    border-radius: 20px;\n"
-"    border-color: beige;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "}\n"
-"QPushButton::hover {\n"
-"    background-color: rgb(204, 204, 204);\n"
-"}"
 "QPushButton:pressed {\n"
 "    background-color: rgb(180, 180, 180);\n"
 "}")
         self.total_buttonS.setGraphicsEffect(self.applyShadow())
+        self.total_buttonS.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED, GREEN and BLUE overlap</span></p></body></html>")
+        self.total_buttonS.setStatusTip("RED, GREEN and BLUE overlap")
         self.total_buttonS.setText("")
-        icon8 = QtGui.QIcon()
-        icon8.addPixmap(QtGui.QPixmap("icon 4.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.total_buttonS.setIcon(icon8)
+        icon6 = QtGui.QIcon()
+        icon6.addPixmap(QtGui.QPixmap("icon 4 grey.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.total_buttonS.setIcon(icon6)
         self.total_buttonS.setIconSize(QtCore.QSize(60, 35))
         self.total_buttonS.setObjectName("total_buttonS")
-        self.total_buttonS.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED, GREEN and BLUE similarity</span></p></body></html>")
-        self.total_buttonS.setStatusTip("RED, GREEN and BLUE similarity")
-        self.total_buttonS.clicked.connect(self.similarity_buttonRGB)
         self.RB_PercentS_edit = QtWidgets.QLineEdit(self.similarity_widget)
-        self.RB_PercentS_edit.setGeometry(QtCore.QRect(70, 50, 71, 31))
+        self.RB_PercentS_edit.setGeometry(QtCore.QRect(60, 70, 81, 31))
         self.RB_PercentS_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
-"    border-radius: 10px;\n"
+"    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "font: 10pt \"Varela\";\n"
@@ -513,9 +370,9 @@ class Ui_Analisys_cellService(QMainWindow):
         self.RB_PercentS_edit.setReadOnly(True)
         self.RB_PercentS_edit.setObjectName("RB_PercentS_edit")
         self.RG_PercentS_edit = QtWidgets.QLineEdit(self.similarity_widget)
-        self.RG_PercentS_edit.setGeometry(QtCore.QRect(70, 110, 71, 31))
+        self.RG_PercentS_edit.setGeometry(QtCore.QRect(60, 140, 81, 31))
         self.RG_PercentS_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
-"    border-radius: 10px;\n"
+"    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "font: 10pt \"Varela\";\n"
@@ -523,9 +380,9 @@ class Ui_Analisys_cellService(QMainWindow):
         self.RG_PercentS_edit.setReadOnly(True)
         self.RG_PercentS_edit.setObjectName("RG_PercentS_edit")
         self.BG_PercentS_edit = QtWidgets.QLineEdit(self.similarity_widget)
-        self.BG_PercentS_edit.setGeometry(QtCore.QRect(70, 170, 71, 31))
+        self.BG_PercentS_edit.setGeometry(QtCore.QRect(60, 210, 81, 31))
         self.BG_PercentS_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
-"    border-radius: 10px;\n"
+"    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "font: 10pt \"Varela\";\n"
@@ -533,9 +390,9 @@ class Ui_Analisys_cellService(QMainWindow):
         self.BG_PercentS_edit.setReadOnly(True)
         self.BG_PercentS_edit.setObjectName("BG_PercentS_edit")
         self.RGB_PercentS_edit = QtWidgets.QLineEdit(self.similarity_widget)
-        self.RGB_PercentS_edit.setGeometry(QtCore.QRect(70, 230, 71, 31))
+        self.RGB_PercentS_edit.setGeometry(QtCore.QRect(60, 280, 81, 31))
         self.RGB_PercentS_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
-"    border-radius: 10px;\n"
+"    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
 "font: 10pt \"Varela\";\n"
@@ -543,7 +400,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.RGB_PercentS_edit.setReadOnly(True)
         self.RGB_PercentS_edit.setObjectName("RGB_PercentS_edit")
         self.compensate_edit = QtWidgets.QLineEdit(self.similarity_widget)
-        self.compensate_edit.setGeometry(QtCore.QRect(0, 20, 171, 16))
+        self.compensate_edit.setGeometry(QtCore.QRect(0, 20, 191, 16))
         self.compensate_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
 "\n"
 "    font: bold 14px;\n"
@@ -554,22 +411,396 @@ class Ui_Analisys_cellService(QMainWindow):
         self.compensate_edit.setReadOnly(True)
         self.compensate_edit.setObjectName("compensate_edit")
         self.similarity_edit = QtWidgets.QLineEdit(self.similarity_widget)
-        self.similarity_edit.setGeometry(QtCore.QRect(0, 0, 171, 31))
+        self.similarity_edit.setGeometry(QtCore.QRect(0, 0, 191, 31))
         self.similarity_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
 "border-radius:15px;\n"
-"    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 14pt \"Varela\" bold;\n"
+"font: 14pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.similarity_edit.setAlignment(QtCore.Qt.AlignCenter)
         self.similarity_edit.setReadOnly(True)
         self.similarity_edit.setObjectName("similarity_edit")
-        self.similarity_edit.setText("Similarity")
+        self.similarity_edit.setText("Overlap")
+        self.redBlue_overlap_title = QtWidgets.QLineEdit(self.similarity_widget)
+        self.redBlue_overlap_title.setGeometry(QtCore.QRect(60, 50, 91, 20))
+        self.redBlue_overlap_title.setStyleSheet("font: 8pt \"Arial\";\n"
+"color: rgb(19, 82, 255);")
+        self.redBlue_overlap_title.setReadOnly(True)
+        self.redBlue_overlap_title.setObjectName("redBlue_overlap_title")
+        self.redBlue_overlap_title.setText("Blue-red overlap")
+        self.redGreen_overlap_title = QtWidgets.QLineEdit(self.similarity_widget)
+        self.redGreen_overlap_title.setGeometry(QtCore.QRect(60, 120, 101, 20))
+        self.redGreen_overlap_title.setStyleSheet("font: 8pt \"Arial\";\n"
+"color: rgb(19, 82, 255);")
+        self.redGreen_overlap_title.setReadOnly(True)
+        self.redGreen_overlap_title.setObjectName("redGreen_overlap_title")
+        self.redGreen_overlap_title.setText("Red-green overlap")
+        self.blueGreen_overlap_title = QtWidgets.QLineEdit(self.similarity_widget)
+        self.blueGreen_overlap_title.setGeometry(QtCore.QRect(60, 190, 101, 20))
+        self.blueGreen_overlap_title.setStyleSheet("font: 8pt \"Arial\";\n"
+"color: rgb(19, 82, 255);")
+        self.blueGreen_overlap_title.setReadOnly(True)
+        self.blueGreen_overlap_title.setObjectName("blueGreen_overlap_title")
+        self.blueGreen_overlap_title.setText("Green-blue overlap")
+        self.all_overlap_title = QtWidgets.QLineEdit(self.similarity_widget)
+        self.all_overlap_title.setGeometry(QtCore.QRect(60, 260, 101, 20))
+        self.all_overlap_title.setStyleSheet("font: 8pt \"Arial\";\n"
+"color: rgb(19, 82, 255);")
+        self.all_overlap_title.setReadOnly(True)
+        self.all_overlap_title.setObjectName("all_overlap_title")
+        self.all_overlap_title.setText("All images overlap")
+        
+    def set_numberIslands(self):
+        self.number_widget = QtWidgets.QWidget(self.principal_widget)
+        self.number_widget.setGeometry(QtCore.QRect(920, 40, 191, 261))
+        self.number_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border-radius: 35px;")
+        self.number_widget.setGraphicsEffect(self.applyShadow())
+        self.number_widget.setObjectName("number_widget")
+        self.number_button_red = QtWidgets.QPushButton(self.number_widget)
+        self.number_button_red.setGeometry(QtCore.QRect(10, 60, 41, 41))
+        self.number_button_red.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.number_button_red.setStyleSheet("QPushButton {\n"
+"     background-color: rgb(255, 255, 255);\n"
+"    border-style: outset;\n"
+"    border: 2px;\n"
+"    border-width: 1px;\n"
+"    border-radius: 20px;\n"
+"    border-color: beige;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(180, 180, 180);\n"
+"}")
+        self.number_button_red.setGraphicsEffect(self.applyShadow())
+        self.number_button_red.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Calculate the number of islands in the red image</span></p></body></html>")
+        self.number_button_red.setStatusTip("Calculate the number of islands in the red image")
+        self.number_button_red.setText("")
+        icon7 = QtGui.QIcon()
+        icon7.addPixmap(QtGui.QPixmap("icon n 2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.number_button_red.setIcon(icon7)
+        self.number_button_red.setIconSize(QtCore.QSize(60, 35))
+        self.number_button_red.setObjectName("number_button_red")
+        self.number_button_green = QtWidgets.QPushButton(self.number_widget)
+        self.number_button_green.setGeometry(QtCore.QRect(10, 130, 41, 41))
+        self.number_button_green.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.number_button_green.setStyleSheet("QPushButton {\n"
+"     background-color: rgb(255, 255, 255);\n"
+"    border-style: outset;\n"
+"    border: 2px;\n"
+"    border-width: 1px;\n"
+"    border-radius: 20px;\n"
+"    border-color: beige;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(180, 180, 180);\n"
+"}")
+        self.number_button_green.setGraphicsEffect(self.applyShadow())
+        self.number_button_green.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Calculate the number of islands in the green image</span></p></body></html>")
+        self.number_button_green.setStatusTip("Calculate the number of islands in the green image")
+        self.number_button_green.setText("")
+        icon8 = QtGui.QIcon()
+        icon8.addPixmap(QtGui.QPixmap("icon n 4.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.number_button_green.setIcon(icon8)
+        self.number_button_green.setIconSize(QtCore.QSize(60, 35))
+        self.number_button_green.setObjectName("number_button_green")
+        self.number_button_blue = QtWidgets.QPushButton(self.number_widget)
+        self.number_button_blue.setGeometry(QtCore.QRect(10, 200, 41, 41))
+        self.number_button_blue.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.number_button_blue.setStyleSheet("QPushButton {\n"
+"    background-color: rgb(255, 255, 255);\n"
+"    border-style: outset;\n"
+"    border: 2px;\n"
+"    border-width: 1px;\n"
+"    border-radius: 20px;\n"
+"    border-color: beige;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(180, 180, 180);\n"
+"    border-style: inset;\n"
+"}")
+        self.number_button_blue.setGraphicsEffect(self.applyShadow())
+        self.number_button_blue.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Calculate the number of islands in the blue image</span></p></body></html>")
+        self.number_button_blue.setStatusTip("Calculate the number of islands in the blue image")
+        self.number_button_blue.setText("")
+        icon9 = QtGui.QIcon()
+        icon9.addPixmap(QtGui.QPixmap("icon n 3.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.number_button_blue.setIcon(icon9)
+        self.number_button_blue.setIconSize(QtCore.QSize(60, 35))
+        self.number_button_blue.setObjectName("number_button_blue")
+        self.Red_number_edit = QtWidgets.QLineEdit(self.number_widget)
+        self.Red_number_edit.setGeometry(QtCore.QRect(60, 70, 81, 31))
+        self.Red_number_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
+"    border-radius: 15px;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"font: 10pt \"Varela\";\n"
+"color: rgb(255, 255, 255);")
+        self.Red_number_edit.setReadOnly(True)
+        self.Red_number_edit.setObjectName("Red_number_edit")
+        self.Blue_number_edit = QtWidgets.QLineEdit(self.number_widget)
+        self.Blue_number_edit.setGeometry(QtCore.QRect(60, 210, 81, 31))
+        self.Blue_number_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
+"    border-radius: 15px;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"font: 10pt \"Varela\";\n"
+"color: rgb(255, 255, 255);")
+        self.Blue_number_edit.setReadOnly(True)
+        self.Blue_number_edit.setObjectName("Blue_number_edit")
+        self.compensate_edit2_2 = QtWidgets.QLineEdit(self.number_widget)
+        self.compensate_edit2_2.setGeometry(QtCore.QRect(0, 20, 191, 16))
+        self.compensate_edit2_2.setStyleSheet("background-color: rgb(19, 82, 255);\n"
+"\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"font: 14pt \"Varela\" bold;\n"
+"color: rgb(255, 255, 255);")
+        self.compensate_edit2_2.setText("")
+        self.compensate_edit2_2.setReadOnly(True)
+        self.compensate_edit2_2.setObjectName("compensate_edit2_2")
+        self.number_edit = QtWidgets.QLineEdit(self.number_widget)
+        self.number_edit.setGeometry(QtCore.QRect(0, 0, 191, 31))
+        self.number_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
+"border-radius:15px;\n"
+"    padding: 6px;\n"
+"font: 14pt \"Arial\";\n"
+"color: rgb(255, 255, 255);")
+        self.number_edit.setAlignment(QtCore.Qt.AlignCenter)
+        self.number_edit.setReadOnly(True)
+        self.number_edit.setObjectName("number_edit")
+        self.number_edit.setText("Number of islands")
+        self.red_number_title = QtWidgets.QLineEdit(self.number_widget)
+        self.red_number_title.setGeometry(QtCore.QRect(60, 50, 121, 20))
+        self.red_number_title.setStyleSheet("font: 8pt \"Arial\";\n"
+"color: rgb(19, 82, 255);")
+        self.red_number_title.setReadOnly(True)
+        self.red_number_title.setObjectName("red_number_title")
+        self.red_number_title.setText("Red numbers of islands")
+        self.red_number_title.setText("Red numbers of islands")
+        self.blue_number_title = QtWidgets.QLineEdit(self.number_widget)
+        self.blue_number_title.setGeometry(QtCore.QRect(60, 190, 121, 20))
+        self.blue_number_title.setStyleSheet("font: 8pt \"Arial\";\n"
+"color: rgb(19, 82, 255);")
+        self.blue_number_title.setReadOnly(True)
+        self.blue_number_title.setObjectName("blue_number_title")
+        self.blue_number_title.setText("Blue biological contents")
+        self.Green_number_edit = QtWidgets.QLineEdit(self.number_widget)
+        self.Green_number_edit.setGeometry(QtCore.QRect(60, 140, 81, 31))
+        self.Green_number_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
+"    border-radius: 15px;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"font: 10pt \"Varela\";\n"
+"color: rgb(255, 255, 255);")
+        self.Green_number_edit.setText("")
+        self.Green_number_edit.setReadOnly(True)
+        self.Green_number_edit.setObjectName("Green_number_edit")
+        self.green_number_title = QtWidgets.QLineEdit(self.number_widget)
+        self.green_number_title.setGeometry(QtCore.QRect(60, 120, 131, 20))
+        self.green_number_title.setStyleSheet("font: 8pt \"Arial\";\n"
+"color: rgb(19, 82, 255);")
+        self.green_number_title.setReadOnly(True)
+        self.green_number_title.setObjectName("green_number_title")
+        self.green_number_title.setText("Green numbers of islands")
+        self.intensity_widget = QtWidgets.QWidget(self.principal_widget)
+    
+    def set_intensityWidget(self):
+        self.intensity_widget.setGeometry(QtCore.QRect(920, 380, 191, 261))
+        self.intensity_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border-radius: 35px;")
+        self.intensity_widget.setGraphicsEffect(self.applyShadow())
+        self.intensity_widget.setObjectName("intensity_widget_2")
+        self.intensity_button_red = QtWidgets.QPushButton(self.intensity_widget)
+        self.intensity_button_red.setGeometry(QtCore.QRect(10, 60, 41, 41))
+        self.intensity_button_red.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.intensity_button_red.setStyleSheet("QPushButton {\n"
+"     background-color: rgb(255, 255, 255);\n"
+"    border-style: outset;\n"
+"    border: 2px;\n"
+"    border-width: 1px;\n"
+"    border-radius: 20px;\n"
+"    border-color: beige;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(180, 180, 180);\n"
+"}")
+        self.intensity_button_red.setGraphicsEffect(self.applyShadow())
+        self.intensity_button_red.setText("")
+        icon10 = QtGui.QIcon()
+        icon10.addPixmap(QtGui.QPixmap("icon int 1.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.intensity_button_red.setIcon(icon10)
+        self.intensity_button_red.setIconSize(QtCore.QSize(60, 35))
+        self.intensity_button_red.setObjectName("intensity_button_red")
+        self.intensity_button_red.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED image min and max intensity</span></p></body></html>")
+        self.intensity_button_red.setStatusTip("RED image min and max intensity")
+        self.intensity_button_green = QtWidgets.QPushButton(self.intensity_widget)
+        self.intensity_button_green.setGeometry(QtCore.QRect(10, 130, 41, 41))
+        self.intensity_button_green.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.intensity_button_green.setStyleSheet("QPushButton {\n"
+"     background-color: rgb(255, 255, 255);\n"
+"    border-style: outset;\n"
+"    border: 2px;\n"
+"    border-width: 1px;\n"
+"    border-radius: 20px;\n"
+"    border-color: beige;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(180, 180, 180);\n"
+"}")
+        self.intensity_button_green.setGraphicsEffect(self.applyShadow())
+        self.intensity_button_green.setText("")
+        icon11 = QtGui.QIcon()
+        icon11.addPixmap(QtGui.QPixmap("icon int 3.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.intensity_button_green.setIcon(icon11)
+        self.intensity_button_green.setIconSize(QtCore.QSize(60, 35))
+        self.intensity_button_green.setObjectName("intensity_button_green")
+        self.intensity_button_green.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">GREEN image min and max intensity</span></p></body></html>")
+        self.intensity_button_green.setStatusTip("GREEN image min and max intensity")
+        self.intensity_button_blue = QtWidgets.QPushButton(self.intensity_widget)
+        self.intensity_button_blue.setGeometry(QtCore.QRect(10, 200, 41, 41))
+        self.intensity_button_blue.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.intensity_button_blue.setStyleSheet("QPushButton {\n"
+"    background-color: rgb(255, 255, 255);\n"
+"    border-style: outset;\n"
+"    border: 2px;\n"
+"    border-width: 1px;\n"
+"    border-radius: 20px;\n"
+"    border-color: beige;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"}\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(180, 180, 180);\n"
+"    border-style: inset;\n"
+"}")
+        self.intensity_button_blue.setGraphicsEffect(self.applyShadow())
+        self.intensity_button_blue.setText("")
+        icon12 = QtGui.QIcon()
+        icon12.addPixmap(QtGui.QPixmap("icon int 2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.intensity_button_blue.setIcon(icon12)
+        self.intensity_button_blue.setIconSize(QtCore.QSize(60, 35))
+        self.intensity_button_blue.setObjectName("intensity_button_blue")
+        self.intensity_button_blue.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">BLUE image min and max intensity</span></p></body></html>")
+        self.intensity_button_blue.setStatusTip("BLUE image min and max intensity")
+        self.Red_intensity_edit_min = QtWidgets.QLineEdit(self.intensity_widget)
+        self.Red_intensity_edit_min.setGeometry(QtCore.QRect(60, 70, 61, 31))
+        self.Red_intensity_edit_min.setStyleSheet("background-color: rgb(128, 183, 255);\n"
+"    border-radius: 15px;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"font: 10pt \"Varela\";\n"
+"color: rgb(255, 255, 255);")
+        self.Red_intensity_edit_min.setReadOnly(True)
+        self.Red_intensity_edit_min.setObjectName("Red_intensity_edit_min")
+        self.Blue_intensity_edit_min = QtWidgets.QLineEdit(self.intensity_widget)
+        self.Blue_intensity_edit_min.setGeometry(QtCore.QRect(60, 210, 61, 31))
+        self.Blue_intensity_edit_min.setStyleSheet("background-color: rgb(128, 183, 255);\n"
+"    border-radius: 15px;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"font: 10pt \"Varela\";\n"
+"color: rgb(255, 255, 255);")
+        self.Blue_intensity_edit_min.setReadOnly(True)
+        self.Blue_intensity_edit_min.setObjectName("Blue_intensity_edit_min")
+        self.compensate_edit2_3 = QtWidgets.QLineEdit(self.intensity_widget)
+        self.compensate_edit2_3.setGeometry(QtCore.QRect(0, 20, 191, 16))
+        self.compensate_edit2_3.setStyleSheet("background-color: rgb(19, 82, 255);\n"
+"\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"font: 14pt \"Varela\" bold;\n"
+"color: rgb(255, 255, 255);")
+        self.compensate_edit2_3.setText("")
+        self.compensate_edit2_3.setReadOnly(True)
+        self.compensate_edit2_3.setObjectName("compensate_edit2_3")
+        self.intensity_edit = QtWidgets.QLineEdit(self.intensity_widget)
+        self.intensity_edit.setGeometry(QtCore.QRect(0, 0, 191, 31))
+        self.intensity_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
+"border-radius:15px;\n"
+"    padding: 6px;\n"
+"font: 14pt \"Arial\";\n"
+"color: rgb(255, 255, 255);")
+        self.intensity_edit.setAlignment(QtCore.Qt.AlignCenter)
+        self.intensity_edit.setReadOnly(True)
+        self.intensity_edit.setObjectName("intensity_edit")
+        self.intensity_edit.setText("Intensity")
+        self.intensity_red_title = QtWidgets.QLineEdit(self.intensity_widget)
+        self.intensity_red_title.setGeometry(QtCore.QRect(85, 50, 71, 20))
+        self.intensity_red_title.setText("Red intensity")
+        self.intensity_red_title.setStyleSheet("font: 8pt \"Arial\";\n"
+"color: rgb(19, 82, 255);")
+        self.intensity_red_title.setReadOnly(True)
+        self.intensity_red_title.setObjectName("intensity_red_title")
+        self.intensity_blue_title = QtWidgets.QLineEdit(self.intensity_widget)
+        self.intensity_blue_title.setGeometry(QtCore.QRect(85, 190, 71, 20))
+        self.intensity_blue_title.setStyleSheet("font: 8pt \"Arial\";\n"
+"color: rgb(19, 82, 255);")
+        self.intensity_blue_title.setReadOnly(True)
+        self.intensity_blue_title.setObjectName("intensity_blue_title")
+        self.intensity_blue_title.setText("Blue intensity")
+        self.Green_intensity_edit_min = QtWidgets.QLineEdit(self.intensity_widget)
+        self.Green_intensity_edit_min.setGeometry(QtCore.QRect(60, 140, 61, 31))
+        self.Green_intensity_edit_min.setStyleSheet("background-color: rgb(128, 183, 255);\n"
+"    border-radius: 15px;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"font: 10pt \"Varela\";\n"
+"color: rgb(255, 255, 255);")
+        self.Green_intensity_edit_min.setText("")
+        self.Green_intensity_edit_min.setReadOnly(True)
+        self.Green_intensity_edit_min.setObjectName("Green_intensity_edit_min")
+        self.intensity_green_title = QtWidgets.QLineEdit(self.intensity_widget)
+        self.intensity_green_title.setGeometry(QtCore.QRect(85, 120, 81, 20))
+        self.intensity_green_title.setStyleSheet("font: 8pt \"Arial\";\n"
+"color: rgb(19, 82, 255);")
+        self.intensity_green_title.setReadOnly(True)
+        self.intensity_green_title.setObjectName("intensity_green_title")
+        self.intensity_green_title.setText("Green intensity")
+        self.Red_intensity_edit_max = QtWidgets.QLineEdit(self.intensity_widget)
+        self.Red_intensity_edit_max.setGeometry(QtCore.QRect(125, 70, 61, 31))
+        self.Red_intensity_edit_max.setStyleSheet("background-color: rgb(128, 183, 255);\n"
+"    border-radius: 15px;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"font: 10pt \"Varela\";\n"
+"color: rgb(255, 255, 255);")
+        self.Red_intensity_edit_max.setReadOnly(True)
+        self.Red_intensity_edit_max.setObjectName("Red_intensity_edit_max")
+        self.Green_intensity_edit_max = QtWidgets.QLineEdit(self.intensity_widget)
+        self.Green_intensity_edit_max.setGeometry(QtCore.QRect(125, 140, 61, 31))
+        self.Green_intensity_edit_max.setStyleSheet("background-color: rgb(128, 183, 255);\n"
+"    border-radius: 15px;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"font: 10pt \"Varela\";\n"
+"color: rgb(255, 255, 255);")
+        self.Green_intensity_edit_max.setReadOnly(True)
+        self.Green_intensity_edit_max.setObjectName("Green_intensity_edit_max")
+        self.Blue_intensity_edit_max = QtWidgets.QLineEdit(self.intensity_widget)
+        self.Blue_intensity_edit_max.setGeometry(QtCore.QRect(125, 210, 61, 31))
+        self.Blue_intensity_edit_max.setStyleSheet("background-color: rgb(128, 183, 255);\n"
+"    border-radius: 15px;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"font: 10pt \"Varela\";\n"
+"color: rgb(255, 255, 255);")
+        self.Blue_intensity_edit_max.setReadOnly(True)
+        self.Blue_intensity_edit_max.setObjectName("Blue_intensity_edit_max")
         self.setCentralWidget(self.principal_widget)
         
     def set_menuBar(self):
-        self.menubar = QtWidgets.QMenuBar()
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 946, 21))
+        self.menubar = QtWidgets.QMenuBar(self)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1150, 21))
         self.menubar.setTabletTracking(False)
         self.menubar.setFocusPolicy(QtCore.Qt.NoFocus)
         self.menubar.setStyleSheet("background-color: rgb(255, 253, 253);\n"
@@ -583,18 +814,17 @@ class Ui_Analisys_cellService(QMainWindow):
         self.help_menu.setObjectName("help_menu")
         self.help_menu.setTitle("Help")
         self.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar()
+        self.statusbar = QtWidgets.QStatusBar(self)
         self.statusbar.setObjectName("statusbar")
         self.setStatusBar(self.statusbar)
-        self.actionPre_processed_image_analisys = QtWidgets.QAction()
+        self.actionPre_processed_image_analisys = QtWidgets.QAction(self)
         self.actionPre_processed_image_analisys.setObjectName("actionPre_processed_image_analisys")
         self.actionPre_processed_image_analisys.setText("Analysis of pre-processed images")
-        self.actionPre_processed_image_analisys.triggered.connect(self.set_all_images)
-        self.actionNew_images_analisys = QtWidgets.QAction()
+        self.actionNew_images_analisys = QtWidgets.QAction(self)
         self.actionNew_images_analisys.setObjectName("actionNew_images_analisys")
-        self.actionNew_images_analisys.setText("New images analisys")
-        self.actionNew_images_analysis = QtWidgets.QAction()
+        self.actionNew_images_analysis = QtWidgets.QAction(self)
         self.actionNew_images_analysis.setObjectName("actionNew_images_analysis")
+        self.actionNew_images_analisys.setText("New images analisys")
         self.actionNew_images_analysis.setText("New images to analyze")
         self.file_menu.addAction(self.actionPre_processed_image_analisys)
         self.file_menu.addSeparator()
@@ -697,5 +927,3 @@ class Ui_Analisys_cellService(QMainWindow):
     
     def set_number_BLUE(self):
         self.countCells(self.parent.blue_mask, self.number_cells_edit_3)
-
-
