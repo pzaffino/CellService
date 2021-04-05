@@ -5,10 +5,8 @@ from PyQt5.QtGui import QPixmap, QIcon, QFont, QImage
 from PyQt5 import QtWidgets
 from PyQt5 import QtGui, QtCore
 from PyQt5.QtCore import Qt, pyqtSlot, QRect
-import skimage.io
-import skimage.morphology
 import numpy as np
-from skimage import filters,morphology
+from skimage import filters, morphology
 
 class CellServiceBinaryProcessing(QMainWindow):
     

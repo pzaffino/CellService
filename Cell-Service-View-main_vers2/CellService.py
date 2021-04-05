@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import sys
 from copy import deepcopy
 from PyQt5.QtCore import QRect

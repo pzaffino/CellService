@@ -1,3 +1,4 @@
+import os
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow, QMessageBox
@@ -14,6 +15,8 @@ class Ui_Analisys_cellService(QMainWindow):
         
     def __init__(self, parent):
         super().__init__()
+        
+        self.parameter = None
         
         self.parent = parent
         
@@ -114,8 +117,8 @@ class Ui_Analisys_cellService(QMainWindow):
 "")
         self.open_image_button.setGraphicsEffect(self.applyShadow())
         self.open_image_button.setText("")
-        icon13 = QtGui.QIcon()
-        icon13.addPixmap(QtGui.QPixmap("file_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon13 = QtGui.QIcon("Icon/file_icon.png")
+        #icon13.addPixmap(QtGui.QPixmap("file_icon"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.open_image_button.setIcon(icon13)
         self.open_image_button.setIconSize(QtCore.QSize(40, 27))
         self.open_image_button.setObjectName("open_image_button")
@@ -146,13 +149,15 @@ class Ui_Analisys_cellService(QMainWindow):
 "}\n"
 "")
         self.canc_image_button.setText("")
-        icon14 = QtGui.QIcon()
-        icon14.addPixmap(QtGui.QPixmap("canc icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon14 = QtGui.QIcon("Icon/canc icon.png")
+        #icon14.addPixmap(QtGui.QPixmap("canc icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.canc_image_button.setIcon(icon14)
         self.canc_image_button.setIconSize(QtCore.QSize(35, 23))
         self.canc_image_button.setObjectName("canc_image_button")
         self.canc_image_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Clear all </span></p></body></html>")
         self.canc_image_button.setStatusTip("Clear all ")
+        self.canc_image_button.clicked.connect(self.clearAll)
+        self.canc_image_button.setGraphicsEffect(self.applyShadow())
         
         self.help_button = QtWidgets.QPushButton(self.principal_widget)
         self.help_button.setGeometry(QtCore.QRect(120, 10, 31, 31))
@@ -179,11 +184,12 @@ class Ui_Analisys_cellService(QMainWindow):
         self.help_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Help </span></p></body></html>")
         self.help_button.setStatusTip("Help")
         self.help_button.setText("")
-        icon15 = QtGui.QIcon()
-        icon15.addPixmap(QtGui.QPixmap("help.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon15 = QtGui.QIcon('Icon/help.png')
+        #icon15.addPixmap(QtGui.QPixmap("help.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.help_button.setIcon(icon15)
         self.help_button.setIconSize(QtCore.QSize(35, 30))
         self.help_button.setObjectName("help_button")
+        self.help_button.setGraphicsEffect(self.applyShadow())
         
     def set_biologicalWidget(self):
         self.biological_widget = QtWidgets.QWidget(self.principal_widget)
@@ -216,8 +222,8 @@ class Ui_Analisys_cellService(QMainWindow):
         self.red_buttonBC.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED image biological contents</span></p></body></html>")
         self.red_buttonBC.setStatusTip("RED image biological contents")
         self.red_buttonBC.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("icon bio.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon = QtGui.QIcon("Icon/icon bio.png")
+        #icon.addPixmap(QtGui.QPixmap("icon bio.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.red_buttonBC.setIcon(icon)
         self.red_buttonBC.setIconSize(QtCore.QSize(60, 35))
         self.red_buttonBC.setObjectName("red_buttonBC")
@@ -245,8 +251,8 @@ class Ui_Analisys_cellService(QMainWindow):
         self.green_buttonBC.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">GREEN image biological contents</span></p></body></html>")
         self.green_buttonBC.setStatusTip("GREEN image biological contents")
         self.green_buttonBC.setText("")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("icon bio 3.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1 = QtGui.QIcon("Icon/icon bio 3.png")
+        #icon1.addPixmap(QtGui.QPixmap("icon bio 3.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.green_buttonBC.setIcon(icon1)
         self.green_buttonBC.setIconSize(QtCore.QSize(60, 35))
         self.green_buttonBC.setObjectName("green_buttonBC")
@@ -274,8 +280,8 @@ class Ui_Analisys_cellService(QMainWindow):
         self.blue_buttonBC.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">BLUE image biological contents</span></p></body></html>")
         self.blue_buttonBC.setStatusTip("BLUE image biological contents")
         self.blue_buttonBC.setText("")
-        icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("icon bio 2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2 = QtGui.QIcon("Icon/icon bio 2.png")
+        #icon2.addPixmap(QtGui.QPixmap("icon bio 2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.blue_buttonBC.setIcon(icon2)
         self.blue_buttonBC.setIconSize(QtCore.QSize(60, 35))
         self.blue_buttonBC.setObjectName("blue_buttonBC")
@@ -388,8 +394,8 @@ class Ui_Analisys_cellService(QMainWindow):
         self.red_blue_buttonS.clicked.connect(self.similarity_buttonRB)
         self.red_blue_buttonS.setGraphicsEffect(self.applyShadow())
         self.red_blue_buttonS.setText("")
-        icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("icon 1.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3 = QtGui.QIcon("Icon/icon 1.png")
+        #icon3.addPixmap(QtGui.QPixmap("icon 1.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.red_blue_buttonS.setIcon(icon3)
         self.red_blue_buttonS.setIconSize(QtCore.QSize(60, 35))
         self.red_blue_buttonS.setObjectName("red_blue_buttonS")
@@ -420,8 +426,8 @@ class Ui_Analisys_cellService(QMainWindow):
         self.red_green_buttonS.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED and GREEN overlap</span></p></body></html>")
         self.red_green_buttonS.setStatusTip("RED and GREEN overlap")
         self.red_green_buttonS.setText("")
-        icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("icon 2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4 = QtGui.QIcon("Icon/icon 2.png")
+        #icon4.addPixmap(QtGui.QPixmap("icon 2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.red_green_buttonS.setIcon(icon4)
         self.red_green_buttonS.setIconSize(QtCore.QSize(60, 35))
         self.red_green_buttonS.setObjectName("red_green_buttonS")
@@ -448,8 +454,8 @@ class Ui_Analisys_cellService(QMainWindow):
         self.blue_green_buttonS.clicked.connect(self.similarity_buttonGB)
         self.blue_green_buttonS.setGraphicsEffect(self.applyShadow())
         self.blue_green_buttonS.setText("")
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap("icon 3.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon5 = QtGui.QIcon("Icon/icon 3.png")
+        #icon5.addPixmap(QtGui.QPixmap("icon 3.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.blue_green_buttonS.setIcon(icon5)
         self.blue_green_buttonS.setIconSize(QtCore.QSize(60, 35))
         self.blue_green_buttonS.setObjectName("blue_green_buttonS")
@@ -478,8 +484,8 @@ class Ui_Analisys_cellService(QMainWindow):
         self.total_buttonS.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED, GREEN and BLUE overlap</span></p></body></html>")
         self.total_buttonS.setStatusTip("RED, GREEN and BLUE overlap")
         self.total_buttonS.setText("")
-        icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap("icon 4 grey.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon6 = QtGui.QIcon("Icon/icon 4 grey.png")
+        #icon6.addPixmap(QtGui.QPixmap("icon 4 grey.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.total_buttonS.setIcon(icon6)
         self.total_buttonS.setIconSize(QtCore.QSize(60, 35))
         self.total_buttonS.setObjectName("total_buttonS")
@@ -606,8 +612,8 @@ class Ui_Analisys_cellService(QMainWindow):
         self.number_button_red.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Calculate the number of islands in the red image</span></p></body></html>")
         self.number_button_red.setStatusTip("Calculate the number of islands in the red image")
         self.number_button_red.setText("")
-        icon7 = QtGui.QIcon()
-        icon7.addPixmap(QtGui.QPixmap("icon n 2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon7 = QtGui.QIcon("Icon/icon n 2.png")
+        #icon7.addPixmap(QtGui.QPixmap("icon n 2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.number_button_red.setIcon(icon7)
         self.number_button_red.setIconSize(QtCore.QSize(60, 35))
         self.number_button_red.setObjectName("number_button_red")
@@ -635,8 +641,8 @@ class Ui_Analisys_cellService(QMainWindow):
         self.number_button_green.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Calculate the number of islands in the green image</span></p></body></html>")
         self.number_button_green.setStatusTip("Calculate the number of islands in the green image")
         self.number_button_green.setText("")
-        icon8 = QtGui.QIcon()
-        icon8.addPixmap(QtGui.QPixmap("icon n 4.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon8 = QtGui.QIcon("Icon/icon n 4.png")
+        #icon8.addPixmap(QtGui.QPixmap("icon n 4.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.number_button_green.setIcon(icon8)
         self.number_button_green.setIconSize(QtCore.QSize(60, 35))
         self.number_button_green.setObjectName("number_button_green")
@@ -665,8 +671,8 @@ class Ui_Analisys_cellService(QMainWindow):
         self.number_button_blue.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Calculate the number of islands in the blue image</span></p></body></html>")
         self.number_button_blue.setStatusTip("Calculate the number of islands in the blue image")
         self.number_button_blue.setText("")
-        icon9 = QtGui.QIcon()
-        icon9.addPixmap(QtGui.QPixmap("icon n 3.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon9 = QtGui.QIcon("Icon/icon n 3.png")
+        #icon9.addPixmap(QtGui.QPixmap("icon n 3.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.number_button_blue.setIcon(icon9)
         self.number_button_blue.setIconSize(QtCore.QSize(60, 35))
         self.number_button_blue.setObjectName("number_button_blue")
@@ -774,8 +780,8 @@ class Ui_Analisys_cellService(QMainWindow):
         self.intensity_button_red.clicked.connect(self.set_min_max_intensityRED)
         self.intensity_button_red.setGraphicsEffect(self.applyShadow())
         self.intensity_button_red.setText("")
-        icon10 = QtGui.QIcon()
-        icon10.addPixmap(QtGui.QPixmap("icon int 1.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon10 = QtGui.QIcon("Icon/icon int 1.png")
+        #icon10.addPixmap(QtGui.QPixmap("icon int 1.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.intensity_button_red.setIcon(icon10)
         self.intensity_button_red.setIconSize(QtCore.QSize(60, 35))
         self.intensity_button_red.setObjectName("intensity_button_red")
@@ -803,8 +809,8 @@ class Ui_Analisys_cellService(QMainWindow):
         self.intensity_button_green.clicked.connect(self.set_min_max_intensityGREEN)
         self.intensity_button_green.setGraphicsEffect(self.applyShadow())
         self.intensity_button_green.setText("")
-        icon11 = QtGui.QIcon()
-        icon11.addPixmap(QtGui.QPixmap("icon int 3.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon11 = QtGui.QIcon("Icon/icon int 3.png")
+        #icon11.addPixmap(QtGui.QPixmap("icon int 3.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.intensity_button_green.setIcon(icon11)
         self.intensity_button_green.setIconSize(QtCore.QSize(60, 35))
         self.intensity_button_green.setObjectName("intensity_button_green")
@@ -832,8 +838,8 @@ class Ui_Analisys_cellService(QMainWindow):
         self.intensity_button_blue.clicked.connect(self.set_min_max_intensityBLUE)
         self.intensity_button_blue.setGraphicsEffect(self.applyShadow())
         self.intensity_button_blue.setText("")
-        icon12 = QtGui.QIcon()
-        icon12.addPixmap(QtGui.QPixmap("icon int 2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon12 = QtGui.QIcon("Icon/icon int 2.png")
+        #icon12.addPixmap(QtGui.QPixmap("icon int 2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.intensity_button_blue.setIcon(icon12)
         self.intensity_button_blue.setIconSize(QtCore.QSize(60, 35))
         self.intensity_button_blue.setObjectName("intensity_button_blue")
@@ -991,8 +997,8 @@ class Ui_Analisys_cellService(QMainWindow):
         self.confirm_button.clicked.connect(self.confirm_parameter)
         self.confirm_button.setGraphicsEffect(self.applyShadow())
         self.confirm_button.setText("")
-        icon16 = QtGui.QIcon()
-        icon16.addPixmap(QtGui.QPixmap("confirm.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon16 = QtGui.QIcon("Icon/confirm.png")
+        #icon16.addPixmap(QtGui.QPixmap("confirm.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.confirm_button.setIcon(icon16)
         self.confirm_button.setIconSize(QtCore.QSize(60, 30))
         self.confirm_button.setObjectName("confirm_button")
@@ -1009,9 +1015,9 @@ class Ui_Analisys_cellService(QMainWindow):
         return shadow
     
     def set_all_images(self):
-        self.parent.set_image(self.parent.red_image, self.RED_Label, "red", mask=False)
-        self.parent.set_image(self.parent.green_image, self.GREEN_Label, "green", mask=False)
-        self.parent.set_image(self.parent.blue_image, self.BLUE_Label, "blue", mask=False)
+        self.parent.set_image(self.parent.red_mask, self.RED_Label, "red", mask=True)
+        self.parent.set_image(self.parent.green_mask, self.GREEN_Label, "green", mask=True)
+        self.parent.set_image(self.parent.blue_mask, self.BLUE_Label, "blue", mask=True)
     
     def two_similarity_overlap(self, image1, image2, edit):
         similarity = 0
@@ -1082,13 +1088,16 @@ class Ui_Analisys_cellService(QMainWindow):
         self.biologicalContents(self.parent.blue_mask, self.Blue_PercentBC_edit) 
     
     def countCells(self, matrixMask, edit):
-        if self.buttonPressed==True:
-            imageFiltered = ndimage.gaussian_filter(matrixMask, self.parameter)
-            cells, number_of_cells = ndimage.label(imageFiltered)
-            edit.setText(str(number_of_cells) + " islands")
-            self.parent.set_image(cells, self.RGB_Label, "red", mask=True)
+        if self.parameter!=None:
+            if self.buttonPressed==True:
+                imageFiltered = ndimage.gaussian_filter(matrixMask, self.parameter)
+                cells, number_of_cells = ndimage.label(imageFiltered)
+                edit.setText(str(number_of_cells) + " islands")
+                self.parent.set_image(cells, self.RGB_Label, "red", mask=True)
+            else:
+                self.error_message("Please, click confirm button!")
         else:
-            self.parent.error_message("Please, click confirm button!")
+            self.error_message("Please, insert a correct number!")
         
     def confirm_parameter(self):
         self.buttonPressed=True
@@ -1097,7 +1106,7 @@ class Ui_Analisys_cellService(QMainWindow):
             float(self.parameter)
             return
         except ValueError:
-            self.parent.error_message("Insert a number!")
+            self.error_message("Insert a number!")
     
     def set_number_RED(self):
         self.countCells(self.parent.red_mask, self.Red_number_edit)
@@ -1120,4 +1129,44 @@ class Ui_Analisys_cellService(QMainWindow):
         self.Blue_intensity_edit_min.setText(str(np.min(self.parent.blue_image)))
         self.Blue_intensity_edit_max.setText(str(np.max(self.parent.blue_image)))
         
-        self.biological_edit
+    def clearAll(self):
+        # clear labels
+        self.RGB_Label.clear()
+        self.RED_Label.clear()
+        self.GREEN_Label.clear()
+        self.BLUE_Label.clear()
+        
+        # clear QLineEdit overlapWidget
+        self.RB_PercentS_edit.clear()
+        self.RG_PercentS_edit.clear()
+        self.BG_PercentS_edit.clear()
+        self.RGB_PercentS_edit.clear()
+        
+        # clear QLineEdit biologicalContents
+        self.Red_PercentBC_edit.clear()
+        self.Green_PercentBC_edit.clear()
+        self.Blue_PercentBC_edit.clear()
+        
+        # clear QLineEdit insertWidget
+        self.parameter_edit.clear()
+        
+        # clear QLineEdit numberOfIslands
+        self.Red_number_edit.clear()
+        self.Green_number_edit.clear()
+        self.Blue_number_edit.clear()
+        
+        # clear QLineEdit intensityWidget
+        self.Red_intensity_edit_min.clear()
+        self.Red_intensity_edit_max.clear()
+        self.Green_intensity_edit_min.clear()
+        self.Green_intensity_edit_max.clear()
+        self.Blue_intensity_edit_min.clear()
+        self.Blue_intensity_edit_max.clear()
+        
+    def error_message(self, text_error):
+        msg = QMessageBox(self)
+        msg.setIcon(QMessageBox.Critical)
+        msg.setText("Error")
+        msg.setInformativeText(text_error)
+        msg.setWindowTitle("Error")
+        msg.exec_()   
