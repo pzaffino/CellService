@@ -37,7 +37,7 @@ class Ui_Analisys_cellService(QMainWindow):
     def setupUi(self):
         # set the window's style
         self.setObjectName("Analisys_cellService")
-        self.resize(1129, 694)
+        self.setFixedSize(1129, 694)
         self.setWindowTitle("Analisys")
         
         # set principa widget's style
