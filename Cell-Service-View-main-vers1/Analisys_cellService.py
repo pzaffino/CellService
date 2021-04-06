@@ -159,7 +159,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.canc_image_button.setGraphicsEffect(self.applyShadow())
         
         self.help_button = QtWidgets.QPushButton(self.principal_widget)
-        self.help_button.setGeometry(QtCore.QRect(120, 10, 31, 31))
+        self.help_button.setGeometry(QtCore.QRect(170, 10, 31, 31))
         self.help_button.setMouseTracking(True)
         self.help_button.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.help_button.setToolTipDuration(-1)
@@ -189,6 +189,38 @@ class Ui_Analisys_cellService(QMainWindow):
         self.help_button.setIconSize(QtCore.QSize(35, 30))
         self.help_button.setObjectName("help_button")
         self.help_button.setGraphicsEffect(self.applyShadow())
+        
+        self.save_button = QtWidgets.QPushButton(self.principal_widget)
+        self.save_button.setGeometry(QtCore.QRect(120, 10, 31, 31))
+        self.save_button.setMouseTracking(True)
+        self.save_button.setFocusPolicy(QtCore.Qt.ClickFocus)
+        self.save_button.setToolTipDuration(-1)
+        self.save_button.setStyleSheet("QPushButton {\n"
+"     background-color: rgb(255, 255, 255);\n"
+"    border-style: outset;\n"
+"    border: 2px;\n"
+"    border-width: 1px;\n"
+"    border-radius: 10px;\n"
+"    border-color: beige;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}" "\n"
+"QPushButton:pressed {\n"
+"    background-color: rgb(180, 180, 180);\n"
+"}\n"
+"")
+        self.save_button.setText("")
+        icon17 = QtGui.QIcon("Icon/save_icon")
+        #icon17.addPixmap(QtGui.QPixmap("save_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.save_button.setIcon(icon17)
+        self.save_button.setIconSize(QtCore.QSize(35, 30))
+        self.save_button.setObjectName("save_button")
+        self.save_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Save image </span></p></body></html>")
+        self.save_button.setStatusTip("Save image")
+        self.save_button.setGraphicsEffect(self.applyShadow())
         
     def set_biologicalWidget(self):
         self.biological_widget = QtWidgets.QWidget(self.principal_widget)
@@ -677,22 +709,22 @@ class Ui_Analisys_cellService(QMainWindow):
         self.number_button_blue.setIconSize(QtCore.QSize(60, 35))
         self.number_button_blue.setObjectName("number_button_blue")
         self.Red_number_edit = QtWidgets.QLineEdit(self.number_widget)
-        self.Red_number_edit.setGeometry(QtCore.QRect(60, 70, 81, 31))
+        self.Red_number_edit.setGeometry(QtCore.QRect(60, 70, 100, 31))
         self.Red_number_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 8pt \"Arial\";\n"
+"font: 10pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.Red_number_edit.setReadOnly(True)
         self.Red_number_edit.setObjectName("Red_number_edit")
         self.Blue_number_edit = QtWidgets.QLineEdit(self.number_widget)
-        self.Blue_number_edit.setGeometry(QtCore.QRect(60, 210, 81, 31))
+        self.Blue_number_edit.setGeometry(QtCore.QRect(60, 210, 100, 31))
         self.Blue_number_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 8pt \"Arial\";\n"
+"font: 10pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.Blue_number_edit.setReadOnly(True)
         self.Blue_number_edit.setObjectName("Blue_number_edit")
@@ -734,12 +766,12 @@ class Ui_Analisys_cellService(QMainWindow):
         self.blue_number_title.setObjectName("blue_number_title")
         self.blue_number_title.setText("Blue biological contents")
         self.Green_number_edit = QtWidgets.QLineEdit(self.number_widget)
-        self.Green_number_edit.setGeometry(QtCore.QRect(60, 140, 81, 31))
+        self.Green_number_edit.setGeometry(QtCore.QRect(60, 140, 100, 31))
         self.Green_number_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 8pt \"Arial\";\n"
+"font: 10pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.Green_number_edit.setText("")
         self.Green_number_edit.setReadOnly(True)
@@ -1108,7 +1140,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.biologicalContents(self.parent.blue_mask, self.Blue_PercentBC_edit) 
         
     def set_image(self, image_visualize):
-        qt_image = QImage(image_visualize.data, image_visualize.shape[1], image_visualize.shape[0], image_visualize.strides[0], QImage.Format_Indexed8)
+        qt_image = QImage(image_visualize.data, image_visualize.shape[1], image_visualize.shape[0], image_visualize.strides[0], QImage.Format_RGB888)
         qt_pixmap = QPixmap.fromImage(qt_image)
         self.RGB_Label.setPixmap(qt_pixmap)
     
