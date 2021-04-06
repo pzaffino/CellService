@@ -37,7 +37,7 @@ class Ui_Analisys_cellService(QMainWindow):
     def setupUi(self):
         # set the window's style
         self.setObjectName("Analisys_cellService")
-        self.setFixedSize(1129, 694)
+        self.setFixedSize(1129, 700)
         self.setWindowTitle("Analisys")
         
         # set principa widget's style
@@ -291,7 +291,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 10pt \"Varela\";\n"
+"font: 8pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.Red_PercentBC_edit.setReadOnly(True)
         self.Red_PercentBC_edit.setObjectName("Red_PercentBC_edit")
@@ -301,7 +301,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 10pt \"Arial\";\n"
+"font: 8pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.Blue_PercentBC_edit.setReadOnly(True)
         self.Blue_PercentBC_edit.setObjectName("Blue_PercentBC_edit")
@@ -336,7 +336,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 10pt \"Varela\";\n"
+"font: 8pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.Green_PercentBC_edit.setText("")
         self.Green_PercentBC_edit.setReadOnly(True)
@@ -495,7 +495,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 10pt \"Varela\";\n"
+"font: 8pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.RB_PercentS_edit.setText("")
         self.RB_PercentS_edit.setReadOnly(True)
@@ -506,7 +506,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 10pt \"Varela\";\n"
+"font: 8pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.RG_PercentS_edit.setReadOnly(True)
         self.RG_PercentS_edit.setObjectName("RG_PercentS_edit")
@@ -516,7 +516,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 10pt \"Varela\";\n"
+"font: 8pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.BG_PercentS_edit.setReadOnly(True)
         self.BG_PercentS_edit.setObjectName("BG_PercentS_edit")
@@ -526,7 +526,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 10pt \"Varela\";\n"
+"font: 8pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.RGB_PercentS_edit.setReadOnly(True)
         self.RGB_PercentS_edit.setObjectName("RGB_PercentS_edit")
@@ -677,22 +677,22 @@ class Ui_Analisys_cellService(QMainWindow):
         self.number_button_blue.setIconSize(QtCore.QSize(60, 35))
         self.number_button_blue.setObjectName("number_button_blue")
         self.Red_number_edit = QtWidgets.QLineEdit(self.number_widget)
-        self.Red_number_edit.setGeometry(QtCore.QRect(60, 70, 81, 31))
+        self.Red_number_edit.setGeometry(QtCore.QRect(60, 70, 100, 31))
         self.Red_number_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 10pt \"Varela\";\n"
+"font: 8pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.Red_number_edit.setReadOnly(True)
         self.Red_number_edit.setObjectName("Red_number_edit")
         self.Blue_number_edit = QtWidgets.QLineEdit(self.number_widget)
-        self.Blue_number_edit.setGeometry(QtCore.QRect(60, 210, 81, 31))
+        self.Blue_number_edit.setGeometry(QtCore.QRect(60, 210, 100, 31))
         self.Blue_number_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 10pt \"Varela\";\n"
+"font: 8pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.Blue_number_edit.setReadOnly(True)
         self.Blue_number_edit.setObjectName("Blue_number_edit")
@@ -733,12 +733,12 @@ class Ui_Analisys_cellService(QMainWindow):
         self.blue_number_title.setObjectName("blue_number_title")
         self.blue_number_title.setText("Blue number of islands")
         self.Green_number_edit = QtWidgets.QLineEdit(self.number_widget)
-        self.Green_number_edit.setGeometry(QtCore.QRect(60, 140, 81, 31))
+        self.Green_number_edit.setGeometry(QtCore.QRect(60, 140, 100, 31))
         self.Green_number_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 10pt \"Varela\";\n"
+"font: 8pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.Green_number_edit.setText("")
         self.Green_number_edit.setReadOnly(True)
@@ -851,7 +851,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 10pt \"Varela\";\n"
+"font: 6.5pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.Red_intensity_edit_min.setReadOnly(True)
         self.Red_intensity_edit_min.setObjectName("Red_intensity_edit_min")
@@ -861,7 +861,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 10pt \"Varela\";\n"
+"font: 6.5pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.Blue_intensity_edit_min.setReadOnly(True)
         self.Blue_intensity_edit_min.setObjectName("Blue_intensity_edit_min")
@@ -907,7 +907,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 10pt \"Varela\";\n"
+"font: 6.5pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.Green_intensity_edit_min.setText("")
         self.Green_intensity_edit_min.setReadOnly(True)
@@ -925,7 +925,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 10pt \"Varela\";\n"
+"font: 6.5pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.Red_intensity_edit_max.setReadOnly(True)
         self.Red_intensity_edit_max.setObjectName("Red_intensity_edit_max")
@@ -935,7 +935,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 10pt \"Varela\";\n"
+"font: 6.5pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.Green_intensity_edit_max.setReadOnly(True)
         self.Green_intensity_edit_max.setObjectName("Green_intensity_edit_max")
@@ -945,7 +945,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 10pt \"Varela\";\n"
+"font: 6.5pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.Blue_intensity_edit_max.setReadOnly(True)
         self.Blue_intensity_edit_max.setObjectName("Blue_intensity_edit_max")
@@ -1131,16 +1131,16 @@ class Ui_Analisys_cellService(QMainWindow):
         self.countCells(self.parent.blue_mask, self.Blue_number_edit)
         
     def set_min_max_intensityRED(self):
-        self.Red_intensity_edit_min.setText(str(np.min(self.parent.red_image)))
-        self.Red_intensity_edit_max.setText(str(np.max(self.parent.red_image)))
+        self.Red_intensity_edit_min.setText("Min: " + str(np.min(self.parent.red_image)))
+        self.Red_intensity_edit_max.setText("Max: " + str(np.max(self.parent.red_image)))
         
     def set_min_max_intensityGREEN(self):
-        self.Green_intensity_edit_min.setText(str(np.min(self.parent.green_image)))
-        self.Green_intensity_edit_max.setText(str(np.max(self.parent.green_image)))
+        self.Green_intensity_edit_min.setText("Min: " + str(np.min(self.parent.green_image)))
+        self.Green_intensity_edit_max.setText("Max: " + str(np.max(self.parent.green_image)))
         
     def set_min_max_intensityBLUE(self):
-        self.Blue_intensity_edit_min.setText(str(np.min(self.parent.blue_image)))
-        self.Blue_intensity_edit_max.setText(str(np.max(self.parent.blue_image)))
+        self.Blue_intensity_edit_min.setText("Min: " + str(np.min(self.parent.blue_image)))
+        self.Blue_intensity_edit_max.setText("Max: " + str(np.max(self.parent.blue_image)))
         
     def clearAll(self):
         # clear labels
