@@ -2,7 +2,7 @@ import os
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow, QMessageBox
-from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QColor, QImage, QPixmap
 import numpy as np
 import skimage
 import skimage.io
@@ -1045,16 +1045,29 @@ class Ui_Analisys_cellService(QMainWindow):
         self.RGB_Label.setScaledContents(True)
     
     def similarity_buttonRB(self):
-        self.parent.set_image(self.two_similarity_overlap(self.parent.red_mask, self.parent.blue_mask, self.RB_PercentS_edit), self.RGB_Label, "red", mask=True)
+        image = self.two_similarity_overlap(self.parent.red_mask, self.parent.blue_mask, self.RB_PercentS_edit)
+        image_visualize = image*255
+        self.convert_npToQimage(image_visualize)
+    
+    def convert_npToQimage(self, image_visualize):
+        qt_image = QImage(image_visualize.data, image_visualize.shape[1], image_visualize.shape[0], image_visualize.strides[0], QImage.Format_Grayscale8)
+        qt_pixmap = QPixmap.fromImage(qt_image)
+        self.RGB_Label.setPixmap(qt_pixmap)
     
     def similarity_buttonRG(self):
-        self.parent.set_image(self.two_similarity_overlap(self.parent.red_mask, self.parent.green_mask, self.RG_PercentS_edit), self.RGB_Label, "green", mask=True)
+        image = self.two_similarity_overlap(self.parent.red_mask, self.parent.green_mask, self.RG_PercentS_edit)
+        image_visualize = image*255
+        self.convert_npToQimage(image_visualize)
     
     def similarity_buttonGB(self):
-        self.parent.set_image(self.two_similarity_overlap(self.parent.green_mask, self.parent.blue_mask, self.BG_PercentS_edit), self.RGB_Label, "blue", mask=True)
+        image = self.two_similarity_overlap(self.parent.green_mask, self.parent.blue_mask, self.BG_PercentS_edit)
+        image_visualize = image*255
+        self.convert_npToQimage(image_visualize)
     
     def similarity_buttonRGB(self):
-        self.parent.set_image(self.AllimagesOverlap(), self.RGB_Label, "green" ,mask=True)
+        image = self.AllimagesOverlap()
+        image_visualize = image*255
+        self.convert_npToQimage(image_visualize)
     
     def AllimagesOverlap(self):
         similarity=0
