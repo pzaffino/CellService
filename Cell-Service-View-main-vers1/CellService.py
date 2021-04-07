@@ -2,12 +2,12 @@ import sys
 from copy import deepcopy
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QGridLayout, QLabel, QAction, QFileDialog, QMenuBar, QMainWindow, QDesktopWidget, QMessageBox
-from PyQt5.QtGui import QIcon, QPixmap, QImage, qRgb
-
+from PyQt5.QtGui import QIcon, QPixmap, QImage, qRgb, QKeySequence
+from PyQt5 import QtWidgets
 import CellService_analysis
 import CellService_processing
 import Analisys_cellService
-
+from PyQt5 import QtCore, QtGui
 import numpy as np
 import skimage.io
 
@@ -15,105 +15,302 @@ class CellService(QMainWindow):
 
     def __init__(self):
         super(CellService, self).__init__()
-
+        
+        self.setupUi()
+        
         self.red_image = None
         self.green_image = None
         self.blue_image = None
+        self.rgb_image = None
 
         self.red_mask = None
         self.green_mask = None
         self.blue_mask = None
-
-        self.initUI()
-
-    def initUI(self):
-
-        # Create widgent and layout
-        self.centralWidget = QWidget()
-        self.setCentralWidget(self.centralWidget)
-        grid = QGridLayout()
-        self.centralWidget.setLayout(grid)
-
-        # Define title, menu and other init stuff
-        self.move(20, 20)
-        self.setWindowTitle("CellService")
-        self.create_menu()
-
-        init_size = 128
-
-        # RGB
-        self.RGB_QLabel = QLabel(self)
-        self.RGB_QLabel.setStyleSheet("border: 3px solid black;")
-        self.RGB_QLabel.setScaledContents(True)
-        grid.addWidget(self.RGB_QLabel, 0,0)
-        self.RGB_QLabel.resize(init_size, init_size)
-
-        # RED
-        self.Red_QLabel = QLabel(self)
-        self.Red_QLabel.setStyleSheet("border: 3px solid red;")
-        self.Red_QLabel.setScaledContents(True)
-        grid.addWidget(self.Red_QLabel, 0,1)
-        self.Red_QLabel.resize(init_size, init_size)
-
-        # GREEN
-        self.Green_QLabel = QLabel(self)
-        self.Green_QLabel.setStyleSheet("border: 3px solid green;")
-        self.Green_QLabel.setScaledContents(True)
-        grid.addWidget(self.Green_QLabel, 1,0)
-        self.Green_QLabel.resize(init_size, init_size)
-
-        # BLUE
-        self.Blue_QLabel = QLabel(self)
-        self.Blue_QLabel.setStyleSheet("border: 3px solid blue;")
-        self.Blue_QLabel.setScaledContents(True)
-        grid.addWidget(self.Blue_QLabel, 1,1)
-        self.Blue_QLabel.resize(init_size, init_size)
-
-        # Show the window
-        self.maximize_window()
-        self.show()
-
-    def maximize_window(self):
-        screen = QDesktopWidget().screenGeometry()
-        self.setFixedSize(int(screen.height()*1.2), int(screen.height()*0.9))
-
-    def create_menu(self):
-        mainMenu = self.menuBar()
-
-        # File menu
-        fileMenu = mainMenu.addMenu("File")
-
-        # Open (single) RGB image
-        openRGBAction = QAction(QIcon('open.png'), '&Open RGB image', self)
-        openRGBAction.setShortcut('Ctrl+O')
-        openRGBAction.setStatusTip('Open a new RGB image')
-        openRGBAction.triggered.connect(self.openRGBCall)
-        fileMenu.addAction(openRGBAction)
-
-        # Open single channels RGB image
-        openSingleChannelsAction = QAction(QIcon('open.png'), '&Open single channels image', self)
-        openSingleChannelsAction.setStatusTip('Open a new RGB image by selecting different channels')
-        openSingleChannelsAction.triggered.connect(self.openSingleChannelsCall)
-        fileMenu.addAction(openSingleChannelsAction)
-
-        # Binarization processing
-        self.third_title = mainMenu.addMenu("Image Processing")
-        # add first choice 
-        self.firstChoiceThirdMenu = QAction("Image binarization")
-        self.firstChoiceThirdMenu.triggered.connect(self.window2)
-        self.third_title.addAction(self.firstChoiceThirdMenu)
-
-        # Analysis menu
-        analysisMenu = mainMenu.addMenu("Analysis")
-        #self.intensityAnalysis = CellService_analysis.CellServiceIntensityAnalysis(self)
-
-        # Intensity analysis
-        intensityAnalysisAction = QAction('&Similarity analysis', self)
-        intensityAnalysisAction.setStatusTip("Execute intensity analysis")
-        intensityAnalysisAction.triggered.connect(self.analisysWindow)
-        analysisMenu.addAction(intensityAnalysisAction)
     
-    def window2(self):
+    def setupUi(self):
+         # set the window's style
+        self.setWindowTitle("CellService")
+        self.setFixedSize(879, 691)
+        self.centralwidget = QtWidgets.QWidget(self)
+        self.centralwidget.setStyleSheet("background-color: rgb(244, 244, 244);")
+        self.centralwidget.setObjectName("centralwidget")
+        self.gridLayoutWidget = QtWidgets.QWidget(self.centralwidget)
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(210, 10, 630, 651))
+        self.gridLayoutWidget.setObjectName("gridLayoutWidget")
+        self.principal_layout = QtWidgets.QGridLayout(self.gridLayoutWidget)
+        self.principal_layout.setContentsMargins(0, 0, 0, 0)
+        self.principal_layout.setObjectName("principal_layout")
+        
+        self.GREEN_QLabel = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.GREEN_QLabel.setStyleSheet("border: 2px solid green")
+        self.GREEN_QLabel.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.GREEN_QLabel.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.GREEN_QLabel.setLineWidth(2)
+        self.GREEN_QLabel.setText("")
+        self.GREEN_QLabel.setScaledContents(True)
+        self.GREEN_QLabel.setObjectName("GREEN_QLabel")
+        self.principal_layout.addWidget(self.GREEN_QLabel, 1, 0, 1, 1)
+        
+        self.RGB_QLabel = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.RGB_QLabel.setStyleSheet("border: 2px solid black")
+        self.RGB_QLabel.setText("")
+        self.RGB_QLabel.setScaledContents(True)
+        self.RGB_QLabel.setObjectName("RGB_QLabel")
+        self.principal_layout.addWidget(self.RGB_QLabel, 0, 0, 1, 1)
+        
+        self.BLUE_QLabel = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.BLUE_QLabel.setStyleSheet("border: 2px solid blue")
+        self.BLUE_QLabel.setText("")
+        self.BLUE_QLabel.setScaledContents(True)
+        self.BLUE_QLabel.setObjectName("BLUE_QLabel")
+        self.principal_layout.addWidget(self.BLUE_QLabel, 1, 1, 1, 1)
+        
+        self.RED_QLabel = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.RED_QLabel.setTabletTracking(True)
+        self.RED_QLabel.setStyleSheet("border: 2px solid red")
+        self.RED_QLabel.setFrameShape(QtWidgets.QFrame.Panel)
+        self.RED_QLabel.setLineWidth(2)
+        self.RED_QLabel.setText("")
+        self.RED_QLabel.setScaledContents(True)
+        self.RED_QLabel.setObjectName("RED_QLabel")
+        self.principal_layout.addWidget(self.RED_QLabel, 0, 1, 1, 1)
+        
+        self.option_widget = QtWidgets.QWidget(self.centralwidget)
+        self.option_widget.setGeometry(QtCore.QRect(28, 50, 155, 551))
+        self.option_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
+"border-radius: 40px;")
+        self.option_widget.setObjectName("option_widget")
+        self.option_widget.setGraphicsEffect(self.applyShadow())
+        
+        self.open_file_button = QtWidgets.QPushButton(self.option_widget)
+        self.open_file_button.setGeometry(QtCore.QRect(50, 20, 51, 51))
+        self.open_file_button.setMouseTracking(True)
+        self.open_file_button.setFocusPolicy(QtCore.Qt.ClickFocus)
+        self.open_file_button.setToolTipDuration(-1)
+        self.open_file_button.setStyleSheet("QPushButton {\n"
+"     background-color: rgb(255, 255, 255);\n"
+"    border-style: outset;\n"
+"    border: 2px;\n"
+"    border-width: 1px;\n"
+"    border-radius: 15px;\n"
+"    border-color: beige;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
+"QPushButton:pressed {\n"
+"    background-color: rgb(180, 180, 180);\n"
+"}\n"
+"")
+        self.open_file_button.setText("")
+        self.open_file_button.setGraphicsEffect(self.applyShadow())
+        icon = QtGui.QIcon("Icon/file_icon.png")
+        #icon.addPixmap(QtGui.QPixmap("Cell-Service-View-main-vers1/Icon/file_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.open_file_button.setIcon(icon)
+        self.open_file_button.setIconSize(QtCore.QSize(60, 55))
+        self.open_file_button.setObjectName("open_file_button")
+        self.open_file_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Open RGB Image (Ctrl+O)</span></p></body></html>")
+        self.open_file_button.setStatusTip("Open RGB Image (Ctrl+O)")
+        self.open_file_button.clicked.connect(self.openRGBCall)
+        self.ctrl_open = QtWidgets.QShortcut(QKeySequence('Ctrl+O'), self)
+        self.ctrl_open.activated.connect(self.openRGBCall)
+        
+        self.openSingle_button = QtWidgets.QPushButton(self.option_widget)
+        self.openSingle_button.setGeometry(QtCore.QRect(50, 130, 51, 51))
+        self.openSingle_button.setMouseTracking(True)
+        self.openSingle_button.setFocusPolicy(QtCore.Qt.ClickFocus)
+        self.openSingle_button.setToolTipDuration(-1)
+        self.openSingle_button.setStyleSheet("QPushButton {\n"
+"     background-color: rgb(255, 255, 255);\n"
+"    border-style: outset;\n"
+"    border: 2px;\n"
+"    border-width: 1px;\n"
+"    border-radius: 15px;\n"
+"    border-color: beige;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
+"QPushButton:pressed {\n"
+"    background-color: rgb(180, 180, 180);\n"
+"}\n"
+"")
+        self.openSingle_button.setGraphicsEffect(self.applyShadow())
+        self.openSingle_button.setText("")
+        icon1 = QtGui.QIcon("Icon/file icon rgb.png")
+        #icon1.addPixmap(QtGui.QPixmap("file icon rgb.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.openSingle_button.setIcon(icon1)
+        self.openSingle_button.setIconSize(QtCore.QSize(60, 55))
+        self.openSingle_button.setObjectName("openSingle_button")
+        self.openSingle_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Open singles channels (Ctrl+Shift+O)</span></p></body></html>")
+        self.openSingle_button.setStatusTip("Open singles channels (Ctrl+Shift+O)")
+        self.openSingle_button.clicked.connect(self.openSingleChannelsCall)
+        self.ctrl_openSingle = QtWidgets.QShortcut(QKeySequence('Ctrl+Shift+O'), self)
+        self.ctrl_openSingle.activated.connect(self.openSingleChannelsCall)
+        
+        self.processing_button = QtWidgets.QPushButton(self.option_widget)
+        self.processing_button.setGeometry(QtCore.QRect(50, 240, 51, 51))
+        self.processing_button.setMouseTracking(True)
+        self.processing_button.setFocusPolicy(QtCore.Qt.ClickFocus)
+        self.processing_button.setToolTipDuration(-1)
+        self.processing_button.setStyleSheet("QPushButton {\n"
+"     background-color: rgb(255, 255, 255);\n"
+"    border-style: outset;\n"
+"    border: 2px;\n"
+"    border-width: 1px;\n"
+"    border-radius: 15px;\n"
+"    border-color: beige;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
+"QPushButton:pressed {\n"
+"    background-color: rgb(180, 180, 180);\n"
+"}\n"
+"")
+        self.processing_button.setGraphicsEffect(self.applyShadow())
+        self.processing_button.setText("")
+        icon3 = QtGui.QIcon("Icon/processing.png")
+        #icon3.addPixmap(QtGui.QPixmap("processing.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.processing_button.setIcon(icon3)
+        self.processing_button.setIconSize(QtCore.QSize(60, 50))
+        self.processing_button.setObjectName("processing_button")
+        self.processing_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Open processing window</span></p></body></html>")
+        self.processing_button.setStatusTip("Open processing window")
+        self.processing_button.clicked.connect(self.processingWindow)
+        
+        self.analisys_button = QtWidgets.QPushButton(self.option_widget)
+        self.analisys_button.setGeometry(QtCore.QRect(50, 350, 51, 51))
+        self.analisys_button.setMouseTracking(True)
+        self.analisys_button.setFocusPolicy(QtCore.Qt.ClickFocus)
+        self.analisys_button.setToolTipDuration(-1)
+        self.analisys_button.setStyleSheet("QPushButton {\n"
+"     background-color: rgb(255, 255, 255);\n"
+"    border-style: outset;\n"
+"    border: 2px;\n"
+"    border-width: 1px;\n"
+"    border-radius: 15px;\n"
+"    border-color: beige;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
+"QPushButton:pressed {\n"
+"    background-color: rgb(180, 180, 180);\n"
+"}\n"
+"")
+        self.analisys_button.setGraphicsEffect(self.applyShadow())
+        self.analisys_button.setText("")
+        icon2 = QtGui.QIcon("Icon/analizer.png")
+        #icon2.addPixmap(QtGui.QPixmap("analizer.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.analisys_button.setIcon(icon2)
+        self.analisys_button.setIconSize(QtCore.QSize(60, 55))
+        self.analisys_button.setObjectName("analisys_button")
+        self.analisys_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Open analisys window</span></p></body></html>")
+        self.analisys_button.setStatusTip("Open analisys window")
+        self.analisys_button.clicked.connect(self.analisysWindow)
+        
+        self.help_button = QtWidgets.QPushButton(self.option_widget)
+        self.help_button.setGeometry(QtCore.QRect(50, 450, 51, 51))
+        self.help_button.setMouseTracking(True)
+        self.help_button.setFocusPolicy(QtCore.Qt.ClickFocus)
+        self.help_button.setToolTipDuration(-1)
+        self.help_button.setStyleSheet("QPushButton {\n"
+"     background-color: rgb(255, 255, 255);\n"
+"    border-style: outset;\n"
+"    border: 2px;\n"
+"    border-width: 1px;\n"
+"    border-radius: 15px;\n"
+"    border-color: beige;\n"
+"    font: bold 14px;\n"
+"    padding: 6px;\n"
+"}\n"
+"QPushButton::hover {\n"
+"    background-color: rgb(204, 204, 204);\n"
+"}"
+"QPushButton:pressed {\n"
+"    background-color: rgb(180, 180, 180);\n"
+"}\n"
+"")
+        self.help_button.setGraphicsEffect(self.applyShadow())
+        self.help_button.setText("")
+        icon4 = QtGui.QIcon("Icon/help.png")
+        #icon4.addPixmap(QtGui.QPixmap("Cell-Service-View-main-vers1/Icon/help.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.help_button.setIcon(icon4)
+        self.help_button.setIconSize(QtCore.QSize(60, 55))
+        self.help_button.setObjectName("help_button")
+        self.help_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Help page</span></p></body></html>")
+        self.help_button.setStatusTip("Help page")
+        
+        self.open_title = QtWidgets.QLineEdit(self.option_widget)
+        self.open_title.setGeometry(QtCore.QRect(10, 80, 141, 20))
+        self.open_title.setStyleSheet("font: 8pt \"Arial\";\n"
+"color: rgb(23, 23, 23);")
+        self.open_title.setAlignment(QtCore.Qt.AlignCenter)
+        self.open_title.setReadOnly(True)
+        self.open_title.setObjectName("open_title")
+        self.open_title.setText("Open RGB image")
+        
+        self.openSingle_title = QtWidgets.QLineEdit(self.option_widget)
+        self.openSingle_title.setGeometry(QtCore.QRect(10, 190, 141, 16))
+        self.openSingle_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
+"color: rgb(0, 0, 0);")
+        self.openSingle_title.setAlignment(QtCore.Qt.AlignCenter)
+        self.openSingle_title.setReadOnly(True)
+        self.openSingle_title.setObjectName("openSingle_title")
+        self.openSingle_title.setText("Open single channels image")
+        
+        self.analisys_title = QtWidgets.QLineEdit(self.option_widget)
+        self.analisys_title.setGeometry(QtCore.QRect(10, 410, 131, 16))
+        self.analisys_title.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.analisys_title.setStyleSheet("font: 8pt \"Arial\";\n"
+"color: rgb(0, 0, 0);")
+        self.analisys_title.setAlignment(QtCore.Qt.AlignCenter)
+        self.analisys_title.setReadOnly(True)
+        self.analisys_title.setObjectName("analisys_title")
+        self.analisys_title.setText("Analisys")
+         
+        self.processing_title = QtWidgets.QLineEdit(self.option_widget)
+        self.processing_title.setGeometry(QtCore.QRect(10, 300, 131, 20))
+        self.processing_title.setStyleSheet("font: 8pt \"Arial\";\n"
+"color: rgb(0, 0, 0);")
+        self.processing_title.setAlignment(QtCore.Qt.AlignCenter)
+        self.processing_title.setReadOnly(True)
+        self.processing_title.setObjectName("processing_title")
+        self.processing_title.setText("Processing")
+        
+        self.help_title = QtWidgets.QLineEdit(self.option_widget)
+        self.help_title.setGeometry(QtCore.QRect(20, 510, 111, 16))
+        self.help_title.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.help_title.setStyleSheet("font: 8pt \"Arial\";\n"
+"color: rgb(0, 0, 0);")
+        self.help_title.setAlignment(QtCore.Qt.AlignCenter)
+        self.help_title.setReadOnly(True)
+        self.help_title.setObjectName("help_title")
+        self.help_title.setText("Help")
+        
+        self.setCentralWidget(self.centralwidget)
+        self.statusbar = QtWidgets.QStatusBar(self)
+        self.statusbar.setObjectName("statusbar")
+        self.setStatusBar(self.statusbar)
+        
+    def applyShadow(self):
+        shadow = QtWidgets.QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(40)
+        shadow.setXOffset(0)
+        shadow.setYOffset(0)
+        shadow.setColor(QtGui.QColor(209, 209, 209))
+        return shadow
+    
+    def processingWindow(self):
         self.intensityAnalysis = CellService_processing.CellServiceBinaryProcessing(self)
         self.intensityAnalysis.show()
         
@@ -146,13 +343,13 @@ class CellService(QMainWindow):
         self.qt_image = QImage(image.data, image.shape[1], image.shape[0], image.strides[0], QImage.Format_RGB888)
         qt_pixmap = QPixmap.fromImage(self.qt_image)
         qt_label.setPixmap(qt_pixmap)
-        self.maximize_window()
+        #self.maximize_window()
 
     def set_all_images(self):
         self.set_image(self.rgb_image, self.RGB_QLabel, "rgb", mask=False)
-        self.set_image(self.red_image, self.Red_QLabel, "red", mask=False)
-        self.set_image(self.green_image, self.Green_QLabel, "green", mask=False)
-        self.set_image(self.blue_image, self.Blue_QLabel, "blue", mask=False)
+        self.set_image(self.red_image, self.RED_QLabel, "red", mask=False)
+        self.set_image(self.green_image, self.GREEN_QLabel, "green", mask=False)
+        self.set_image(self.blue_image, self.BLUE_QLabel, "blue", mask=False)
 
     def openRGBCall(self):
         # see https://gist.github.com/smex/5287589
@@ -223,8 +420,9 @@ class CellService(QMainWindow):
         msg.setWindowTitle("Error")
         msg.exec_()
 
-if __name__ == '__main__':
-     app = QApplication(sys.argv)
-     ex = CellService()
-     sys.exit(app.exec_())
+if __name__ == "__main__":
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = CellService()
+    MainWindow.show()
+    sys.exit(app.exec_())
 

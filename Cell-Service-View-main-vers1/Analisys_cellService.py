@@ -1,7 +1,8 @@
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QMainWindow, QMessageBox
-from PyQt5.QtGui import QColor, QImage, QPixmap
+from PyQt5.QtGui import QColor, QImage, QPixmap, QKeySequence
 import numpy as np
 import skimage
 import skimage.io
@@ -121,9 +122,11 @@ class Ui_Analisys_cellService(QMainWindow):
         self.open_image_button.setIcon(icon13)
         self.open_image_button.setIconSize(QtCore.QSize(40, 27))
         self.open_image_button.setObjectName("open_image_button")
-        self.open_image_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Open pre-processed images</span></p></body></html>")
-        self.open_image_button.setStatusTip("Open pre-processed images")
+        self.open_image_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Open pre-processed images (Ctrl+O)</span></p></body></html>")
+        self.open_image_button.setStatusTip("Open pre-processed images (Ctrl+O)")
         self.open_image_button.clicked.connect(self.set_all_images)
+        self.ctrl_open = QtWidgets.QShortcut(QKeySequence('Ctrl+O'), self)
+        self.ctrl_open.activated.connect(self.set_all_images)
         
         self.canc_image_button = QtWidgets.QPushButton(self.principal_widget)
         self.canc_image_button.setGeometry(QtCore.QRect(70, 10, 31, 31))
@@ -153,10 +156,12 @@ class Ui_Analisys_cellService(QMainWindow):
         self.canc_image_button.setIcon(icon14)
         self.canc_image_button.setIconSize(QtCore.QSize(35, 23))
         self.canc_image_button.setObjectName("canc_image_button")
-        self.canc_image_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Clear all </span></p></body></html>")
-        self.canc_image_button.setStatusTip("Clear all ")
+        self.canc_image_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Clear all (Ctrl+Del)</span></p></body></html>")
+        self.canc_image_button.setStatusTip("Clear all (Ctrl+Del)")
         self.canc_image_button.clicked.connect(self.clearAll)
         self.canc_image_button.setGraphicsEffect(self.applyShadow())
+        self.ctrl_canc = QtWidgets.QShortcut(QKeySequence('Ctrl+Delete'), self)
+        self.ctrl_canc.activated.connect(self.clearAll)
         
         self.help_button = QtWidgets.QPushButton(self.principal_widget)
         self.help_button.setGeometry(QtCore.QRect(170, 10, 31, 31))
@@ -189,6 +194,8 @@ class Ui_Analisys_cellService(QMainWindow):
         self.help_button.setIconSize(QtCore.QSize(35, 30))
         self.help_button.setObjectName("help_button")
         self.help_button.setGraphicsEffect(self.applyShadow())
+        #self.ctrl_help = QtWidgets.QShortcut(QKeySequence('Ctrl+Delete'), self)
+        #self.ctrl_help.activated.connect(self.clearAll)
         
         self.save_button = QtWidgets.QPushButton(self.principal_widget)
         self.save_button.setGeometry(QtCore.QRect(120, 10, 31, 31))
@@ -1185,6 +1192,10 @@ class Ui_Analisys_cellService(QMainWindow):
     def set_min_max_intensityBLUE(self):
         self.Blue_intensity_edit_min.setText("Min: " + str(np.min(self.parent.blue_mask)))
         self.Blue_intensity_edit_max.setText("Max: " + str(np.max(self.parent.blue_image)))
+    
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Enter:
+            self.confirm_parameter()
         
     def clearAll(self):
         # clear labels
