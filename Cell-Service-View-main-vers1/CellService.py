@@ -311,7 +311,7 @@ class CellService(QMainWindow):
         return shadow
     
     def processingWindow(self):
-        self.intensityAnalysis = CellService_processing.CellServiceBinaryProcessing(self)
+        self.intensityAnalysis = CellService_processing.Processing_cellService(self)
         self.intensityAnalysis.show()
         
     def analisysWindow(self):
