@@ -24,16 +24,17 @@ class Processing_cellService(QMainWindow):
         self.set_segmentation()
         
     def setupUI(self):
-        self.setFixedSize(1120, 726)
+        self.setFixedSize(1120, 826)
         self.principal_widget = QtWidgets.QWidget()
         self.gridLayoutWidget = QtWidgets.QWidget(self.principal_widget)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(260, 60, 561, 621))
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(260, 60, 561, 721))
         self.principal_layout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.principal_layout.setContentsMargins(0, 0, 0, 0)
         
         self.Original_Label = QtWidgets.QLabel(self.gridLayoutWidget)
         self.Original_Label.setTabletTracking(True)
         self.Original_Label.setStyleSheet("border: 2px solid red")
+        self.Original_Label.setFixedSize(275,235)
         self.Original_Label.setFrameShape(QtWidgets.QFrame.Panel)
         self.Original_Label.setLineWidth(2)
         self.Original_Label.setScaledContents(True)
@@ -43,11 +44,13 @@ class Processing_cellService(QMainWindow):
         self.Filtred_Label.setStyleSheet("border: 2px solid red")
         self.Filtred_Label.setFrameShape(QtWidgets.QFrame.Panel)
         self.Filtred_Label.setLineWidth(2)
+        self.Filtred_Label.setFixedSize(275,235)
         self.Filtred_Label.setScaledContents(True)
         self.principal_layout.addWidget(self.Filtred_Label, 1, 1, 1, 1)
         
         self.Original_Label1 = QtWidgets.QLabel(self.gridLayoutWidget)
         self.Original_Label1.setStyleSheet("border: 2px solid green")
+        self.Original_Label1.setFixedSize(275,235)
         self.Original_Label1.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.Original_Label1.setFrameShadow(QtWidgets.QFrame.Plain)
         self.Original_Label1.setLineWidth(2)
@@ -56,6 +59,7 @@ class Processing_cellService(QMainWindow):
         self.Filtred_Label1 = QtWidgets.QLabel(self.gridLayoutWidget)
         self.Filtred_Label1.setStyleSheet("border: 2px solid green")
         self.Filtred_Label1.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.Filtred_Label1.setFixedSize(275,235)
         self.Filtred_Label1.setFrameShadow(QtWidgets.QFrame.Plain)
         self.Filtred_Label1.setLineWidth(2)
         self.Filtred_Label1.setScaledContents(True)
@@ -64,10 +68,12 @@ class Processing_cellService(QMainWindow):
         self.Original_Label2 = QtWidgets.QLabel(self.gridLayoutWidget)
         self.Original_Label2.setStyleSheet("border: 2px solid blue")
         self.Original_Label2.setScaledContents(True)
+        self.Original_Label2.setFixedSize(275,235)
         self.principal_layout.addWidget(self.Original_Label2, 4, 0, 1, 1)
         self.Filtred_Label2 = QtWidgets.QLabel(self.gridLayoutWidget)
         self.Filtred_Label2.setStyleSheet("border: 2px solid blue")
         self.Filtred_Label2.setScaledContents(True)
+        self.Filtred_Label2.setFixedSize(275,235)
         self.principal_layout.addWidget(self.Filtred_Label2, 4, 1, 1, 1)
         
         self.radioRed = QtWidgets.QRadioButton(self.principal_widget)
@@ -132,7 +138,7 @@ class Processing_cellService(QMainWindow):
             "}\n"
             "")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("Icon/confirm.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap("Icon/save_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.save_button.setIcon(icon3)
         self.save_button.setIconSize(QtCore.QSize(35, 30))
         self.save_button.clicked.connect(self.save)
@@ -183,8 +189,6 @@ class Processing_cellService(QMainWindow):
         self.selezioni=np.array([0,0,0,0,0])
         self.valore=0
         self.set_all_images()
-        
-        self.set_segmentation()
 
     def set_segmentation(self):
         self.segmentation_widget = QtWidgets.QWidget(self.principal_widget)
