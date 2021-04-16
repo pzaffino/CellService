@@ -34,6 +34,8 @@ class Ui_Analisys_cellService(QMainWindow):
         self.set_insertWidget()
         
         self.statusBar()
+        
+        self.set_all_images()
     
     def setupUi(self):
         # set the window's style
@@ -94,43 +96,8 @@ class Ui_Analisys_cellService(QMainWindow):
         self.RED_Label.setObjectName("RED_Label")
         self.principal_layout.addWidget(self.RED_Label, 0, 0, 1, 1)
         
-        self.open_image_button = QtWidgets.QPushButton(self.principal_widget)
-        self.open_image_button.setGeometry(QtCore.QRect(20, 10, 31, 31))
-        self.open_image_button.setMouseTracking(True)
-        self.open_image_button.setFocusPolicy(QtCore.Qt.ClickFocus)
-        self.open_image_button.setToolTipDuration(-1)
-        self.open_image_button.setStyleSheet("QPushButton {\n"
-"     background-color: rgb(255, 255, 255);\n"
-"    border-style: outset;\n"
-"    border: 2px;\n"
-"    border-width: 1px;\n"
-"    border-radius: 10px;\n"
-"    border-color: beige;\n"
-"    font: bold 14px;\n"
-"    padding: 6px;\n"
-"}\n"
-"QPushButton::hover {\n"
-"    background-color: rgb(204, 204, 204);\n"
-"}" "\n"
-"QPushButton:pressed {\n"
-"    background-color: rgb(180, 180, 180);\n"
-"}\n"
-"")
-        self.open_image_button.setGraphicsEffect(self.applyShadow())
-        self.open_image_button.setText("")
-        icon13 = QtGui.QIcon("Icon/file_icon.png")
-        #icon13.addPixmap(QtGui.QPixmap("file_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.open_image_button.setIcon(icon13)
-        self.open_image_button.setIconSize(QtCore.QSize(40, 27))
-        self.open_image_button.setObjectName("open_image_button")
-        self.open_image_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Open pre-processed images (Ctrl+O)</span></p></body></html>")
-        self.open_image_button.setStatusTip("Open pre-processed images (Ctrl+O)")
-        self.open_image_button.clicked.connect(self.set_all_images)
-        self.ctrl_open = QtWidgets.QShortcut(QKeySequence('Ctrl+O'), self)
-        self.ctrl_open.activated.connect(self.set_all_images)
-        
         self.canc_image_button = QtWidgets.QPushButton(self.principal_widget)
-        self.canc_image_button.setGeometry(QtCore.QRect(70, 10, 31, 31))
+        self.canc_image_button.setGeometry(QtCore.QRect(20, 10, 31, 31))
         self.canc_image_button.setMouseTracking(True)
         self.canc_image_button.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.canc_image_button.setToolTipDuration(-1)
@@ -165,7 +132,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.ctrl_canc.activated.connect(self.clearAll)
         
         self.help_button = QtWidgets.QPushButton(self.principal_widget)
-        self.help_button.setGeometry(QtCore.QRect(170, 10, 31, 31))
+        self.help_button.setGeometry(QtCore.QRect(120, 10, 31, 31))
         self.help_button.setMouseTracking(True)
         self.help_button.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.help_button.setToolTipDuration(-1)
@@ -199,7 +166,7 @@ class Ui_Analisys_cellService(QMainWindow):
         #self.ctrl_help.activated.connect(self.clearAll)
         
         self.save_button = QtWidgets.QPushButton(self.principal_widget)
-        self.save_button.setGeometry(QtCore.QRect(120, 10, 31, 31))
+        self.save_button.setGeometry(QtCore.QRect(70, 10, 31, 31))
         self.save_button.setMouseTracking(True)
         self.save_button.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.save_button.setToolTipDuration(-1)
@@ -258,8 +225,8 @@ class Ui_Analisys_cellService(QMainWindow):
 "}")
         self.red_buttonBC.clicked.connect(self.set_biologicalRED)
         self.red_buttonBC.setGraphicsEffect(self.applyShadow())
-        self.red_buttonBC.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED image biological contents</span></p></body></html>")
-        self.red_buttonBC.setStatusTip("RED image biological contents")
+        self.red_buttonBC.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED image density</span></p></body></html>")
+        self.red_buttonBC.setStatusTip("RED image density")
         self.red_buttonBC.setText("")
         icon = QtGui.QIcon("Icon/icon bio.png")
         #icon.addPixmap(QtGui.QPixmap("icon bio.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -287,8 +254,8 @@ class Ui_Analisys_cellService(QMainWindow):
 "}")
         self.green_buttonBC.clicked.connect(self.set_biologicalGREEN)
         self.green_buttonBC.setGraphicsEffect(self.applyShadow())
-        self.green_buttonBC.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">GREEN image biological contents</span></p></body></html>")
-        self.green_buttonBC.setStatusTip("GREEN image biological contents")
+        self.green_buttonBC.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">GREEN image density</span></p></body></html>")
+        self.green_buttonBC.setStatusTip("GREEN image density")
         self.green_buttonBC.setText("")
         icon1 = QtGui.QIcon("Icon/icon bio 3.png")
         #icon1.addPixmap(QtGui.QPixmap("icon bio 3.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -316,8 +283,8 @@ class Ui_Analisys_cellService(QMainWindow):
 "}")
         self.blue_buttonBC.clicked.connect(self.set_biologicalBLUE)
         self.blue_buttonBC.setGraphicsEffect(self.applyShadow())
-        self.blue_buttonBC.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">BLUE image biological contents</span></p></body></html>")
-        self.blue_buttonBC.setStatusTip("BLUE image biological contents")
+        self.blue_buttonBC.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">BLUE image density</span></p></body></html>")
+        self.blue_buttonBC.setStatusTip("BLUE image biological density")
         self.blue_buttonBC.setText("")
         icon2 = QtGui.QIcon("Icon/icon bio 2.png")
         #icon2.addPixmap(QtGui.QPixmap("icon bio 2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -361,14 +328,14 @@ class Ui_Analisys_cellService(QMainWindow):
 "color: rgb(19, 82, 255);")
         self.red_biological_title.setReadOnly(True)
         self.red_biological_title.setObjectName("red_biological_title")
-        self.red_biological_title.setText("Red biological contents")
+        self.red_biological_title.setText("Red biological density")
         self.blue_biological_title = QtWidgets.QLineEdit(self.biological_widget)
         self.blue_biological_title.setGeometry(QtCore.QRect(50, 190, 135, 20))
         self.blue_biological_title.setStyleSheet("font: 7.4pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.blue_biological_title.setReadOnly(True)
         self.blue_biological_title.setObjectName("blue_biological_title")
-        self.blue_biological_title.setText("Blue biological contents")
+        self.blue_biological_title.setText("Blue biological density")
         self.Green_PercentBC_edit = QtWidgets.QLineEdit(self.biological_widget)
         self.Green_PercentBC_edit.setGeometry(QtCore.QRect(60, 140, 81, 31))
         self.Green_PercentBC_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
@@ -386,7 +353,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "color: rgb(19, 82, 255);")
         self.green_biological_title.setReadOnly(True)
         self.green_biological_title.setObjectName("green_biological_title")
-        self.green_biological_title.setText("Green biological contents")
+        self.green_biological_title.setText("Green biological density")
         self.biological_edit = QtWidgets.QLineEdit(self.biological_widget)
         self.biological_edit.setGeometry(QtCore.QRect(0, 0, 191, 31))
         self.biological_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
@@ -398,7 +365,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.biological_edit.setAlignment(QtCore.Qt.AlignCenter)
         self.biological_edit.setReadOnly(True)
         self.biological_edit.setObjectName("biological_edit")
-        self.biological_edit.setText("Biological contents")
+        self.biological_edit.setText("Density")
     
     def set_overlapWidget(self):
         self.similarity_widget = QtWidgets.QWidget(self.principal_widget)
@@ -438,8 +405,8 @@ class Ui_Analisys_cellService(QMainWindow):
         self.red_blue_buttonS.setIcon(icon3)
         self.red_blue_buttonS.setIconSize(QtCore.QSize(60, 35))
         self.red_blue_buttonS.setObjectName("red_blue_buttonS")
-        self.red_blue_buttonS.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED and BLUE overlap</span></p></body></html>")
-        self.red_blue_buttonS.setStatusTip("RED and BLUE overlap")
+        self.red_blue_buttonS.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED and BLUE intersect</span></p></body></html>")
+        self.red_blue_buttonS.setStatusTip("RED and BLUE intersect")
         self.red_green_buttonS = QtWidgets.QPushButton(self.similarity_widget)
         self.red_green_buttonS.setGeometry(QtCore.QRect(10, 130, 41, 41))
         self.red_green_buttonS.setFocusPolicy(QtCore.Qt.StrongFocus)
@@ -462,8 +429,8 @@ class Ui_Analisys_cellService(QMainWindow):
 "}")
         self.red_green_buttonS.clicked.connect(self.similarity_buttonRG)
         self.red_green_buttonS.setGraphicsEffect(self.applyShadow())
-        self.red_green_buttonS.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED and GREEN overlap</span></p></body></html>")
-        self.red_green_buttonS.setStatusTip("RED and GREEN overlap")
+        self.red_green_buttonS.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED and GREEN intersect</span></p></body></html>")
+        self.red_green_buttonS.setStatusTip("RED and GREEN intersect")
         self.red_green_buttonS.setText("")
         icon4 = QtGui.QIcon("Icon/icon 2.png")
         #icon4.addPixmap(QtGui.QPixmap("icon 2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -498,8 +465,8 @@ class Ui_Analisys_cellService(QMainWindow):
         self.blue_green_buttonS.setIcon(icon5)
         self.blue_green_buttonS.setIconSize(QtCore.QSize(60, 35))
         self.blue_green_buttonS.setObjectName("blue_green_buttonS")
-        self.blue_green_buttonS.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">GREEN and BLUE overlap</span></p></body></html>")
-        self.blue_green_buttonS.setStatusTip("GREEN and BLUE overlap")
+        self.blue_green_buttonS.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">GREEN and BLUE intersect</span></p></body></html>")
+        self.blue_green_buttonS.setStatusTip("GREEN and BLUE intersect")
         self.total_buttonS = QtWidgets.QPushButton(self.similarity_widget)
         self.total_buttonS.setGeometry(QtCore.QRect(10, 270, 41, 41))
         self.total_buttonS.setFocusPolicy(QtCore.Qt.StrongFocus)
@@ -520,8 +487,8 @@ class Ui_Analisys_cellService(QMainWindow):
 "}")
         self.total_buttonS.clicked.connect(self.similarity_buttonRGB)
         self.total_buttonS.setGraphicsEffect(self.applyShadow())
-        self.total_buttonS.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED, GREEN and BLUE overlap</span></p></body></html>")
-        self.total_buttonS.setStatusTip("RED, GREEN and BLUE overlap")
+        self.total_buttonS.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED, GREEN and BLUE intersect</span></p></body></html>")
+        self.total_buttonS.setStatusTip("RED, GREEN and BLUE intersect")
         self.total_buttonS.setText("")
         icon6 = QtGui.QIcon("Icon/icon 4 grey.png")
         #icon6.addPixmap(QtGui.QPixmap("icon 4 grey.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -590,35 +557,35 @@ class Ui_Analisys_cellService(QMainWindow):
         self.similarity_edit.setAlignment(QtCore.Qt.AlignCenter)
         self.similarity_edit.setReadOnly(True)
         self.similarity_edit.setObjectName("similarity_edit")
-        self.similarity_edit.setText("Overlap")
+        self.similarity_edit.setText("Intersect")
         self.redBlue_overlap_title = QtWidgets.QLineEdit(self.similarity_widget)
         self.redBlue_overlap_title.setGeometry(QtCore.QRect(50, 50, 100, 20))
         self.redBlue_overlap_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.redBlue_overlap_title.setReadOnly(True)
         self.redBlue_overlap_title.setObjectName("redBlue_overlap_title")
-        self.redBlue_overlap_title.setText("Blue-red overlap")
+        self.redBlue_overlap_title.setText("Blue-red intersect")
         self.redGreen_overlap_title = QtWidgets.QLineEdit(self.similarity_widget)
         self.redGreen_overlap_title.setGeometry(QtCore.QRect(50, 120, 120, 20))
         self.redGreen_overlap_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.redGreen_overlap_title.setReadOnly(True)
         self.redGreen_overlap_title.setObjectName("redGreen_overlap_title")
-        self.redGreen_overlap_title.setText("Red-green overlap")
+        self.redGreen_overlap_title.setText("Red-green intersect")
         self.blueGreen_overlap_title = QtWidgets.QLineEdit(self.similarity_widget)
         self.blueGreen_overlap_title.setGeometry(QtCore.QRect(50, 190, 120, 20))
         self.blueGreen_overlap_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.blueGreen_overlap_title.setReadOnly(True)
         self.blueGreen_overlap_title.setObjectName("blueGreen_overlap_title")
-        self.blueGreen_overlap_title.setText("Green-blue overlap")
+        self.blueGreen_overlap_title.setText("Green-blue intersect")
         self.all_overlap_title = QtWidgets.QLineEdit(self.similarity_widget)
         self.all_overlap_title.setGeometry(QtCore.QRect(50, 260, 120, 20))
         self.all_overlap_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.all_overlap_title.setReadOnly(True)
         self.all_overlap_title.setObjectName("all_overlap_title")
-        self.all_overlap_title.setText("All images overlap")
+        self.all_overlap_title.setText("All images intersect")
         
     def set_numberIslands(self):
         self.number_widget = QtWidgets.QWidget(self.principal_widget)
@@ -1060,13 +1027,10 @@ class Ui_Analisys_cellService(QMainWindow):
     
     def two_similarity_overlap(self, image1, image2, edit):
         similarity = 0
-        overlapping = np.zeros_like(image1)
-        
-        for i in range(image1.shape[0]):
-            for j in range(image1.shape[1]):
-                if (image1[i][j]==image2[i][j]):
-                    similarity += 1
-                    overlapping[i][j]=1
+        overlapping = np.zeros_like(image1, dtype=np.uint8)
+        mask=np.logical_and(image1==1, image2==1)
+        overlapping[mask]=1
+        similarity=overlapping.sum()
         edit.setText(str(round((similarity*100)/(self.parent.red_mask.shape[0]* self.parent.red_mask.shape[1]), 2))+ "%")
         return overlapping
     
@@ -1109,25 +1073,17 @@ class Ui_Analisys_cellService(QMainWindow):
         self.convert_npToQimage(image_visualize)
     
     def AllimagesOverlap(self):
-        similarity=0
-        overlapping = np.zeros_like(self.parent.red_mask)
-        for i in range(self.parent.red_mask.shape[0]):
-          for j in range(self.parent.red_mask.shape[1]):
-              if (self.parent.red_mask[i][j]==1 and self.parent.green_mask[i][j]==1 
-                  and self.parent.blue_mask[i][j]==1):
-                          overlapping[i][j]=1
-                          similarity+=1
-                          
+        similarity = 0
+        overlapping = np.zeros_like(self.parent.red_mask, dtype=np.uint8)
+        mask=np.logical_and(self.parent.red_mask==1, self.parent.green_mask==1, self.parent.blue_mask==1)
+        overlapping[mask]=1
+        similarity=overlapping.sum()                          
         self.RGB_Label.setScaledContents(True)
         self.RGB_PercentS_edit.setText(str(round((similarity*100)/(self.parent.red_mask.shape[0]* self.parent.red_mask.shape[1]), 2))+ "%")
         return overlapping
     
     def biologicalContents(self, imageMatrix, edit):
-        count = 0;
-        for i in range(imageMatrix.shape[0]):
-            for j in range(imageMatrix.shape[1]):
-                if imageMatrix[i][j] == 1:
-                    count = count+1
+        count = imageMatrix.sum();
         edit.setText(str(round((count*100)/(self.parent.red_mask.shape[0]* self.parent.red_mask.shape[1]), 2))+ "%")
     
     def set_biologicalRED(self):
@@ -1188,9 +1144,6 @@ class Ui_Analisys_cellService(QMainWindow):
     def clearAll(self):
         # clear labels
         self.RGB_Label.clear()
-        self.RED_Label.clear()
-        self.GREEN_Label.clear()
-        self.BLUE_Label.clear()
         
         # clear QLineEdit overlapWidget
         self.RB_PercentS_edit.clear()
