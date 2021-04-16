@@ -22,6 +22,8 @@ class Processing_cellService(QMainWindow):
         self.setupUI()
         self.binary_processing()
         self.set_segmentation()
+        self.statusbar = QtWidgets.QStatusBar(self)
+        self.setStatusBar(self.statusbar)
         
     def setupUI(self):
         self.setFixedSize(1120, 826)
@@ -77,18 +79,18 @@ class Processing_cellService(QMainWindow):
         self.principal_layout.addWidget(self.Filtred_Label2, 4, 1, 1, 1)
         
         self.radioRed = QtWidgets.QRadioButton(self.principal_widget)
-        self.radioRed.setText("RadioButton")
+        self.radioRed.setText("Red Image")
         self.radioRed.setChecked(True)
         self.radioRed.setGeometry(QtCore.QRect(320, 20, 101, 20))
         self.radioRed.setStyleSheet("font: 8pt \"Arial\";\n" "color: red;\n")
         self.radioGreen = QtWidgets.QRadioButton(self.principal_widget)
-        self.radioGreen.setText("RadioButton")
+        self.radioGreen.setText("Green Image")
         self.radioGreen.setGeometry(QtCore.QRect(490, 20, 101, 20))
         self.radioGreen.setStyleSheet("font: 8pt \"Arial\";\n" "color: Green;")
         self.radioBlue = QtWidgets.QRadioButton(self.principal_widget)
         self.radioBlue.setGeometry(QtCore.QRect(670, 20, 101, 20))
         self.radioBlue.setStyleSheet("font: 8pt \"Arial\";\n" "color: Blue;")
-        self.radioBlue.setText("RadioButton")
+        self.radioBlue.setText("Blue Image")
         
         self.help_button = QtWidgets.QPushButton(self.principal_widget)
         self.help_button.setGraphicsEffect(self.applyShadow())
@@ -114,6 +116,7 @@ class Processing_cellService(QMainWindow):
         icon2.addPixmap(QtGui.QPixmap("Icon/help.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.help_button.setIcon(icon2)
         self.help_button.setIconSize(QtCore.QSize(35, 30))
+        self.help_button.clicked.connect(self.help_message)
         self.help_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Help </span></p></body></html>")
         self.help_button.setStatusTip("Help")
        
@@ -147,7 +150,7 @@ class Processing_cellService(QMainWindow):
         
         self.Label_Save = QtWidgets.QLabel(self.principal_widget)
         self.Label_Save.setGraphicsEffect(self.applyShadow())
-        self.Label_Save.setEnabled(False)
+        self.Label_Save.setWordWrap(True)
         self.Label_Save.setGeometry(QtCore.QRect(20, 480, 221, 150))
         self.Label_Save.setStyleSheet("background-color: rgb(255, 255, 255);\n"
             "border-radius: 30px;\n"
@@ -155,6 +158,7 @@ class Processing_cellService(QMainWindow):
             "color: rgb(19, 82, 255);")
         self.Label_Save.setScaledContents(True)
         self.Label_Save.setText("Don't forget to save image!")
+        self.Label_Save.setAlignment(QtCore.Qt.AlignCenter)
         
         self.delete_button = QtWidgets.QPushButton(self.principal_widget)
         self.delete_button.setGraphicsEffect(self.applyShadow())
@@ -695,6 +699,8 @@ class Processing_cellService(QMainWindow):
         self.Radius_title.setReadOnly(True)
         self.Radius_title.setText("Radius")
         
+        self.setEnabled_False_Button()
+        
     def binary_processing(self):
         self.binary_widget = QtWidgets.QWidget(self.principal_widget)
         self.binary_widget.setGeometry(QtCore.QRect(10, 80, 241, 361))
@@ -770,7 +776,7 @@ class Processing_cellService(QMainWindow):
         
         self.apply = QtWidgets.QPushButton(self.binary_widget)
         self.apply.setGraphicsEffect(self.applyShadow())
-        self.apply.setGeometry(QtCore.QRect(90, 280, 41, 41))
+        self.apply.setGeometry(QtCore.QRect(90, 273, 41, 41))
         self.apply.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.apply.clicked.connect(self.runIntensityBinarization)
         self.apply.setStyleSheet("QPushButton {\n"
@@ -795,12 +801,12 @@ class Processing_cellService(QMainWindow):
         self.apply.setStatusTip("Binarize Image")
         
         self.Automatic_title = QtWidgets.QLabel(self.binary_widget)
-        self.Automatic_title.setGeometry(QtCore.QRect(50, 240, 131, 31))
+        self.Automatic_title.setGeometry(QtCore.QRect(50, 242, 131, 21))
         self.Automatic_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.Automatic_title.setText("Automatic Threashold")
         self.Apply_title = QtWidgets.QLabel(self.binary_widget)
         self.Apply_title.setText("Binarize Image")
-        self.Apply_title.setGeometry(QtCore.QRect(70, 310, 101, 31))
+        self.Apply_title.setGeometry(QtCore.QRect(70, 315, 101, 21))
         self.Apply_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.binary_edit = QtWidgets.QLineEdit(self.binary_widget)
         self.binary_edit.setGeometry(QtCore.QRect(0, 0, 241, 41))
@@ -831,9 +837,9 @@ class Processing_cellService(QMainWindow):
         self.Repeat_Blue=False
     
     def back_binary(self):
-        self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=False)
-        self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=False)
-        self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=False)
+        self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
+        self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
+        self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
     
     def runIntensityBinarization(self):
         if self.radioRed.isChecked():
@@ -1089,13 +1095,11 @@ class Processing_cellService(QMainWindow):
     
     def delete(self, label):
         current_number=int(label.text())-1
-        print(current_number)
         for i in range (current_number, (len(self.selezioni))):
             if(i==(len(self.selezioni)-1)):
                 self.selezioni[i]=0
             else:
                 self.selezioni[i]=self.selezioni[i+1]
-                print(str(i))
             if(self.selezioni[i]==1):
                 stringa=str(i+1)
                 self.Remove_edit.setText(stringa)
@@ -1111,7 +1115,6 @@ class Processing_cellService(QMainWindow):
             if(self.selezioni[i]==5):
                 stringa=str(i+1)
                 self.Close_edit.setText(stringa)
-                print(i)
         self.valore=self.valore-1
     
     def delete_edit_remove(self):
@@ -1156,7 +1159,6 @@ class Processing_cellService(QMainWindow):
     
     def save(self):
         if((self.parent.red_mask is not None) and (self.parent.green_mask is not None) and (self.parent.blue_mask is not None)):
-            self.Label_Save.setText("SAVED IMAGES! IF YOU WANT TO CHANGE THE IMAGES, REMEMBER TO CLEAR FILTRED LABEL")
             self.save_message()
         else:
             self.error_message("Attention: the images haven't been binarized")
@@ -1191,6 +1193,7 @@ class Processing_cellService(QMainWindow):
         mbox.setStandardButtons(QMessageBox.Save | QMessageBox.Cancel)
         returnValue = mbox.exec()
         if returnValue == QMessageBox.Save:
+            self.Label_Save.setText("SAVED IMAGES!")
             if(self.mask_red is not None):
                 self.local_red_mask= self.parent.red_mask
                 self.parent.red_mask = self.mask_red
@@ -1206,7 +1209,7 @@ class Processing_cellService(QMainWindow):
     
     def remove_message(self):
         mbox = QMessageBox(self)
-        mbox.setIcon(QMessageBox.Question)
+        mbox.setIcon(QMessageBox.Information)
         mbox.setWindowTitle("Remove Help")
         mbox.setText("What does it?")
         mbox.setInformativeText("Remove objects smaller than the specified size.")
@@ -1214,7 +1217,7 @@ class Processing_cellService(QMainWindow):
     
     def dilation_message(self):
         mbox = QMessageBox(self)
-        mbox.setIcon(QMessageBox.Question)
+        mbox.setIcon(QMessageBox.Information)
         mbox.setWindowTitle("Dilation Help")
         mbox.setText("What does it?")
         mbox.setInformativeText("Dilation enlarges bright regions and shrinks dark regions.")
@@ -1222,7 +1225,7 @@ class Processing_cellService(QMainWindow):
     
     def erosion_message(self):
         mbox = QMessageBox(self)
-        mbox.setIcon(QMessageBox.Question)
+        mbox.setIcon(QMessageBox.Information)
         mbox.setWindowTitle("Erosion Help")
         mbox.setText("What does it?")
         mbox.setInformativeText("Erosion shrinks bright regions and enlarges dark regions.")
@@ -1230,7 +1233,7 @@ class Processing_cellService(QMainWindow):
     
     def open_message(self):
         mbox = QMessageBox(self)
-        mbox.setIcon(QMessageBox.Question)
+        mbox.setIcon(QMessageBox.Information)
         mbox.setWindowTitle("Opening Help")
         mbox.setText("What does it?")
         mbox.setInformativeText("The morphological opening on an image is defined as an erosion followed by a dilation. Opening can remove small bright spots (i.e. “salt”) and connect small dark cracks. This tends to “open” up (dark) gaps between (bright) features")
@@ -1238,10 +1241,18 @@ class Processing_cellService(QMainWindow):
     
     def close_message(self):
         mbox = QMessageBox(self)
-        mbox.setIcon(QMessageBox.Question)
+        mbox.setIcon(QMessageBox.Information)
         mbox.setWindowTitle("Closing Help")
         mbox.setText("What does it?")
         mbox.setInformativeText("The morphological closing on an image is defined as a dilation followed by an erosion. Closing can remove small dark spots (i.e. “pepper”) and connect small bright cracks. This tends to “close” up (dark) gaps between (bright) features.")
+        mbox.exec_()
+    
+    def help_message(self):
+        mbox = QMessageBox(self)
+        mbox.setIcon(QMessageBox.Information)
+        mbox.setWindowTitle("Help")
+        mbox.setText("Processing")
+        mbox.setInformativeText ("In the field of image processing, the ability to distinguish different objects, shapes and contours present in the image under analysis plays a fundamental role. This is possible thanks to thresholding techniques: techniques that consider pixels with intensity higher than a minimum threshold and, if this is present, lower than a maximum threshold. In this case, the threshold can be set by the user (choosing a minimum threshold and a maximum threshold of intensity of the pixels to be considered). If you don't know which one to choose, you can use the automatic threshold method: this uses the Otsu threshold to choose a minimum threshold, but does not set any maximum threshold. Remember to choose the image to binarize before applying the threshold to the images and to confirm the choice with the Binarize image button to apply the thresholding.")
         mbox.exec_()
     
 
