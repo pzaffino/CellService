@@ -904,84 +904,60 @@ class Processing_cellService(QMainWindow):
             self.selezioni[(self.valore-1)]=5
             self.Close_edit.setText(str(self.valore))
             self.Close_canc.setEnabled(True)
-        
-    def apply_segmentation(self):
-        error=False #controlla errori
-        
-        #controlla che l'immagine selezionata sia stata binarizzata, altrimenti errore
-        if self.radioRed.isChecked() and self.parent.red_mask is None:
-            self.error_message("Binarize red image")
+    
+    #controlla errori prima di procedere per la segmentazione
+    def TrueORFalse_error(self,mask):
+        error=False
+        if mask is None:
+            self.error_message("Binarize this image")
             error=True
-        if self.radioGreen.isChecked() and self.parent.green_mask is None:
-            self.error_message("Binarize green image")
-            error=True
-        if self.radioBlue.isChecked() and self.parent.blue_mask is None:
-            self.error_message("Binarize blue image")
-            error=True
-        
-        #serve per vedere se è stato selezionato il button remove small object, 
-        #in questo caso il raggio deve essere != da 0, altrimenti è errore
         for i in range (0,5):
             if(self.selezioni[i]==1):
-                raggio=self.Raggio.value()
-                if raggio==0:
+                self.raggio=self.Raggio.value()
+                if self.raggio==0:
                     self.error_message("Insert a radius!")
                     error=True
-                    
-        if (error is False): #se ci sono stati degli errori in precedenza non devi continuare
-            self.clear=False #parametro utile nella funzione back se vengono cancellate tutte le immagini e si vuole tornare indietro
-            if(self.radioRed.isChecked()):
+        return error
+    
+    #applica segmentazione dato che non ci sono errori
+    def segmentation_RadioButton(self, mask):
+        self.clear=False
+        self.Undo_button.setEnabled(True)
+        for i in range (0,5): #scorrere il vettore delle selezioni per svolgere in ordine quanto richiesto
+            if (self.selezioni[i]==1):
+                mask=morphology.remove_small_objects(mask.astype(np.bool), self.raggio)
+            elif (self.selezioni[i]==2):
+                mask=morphology.binary_erosion(mask)
+            elif (self.selezioni[i]==3):
+                mask=morphology.binary_dilation(mask)
+            elif (self.selezioni[i]==4):
+                mask=morphology.binary_opening(mask)
+            elif (self.selezioni[i]==5):
+                mask=morphology.binary_closing(mask)
+        return mask
+    
+    #scelta immagine da segmentare, richiama le due precedenti applicandole alle immagini selezionate
+    def apply_segmentation(self):
+        error=False
+        if self.radioRed.isChecked():
+            error=self.TrueORFalse_error(self.parent.red_mask)
+            if(error==False):
                 self.filtred_red_mask=self.parent.red_mask
-                self.Undo_button.setEnabled(True)
-            if(self.radioGreen.isChecked()):
-                self.filtred_green_mask=self.parent.green_mask
-                self.Undo_button.setEnabled(True)
-            if(self.radioBlue.isChecked()):
-                self.filtred_blue_mask=self.parent.blue_mask
-                self.Undo_button.setEnabled(True)
-            for i in range (0,5): #scorrere il vettore delle selezioni per svolgere in ordine quanto richiesto
-                if (self.selezioni[i]==1):
-                    if (self.radioRed.isChecked()):
-                        self.parent.red_mask= morphology.remove_small_objects(self.parent.red_mask.astype(np.bool), raggio)
-                    if (self.radioGreen.isChecked()):
-                        self.parent.green_mask= morphology.remove_small_objects(self.parent.green_mask.astype(np.bool), raggio)
-                    if (self.radioBlue.isChecked()):
-                        self.parent.blue_mask= morphology.remove_small_objects(self.parent.blue_mask.astype(np.bool), raggio)
-                elif (self.selezioni[i]==2):
-                    if self.radioRed.isChecked():
-                        self.parent.red_mask=morphology.binary_erosion(self.parent.red_mask)
-                    if self.radioGreen.isChecked():
-                        self.parent.green_mask=morphology.binary_erosion(self.parent.green_mask)
-                    if self.radioBlue.isChecked():
-                        self.parent.blue_mask=morphology.binary_erosion(self.parent.blue_mask)
-                elif (self.selezioni[i]==3):
-                    if self.radioRed.isChecked():
-                        self.parent.red_mask=morphology.binary_dilation(self.parent.red_mask)
-                    if self.radioGreen.isChecked():
-                        self.parent.green_mask=morphology.binary_dilation(self.parent.green_mask)
-                    if self.radioBlue.isChecked():
-                        self.parent.blue_mask=morphology.binary_dilation(self.parent.blue_mask)
-                elif (self.selezioni[i]==4):
-                    if self.radioRed.isChecked():
-                        self.parent.red_mask=morphology.binary_opening(self.parent.red_mask)
-                    if self.radioGreen.isChecked():
-                        self.parent.green_mask=morphology.binary_opening(self.parent.green_mask)
-                    if self.radioBlue.isChecked():
-                        self.parent.blue_mask=morphology.binary_opening(self.parent.blue_mask)
-                elif (self.selezioni[i]==5):
-                    if self.radioRed.isChecked():
-                        self.parent.red_mask=morphology.binary_closing(self.parent.red_mask)
-                    if self.radioGreen.isChecked():
-                        self.parent.green_mask=morphology.binary_closing(self.parent.green_mask)
-                    if self.radioBlue.isChecked():
-                        self.parent.blue_mask=morphology.binary_closing(self.parent.blue_mask)
-            #setto le immagini con il nuovo contenuto
-            if self.radioRed.isChecked():
+                self.parent.red_mask=self.segmentation_RadioButton(self.parent.red_mask)
                 self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
-            if self.radioGreen.isChecked():
+        if self.radioGreen.isChecked():
+            error=self.TrueORFalse_error(self.parent.green_mask)
+            if(error==False):
+                self.filtred_green_mask=self.parent.green_mask
+                self.parent.green_mask=self.segmentation_RadioButton(self.parent.green_mask)
                 self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
-            if self.radioBlue.isChecked():
+        if self.radioBlue.isChecked():
+            error=self.TrueORFalse_error(self.parent.blue_mask)
+            if(error==False):
+                self.filtred_blue_mask=self.parent.blue_mask
+                self.parent.blue_mask=self.segmentation_RadioButton(self.parent.blue_mask)
                 self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
+        if(error==False):
             self.clear_edit_label() #ripulisce label numerazione dopo aver apportato modifiche
     
     #delete numeration
@@ -1067,8 +1043,8 @@ class Processing_cellService(QMainWindow):
         self.Close_canc.setEnabled(False)
         
     def delete(self, label):
-        current_number=int(label.text())-1
-        for i in range (current_number, (len(self.selezioni))):
+        current_number=int(label.text())-1 #legge numero dalla label
+        for i in range (current_number, (len(self.selezioni))): #scala tutto ciò che sta dopo questo numero (valore corrente-1)
             if(i==(len(self.selezioni)-1)):
                 self.selezioni[i]=0
             else:
