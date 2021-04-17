@@ -36,11 +36,14 @@ class Ui_Analisys_cellService(QMainWindow):
         self.statusBar()
         
         self.set_all_images()
+        
+        if self.parent.red_mask is not None:
+            self.image_size()
     
     def setupUi(self):
         # set the window's style
         self.setObjectName("Analisys_cellService")
-        self.setFixedSize(1129, 700)
+        self.setFixedSize(1129, 715)
         self.setWindowTitle("Analisys")
         
         # set principa widget's style
@@ -132,7 +135,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.ctrl_canc.activated.connect(self.clearAll)
         
         self.help_button = QtWidgets.QPushButton(self.principal_widget)
-        self.help_button.setGeometry(QtCore.QRect(120, 10, 31, 31))
+        self.help_button.setGeometry(QtCore.QRect(70, 10, 31, 31))
         self.help_button.setMouseTracking(True)
         self.help_button.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.help_button.setToolTipDuration(-1)
@@ -165,41 +168,14 @@ class Ui_Analisys_cellService(QMainWindow):
         #self.ctrl_help = QtWidgets.QShortcut(QKeySequence('Ctrl+Delete'), self)
         #self.ctrl_help.activated.connect(self.clearAll)
         
-        self.save_button = QtWidgets.QPushButton(self.principal_widget)
-        self.save_button.setGeometry(QtCore.QRect(70, 10, 31, 31))
-        self.save_button.setMouseTracking(True)
-        self.save_button.setFocusPolicy(QtCore.Qt.ClickFocus)
-        self.save_button.setToolTipDuration(-1)
-        self.save_button.setStyleSheet("QPushButton {\n"
-"     background-color: rgb(255, 255, 255);\n"
-"    border-style: outset;\n"
-"    border: 2px;\n"
-"    border-width: 1px;\n"
-"    border-radius: 10px;\n"
-"    border-color: beige;\n"
-"    font: bold 14px;\n"
-"    padding: 6px;\n"
-"}\n"
-"QPushButton::hover {\n"
-"    background-color: rgb(204, 204, 204);\n"
-"}" "\n"
-"QPushButton:pressed {\n"
-"    background-color: rgb(180, 180, 180);\n"
-"}\n"
-"")
-        self.save_button.setText("")
-        icon17 = QtGui.QIcon("Icon/save_icon")
-        #icon17.addPixmap(QtGui.QPixmap("save_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.save_button.setIcon(icon17)
-        self.save_button.setIconSize(QtCore.QSize(35, 30))
-        self.save_button.setObjectName("save_button")
-        self.save_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Save image </span></p></body></html>")
-        self.save_button.setStatusTip("Save image")
-        self.save_button.setGraphicsEffect(self.applyShadow())
+        self.label = QtWidgets.QLabel(self.principal_widget)
+        self.label.setGeometry(QtCore.QRect(20, 670, 191, 16))
+        self.label.setObjectName("label")
+        self.label.setText("Image size: ")
         
     def set_biologicalWidget(self):
         self.biological_widget = QtWidgets.QWidget(self.principal_widget)
-        self.biological_widget.setGeometry(QtCore.QRect(20, 400, 191, 261))
+        self.biological_widget.setGeometry(QtCore.QRect(20, 400, 200, 261))
         self.biological_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "border-radius: 35px;")
         self.biological_widget.setObjectName("biological_widget")
@@ -292,7 +268,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.blue_buttonBC.setIconSize(QtCore.QSize(60, 35))
         self.blue_buttonBC.setObjectName("blue_buttonBC")
         self.Red_PercentBC_edit = QtWidgets.QLineEdit(self.biological_widget)
-        self.Red_PercentBC_edit.setGeometry(QtCore.QRect(60, 70, 81, 31))
+        self.Red_PercentBC_edit.setGeometry(QtCore.QRect(55, 70, 130, 31))
         self.Red_PercentBC_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
@@ -302,7 +278,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.Red_PercentBC_edit.setReadOnly(True)
         self.Red_PercentBC_edit.setObjectName("Red_PercentBC_edit")
         self.Blue_PercentBC_edit = QtWidgets.QLineEdit(self.biological_widget)
-        self.Blue_PercentBC_edit.setGeometry(QtCore.QRect(60, 210, 81, 31))
+        self.Blue_PercentBC_edit.setGeometry(QtCore.QRect(55, 210, 130, 31))
         self.Blue_PercentBC_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
@@ -312,7 +288,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.Blue_PercentBC_edit.setReadOnly(True)
         self.Blue_PercentBC_edit.setObjectName("Blue_PercentBC_edit")
         self.compensate_edit2 = QtWidgets.QLineEdit(self.biological_widget)
-        self.compensate_edit2.setGeometry(QtCore.QRect(0, 20, 191, 16))
+        self.compensate_edit2.setGeometry(QtCore.QRect(0, 20, 200, 16))
         self.compensate_edit2.setStyleSheet("background-color: rgb(19, 82, 255);\n"
 "\n"
 "    font: bold 14px;\n"
@@ -323,21 +299,21 @@ class Ui_Analisys_cellService(QMainWindow):
         self.compensate_edit2.setReadOnly(True)
         self.compensate_edit2.setObjectName("compensate_edit2")
         self.red_biological_title = QtWidgets.QLineEdit(self.biological_widget)
-        self.red_biological_title.setGeometry(QtCore.QRect(50, 50, 135, 20))
+        self.red_biological_title.setGeometry(QtCore.QRect(55, 50, 135, 20))
         self.red_biological_title.setStyleSheet("font: 7.4pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.red_biological_title.setReadOnly(True)
         self.red_biological_title.setObjectName("red_biological_title")
         self.red_biological_title.setText("Red biological density")
         self.blue_biological_title = QtWidgets.QLineEdit(self.biological_widget)
-        self.blue_biological_title.setGeometry(QtCore.QRect(50, 190, 135, 20))
+        self.blue_biological_title.setGeometry(QtCore.QRect(55, 190, 135, 20))
         self.blue_biological_title.setStyleSheet("font: 7.4pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.blue_biological_title.setReadOnly(True)
         self.blue_biological_title.setObjectName("blue_biological_title")
         self.blue_biological_title.setText("Blue biological density")
         self.Green_PercentBC_edit = QtWidgets.QLineEdit(self.biological_widget)
-        self.Green_PercentBC_edit.setGeometry(QtCore.QRect(60, 140, 81, 31))
+        self.Green_PercentBC_edit.setGeometry(QtCore.QRect(55, 140, 130, 31))
         self.Green_PercentBC_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
@@ -348,19 +324,19 @@ class Ui_Analisys_cellService(QMainWindow):
         self.Green_PercentBC_edit.setReadOnly(True)
         self.Green_PercentBC_edit.setObjectName("Green_PercentBC_edit")
         self.green_biological_title = QtWidgets.QLineEdit(self.biological_widget)
-        self.green_biological_title.setGeometry(QtCore.QRect(50, 120, 142, 20))
+        self.green_biological_title.setGeometry(QtCore.QRect(55, 120, 142, 20))
         self.green_biological_title.setStyleSheet("font: 7.1pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.green_biological_title.setReadOnly(True)
         self.green_biological_title.setObjectName("green_biological_title")
         self.green_biological_title.setText("Green biological density")
         self.biological_edit = QtWidgets.QLineEdit(self.biological_widget)
-        self.biological_edit.setGeometry(QtCore.QRect(0, 0, 191, 31))
+        self.biological_edit.setGeometry(QtCore.QRect(0, 0, 200, 31))
         self.biological_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
 "border-radius:15px;\n"
 "    font: bold 10px;\n"
 "    padding: 6px;\n"
-"font: 12.5pt \"Arial\";\n"
+"font: 14pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.biological_edit.setAlignment(QtCore.Qt.AlignCenter)
         self.biological_edit.setReadOnly(True)
@@ -369,7 +345,7 @@ class Ui_Analisys_cellService(QMainWindow):
     
     def set_overlapWidget(self):
         self.similarity_widget = QtWidgets.QWidget(self.principal_widget)
-        self.similarity_widget.setGeometry(QtCore.QRect(20, 50, 191, 331))
+        self.similarity_widget.setGeometry(QtCore.QRect(20, 50, 200, 331))
         self.similarity_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "border-radius: 35px;")
         self.similarity_widget.setGraphicsEffect(self.applyShadow())
@@ -496,7 +472,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.total_buttonS.setIconSize(QtCore.QSize(60, 35))
         self.total_buttonS.setObjectName("total_buttonS")
         self.RB_PercentS_edit = QtWidgets.QLineEdit(self.similarity_widget)
-        self.RB_PercentS_edit.setGeometry(QtCore.QRect(60, 70, 81, 31))
+        self.RB_PercentS_edit.setGeometry(QtCore.QRect(55, 70, 130, 31))
         self.RB_PercentS_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
@@ -507,7 +483,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.RB_PercentS_edit.setReadOnly(True)
         self.RB_PercentS_edit.setObjectName("RB_PercentS_edit")
         self.RG_PercentS_edit = QtWidgets.QLineEdit(self.similarity_widget)
-        self.RG_PercentS_edit.setGeometry(QtCore.QRect(60, 140, 81, 31))
+        self.RG_PercentS_edit.setGeometry(QtCore.QRect(55, 140, 130, 31))
         self.RG_PercentS_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
@@ -517,7 +493,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.RG_PercentS_edit.setReadOnly(True)
         self.RG_PercentS_edit.setObjectName("RG_PercentS_edit")
         self.BG_PercentS_edit = QtWidgets.QLineEdit(self.similarity_widget)
-        self.BG_PercentS_edit.setGeometry(QtCore.QRect(60, 210, 81, 31))
+        self.BG_PercentS_edit.setGeometry(QtCore.QRect(55, 210, 130, 31))
         self.BG_PercentS_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
@@ -527,7 +503,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.BG_PercentS_edit.setReadOnly(True)
         self.BG_PercentS_edit.setObjectName("BG_PercentS_edit")
         self.RGB_PercentS_edit = QtWidgets.QLineEdit(self.similarity_widget)
-        self.RGB_PercentS_edit.setGeometry(QtCore.QRect(60, 280, 81, 31))
+        self.RGB_PercentS_edit.setGeometry(QtCore.QRect(55, 280, 130, 31))
         self.RGB_PercentS_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
@@ -537,7 +513,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.RGB_PercentS_edit.setReadOnly(True)
         self.RGB_PercentS_edit.setObjectName("RGB_PercentS_edit")
         self.compensate_edit = QtWidgets.QLineEdit(self.similarity_widget)
-        self.compensate_edit.setGeometry(QtCore.QRect(0, 20, 191, 16))
+        self.compensate_edit.setGeometry(QtCore.QRect(0, 20, 200, 16))
         self.compensate_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
 "\n"
 "    font: bold 14px;\n"
@@ -548,7 +524,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.compensate_edit.setReadOnly(True)
         self.compensate_edit.setObjectName("compensate_edit")
         self.similarity_edit = QtWidgets.QLineEdit(self.similarity_widget)
-        self.similarity_edit.setGeometry(QtCore.QRect(0, 0, 191, 31))
+        self.similarity_edit.setGeometry(QtCore.QRect(0, 0, 200, 31))
         self.similarity_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
 "border-radius:15px;\n"
 "    padding: 6px;\n"
@@ -559,28 +535,28 @@ class Ui_Analisys_cellService(QMainWindow):
         self.similarity_edit.setObjectName("similarity_edit")
         self.similarity_edit.setText("Intersect")
         self.redBlue_overlap_title = QtWidgets.QLineEdit(self.similarity_widget)
-        self.redBlue_overlap_title.setGeometry(QtCore.QRect(50, 50, 100, 20))
+        self.redBlue_overlap_title.setGeometry(QtCore.QRect(55, 50, 100, 20))
         self.redBlue_overlap_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.redBlue_overlap_title.setReadOnly(True)
         self.redBlue_overlap_title.setObjectName("redBlue_overlap_title")
         self.redBlue_overlap_title.setText("Blue-red intersect")
         self.redGreen_overlap_title = QtWidgets.QLineEdit(self.similarity_widget)
-        self.redGreen_overlap_title.setGeometry(QtCore.QRect(50, 120, 120, 20))
+        self.redGreen_overlap_title.setGeometry(QtCore.QRect(55, 120, 120, 20))
         self.redGreen_overlap_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.redGreen_overlap_title.setReadOnly(True)
         self.redGreen_overlap_title.setObjectName("redGreen_overlap_title")
         self.redGreen_overlap_title.setText("Red-green intersect")
         self.blueGreen_overlap_title = QtWidgets.QLineEdit(self.similarity_widget)
-        self.blueGreen_overlap_title.setGeometry(QtCore.QRect(50, 190, 120, 20))
+        self.blueGreen_overlap_title.setGeometry(QtCore.QRect(55, 190, 120, 20))
         self.blueGreen_overlap_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.blueGreen_overlap_title.setReadOnly(True)
         self.blueGreen_overlap_title.setObjectName("blueGreen_overlap_title")
         self.blueGreen_overlap_title.setText("Green-blue intersect")
         self.all_overlap_title = QtWidgets.QLineEdit(self.similarity_widget)
-        self.all_overlap_title.setGeometry(QtCore.QRect(50, 260, 120, 20))
+        self.all_overlap_title.setGeometry(QtCore.QRect(55, 260, 120, 20))
         self.all_overlap_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.all_overlap_title.setReadOnly(True)
@@ -1031,7 +1007,9 @@ class Ui_Analisys_cellService(QMainWindow):
         mask=np.logical_and(image1==1, image2==1)
         overlapping[mask]=1
         similarity=overlapping.sum()
-        edit.setText(str(round((similarity*100)/(self.parent.red_mask.shape[0]* self.parent.red_mask.shape[1]), 2))+ "%")
+        edit.setText(str(round((similarity*100)/(self.parent.red_mask.shape[0] 
+                                                 * self.parent.red_mask.shape[1]), 2))
+                     + "% - " + str(similarity) + " pixels")
         return overlapping
     
     def runSimilarity(self, buttonPressed):
@@ -1079,13 +1057,17 @@ class Ui_Analisys_cellService(QMainWindow):
         overlapping[mask]=1
         similarity=overlapping.sum()                          
         self.RGB_Label.setScaledContents(True)
-        self.RGB_PercentS_edit.setText(str(round((similarity*100)/(self.parent.red_mask.shape[0]* self.parent.red_mask.shape[1]), 2))+ "%")
+        self.RGB_PercentS_edit.setText(str(round((similarity*100)/(self.parent.red_mask.shape[0] * 
+                                                                   self.parent.red_mask.shape[1]), 2))+ 
+                                       "% - " + str(similarity) + " pixels")
         return overlapping
     
     def biologicalContents(self, imageMatrix, edit):
         count = imageMatrix.sum();
-        edit.setText(str(round((count*100)/(self.parent.red_mask.shape[0]* self.parent.red_mask.shape[1]), 2))+ "%")
-    
+        edit.setText(str(round((count*100)/(self.parent.red_mask.shape[0] * 
+                                            self.parent.red_mask.shape[1]), 2))
+                     + "% - " + str(count) + " pixels")
+        
     def set_biologicalRED(self):
         self.biologicalContents(self.parent.red_mask, self.Red_PercentBC_edit)
     
@@ -1140,6 +1122,10 @@ class Ui_Analisys_cellService(QMainWindow):
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Enter:
             self.confirm_parameter()
+            
+    def image_size(self):
+        self.label.setText("Images size: " + str(self.parent.red_mask.shape[0]) + " x "
+                   + str(self.parent.red_mask.shape[1]) + " pixels")
         
     def clearAll(self):
         # clear labels

@@ -26,16 +26,18 @@ class CellService(QMainWindow):
         self.red_mask = None
         self.green_mask = None
         self.blue_mask = None
+        
+        self.maximize_window()
     
     def setupUi(self):
          # set the window's style
         self.setWindowTitle("CellService")
-        self.setFixedSize(1000, 691)
+        #self.setFixedSize(1000, 691)
         self.centralwidget = QtWidgets.QWidget(self)
         self.centralwidget.setStyleSheet("background-color: rgb(244, 244, 244);")
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(310, 10, 630, 651))
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(237, 10, 651, 651))
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
         self.principal_layout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.principal_layout.setContentsMargins(0, 0, 0, 0)
@@ -309,6 +311,10 @@ class CellService(QMainWindow):
         shadow.setYOffset(0)
         shadow.setColor(QtGui.QColor(209, 209, 209))
         return shadow
+    
+    def maximize_window(self):
+        screen = QDesktopWidget().screenGeometry()
+        self.setFixedSize(int(screen.height()*1.2), int(screen.height()*0.9))
     
     def processingWindow(self):
         self.intensityAnalysis = CellService_processing.Processing_cellService(self)
