@@ -9,12 +9,10 @@ class Processing_cellService(QMainWindow):
     def __init__(self, parent):
         super().__init__()
         
-        self.local_red_mask=None
-        self.local_green_mask=None
-        self.local_blue_mask=None
-        self.mask_red=None
-        self.mask_green=None
-        self.mask_blue=None
+        self.filtred_red_mask=None
+        self.filtred_green_mask=None
+        self.filtred_blue_mask=None
+        self.clear=False
         
         self.parent = parent
         self.setWindowTitle("Processing")
@@ -94,7 +92,7 @@ class Processing_cellService(QMainWindow):
         
         self.help_button = QtWidgets.QPushButton(self.principal_widget)
         self.help_button.setGraphicsEffect(self.applyShadow())
-        self.help_button.setGeometry(QtCore.QRect(110, 10, 41, 41))
+        self.help_button.setGeometry(QtCore.QRect(880, 720, 41, 41))
         self.help_button.setMouseTracking(True)
         self.help_button.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.help_button.setStyleSheet("QPushButton {\n"
@@ -113,16 +111,16 @@ class Processing_cellService(QMainWindow):
             "}\n"
             "")
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("Icon/help.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap("Icon/help_page.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.help_button.setIcon(icon2)
-        self.help_button.setIconSize(QtCore.QSize(35, 30))
+        self.help_button.setIconSize(QtCore.QSize(65, 30))
         self.help_button.clicked.connect(self.help_message)
         self.help_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Help </span></p></body></html>")
         self.help_button.setStatusTip("Help")
        
         self.save_button = QtWidgets.QPushButton(self.principal_widget)
         self.save_button.setGraphicsEffect(self.applyShadow())
-        self.save_button.setGeometry(QtCore.QRect(190, 10, 41, 41))
+        self.save_button.setGeometry(QtCore.QRect(950, 720, 41, 41))
         self.save_button.setMouseTracking(True)
         self.save_button.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.save_button.setStyleSheet("QPushButton {\n"
@@ -141,30 +139,18 @@ class Processing_cellService(QMainWindow):
             "}\n"
             "")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("Icon/save_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap("Icon/images (1).png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.save_button.setIcon(icon3)
-        self.save_button.setIconSize(QtCore.QSize(35, 30))
+        self.save_button.setIconSize(QtCore.QSize(65, 30))
         self.save_button.clicked.connect(self.save)
         self.save_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Save all changes</span></p></body></html>")
         self.save_button.setStatusTip("Save all changes")
-        
-        self.Label_Save = QtWidgets.QLabel(self.principal_widget)
-        self.Label_Save.setGraphicsEffect(self.applyShadow())
-        self.Label_Save.setWordWrap(True)
-        self.Label_Save.setGeometry(QtCore.QRect(20, 480, 221, 150))
-        self.Label_Save.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-            "border-radius: 30px;\n"
-            "font: 9pt \"Arial\";\n"
-            "color: rgb(19, 82, 255);")
-        self.Label_Save.setScaledContents(True)
-        self.Label_Save.setText("Don't forget to save image!")
-        self.Label_Save.setAlignment(QtCore.Qt.AlignCenter)
         
         self.delete_button = QtWidgets.QPushButton(self.principal_widget)
         self.delete_button.setGraphicsEffect(self.applyShadow())
         self.delete_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Delete </span></p></body></html>")
         self.delete_button.setStatusTip("Delete")
-        self.delete_button.setGeometry(QtCore.QRect(30, 10, 41, 41))
+        self.delete_button.setGeometry(QtCore.QRect(1020, 720, 41, 41))
         self.delete_button.setMouseTracking(True)
         self.delete_button.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.delete_button.setToolTipDuration(-1)
@@ -184,7 +170,7 @@ class Processing_cellService(QMainWindow):
             "}\n"
             "")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("Icon/canc icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap("Icon/canc_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.delete_button.setIcon(icon1)
         self.delete_button.setIconSize(QtCore.QSize(35, 30))
         self.delete_button.clicked.connect(self.Clear_filtred_label)
@@ -196,16 +182,16 @@ class Processing_cellService(QMainWindow):
 
     def set_segmentation(self):
         self.segmentation_widget = QtWidgets.QWidget(self.principal_widget)
-        self.segmentation_widget.setGeometry(QtCore.QRect(840, 50, 261, 631))
+        self.segmentation_widget.setGeometry(QtCore.QRect(840, 50, 245, 630))
         self.segmentation_widget.setGraphicsEffect(self.applyShadow())
         self.segmentation_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n" "border-radius: 35px;")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("Icon/confirm.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap("Icon/accept.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 
         self.Add_button = QtWidgets.QPushButton(self.segmentation_widget)
         self.Add_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Add Changes to the filtred image</span></p></body></html>")
         self.Add_button.setStatusTip("Add Changes to the filtred image")
-        self.Add_button.clicked.connect(self.add_change)
+        self.Add_button.clicked.connect(self.apply_segmentation)
         self.Add_button.setGraphicsEffect(self.applyShadow())
         self.Add_button.setGeometry(QtCore.QRect(50, 470, 41, 41))
         self.Add_button.setFocusPolicy(QtCore.Qt.StrongFocus)
@@ -223,15 +209,39 @@ class Processing_cellService(QMainWindow):
             "    background-color: rgb(180, 180, 180);\n"
             "}")
         self.Add_button.setIcon(icon3)
-        self.Add_button.setIconSize(QtCore.QSize(60, 35))
-        self.New_button = QtWidgets.QPushButton(self.segmentation_widget)
-        self.New_button.setGraphicsEffect(self.applyShadow())
-        self.New_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Filtres a binarized image</span></p></body></html>")
-        self.New_button.setStatusTip("Filtres a binarized image")
-        self.New_button.clicked.connect(self.apply_segmentation)
-        self.New_button.setGeometry(QtCore.QRect(160, 470, 41, 41))
-        self.New_button.setFocusPolicy(QtCore.Qt.StrongFocus)
-        self.New_button.setStyleSheet("QPushButton {\n"
+        self.Add_button.setIconSize(QtCore.QSize(30, 35))
+        icon_not = QtGui.QIcon()
+        icon_not.addPixmap(QtGui.QPixmap("Icon/not_accept.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.No_button = QtWidgets.QPushButton(self.segmentation_widget)
+        self.No_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Not Changes to the filtred image</span></p></body></html>")
+        self.No_button.setStatusTip("Not Changed")
+        self.No_button.clicked.connect(self.clear_edit_label)
+        self.No_button.setGraphicsEffect(self.applyShadow())
+        self.No_button.setGeometry(QtCore.QRect(150, 470, 41, 41))
+        self.No_button.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.No_button.setStyleSheet("QPushButton {\n"
+            "     background-color: rgb(255, 255, 255);\n"
+            "    border-style: outset;\n"
+            "    border: 2px;\n"
+            "    border-width: 1px;\n"
+            "    border-radius: 20px;\n"
+            "    border-color: beige;\n"
+            "    font: bold 14px;\n"
+            "    padding: 6px;\n"
+            "}\n"
+            "QPushButton:pressed {\n"
+            "    background-color: rgb(180, 180, 180);\n"
+            "}")
+        self.No_button.setIcon(icon_not)
+        self.No_button.setIconSize(QtCore.QSize(30, 35))
+        self.Undo_button = QtWidgets.QPushButton(self.segmentation_widget)
+        self.Undo_button.setGraphicsEffect(self.applyShadow())
+        self.Undo_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Undo Change</span></p></body></html>")
+        self.Undo_button.setStatusTip("Undo change")
+        self.Undo_button.clicked.connect(self.back)
+        self.Undo_button.setGeometry(QtCore.QRect(100, 550, 41, 41))
+        self.Undo_button.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.Undo_button.setStyleSheet("QPushButton {\n"
             "     background-color: rgb(255, 255, 255);\n"
             "    border-style: outset;\n"
             "    border: 2px;\n"
@@ -245,35 +255,9 @@ class Processing_cellService(QMainWindow):
             "    background-color: rgb(180, 180, 180);\n"
             "}")
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("Icon/images.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.New_button.setIcon(icon4)
-        self.Back_button = QtWidgets.QPushButton(self.segmentation_widget)
-        self.Back_button.setGraphicsEffect(self.applyShadow())
-        self.Back_button.setGeometry(QtCore.QRect(110, 550, 41, 41))
-        self.Back_button.setMouseTracking(True)
-        self.Back_button.clicked.connect(self.back_binary)
-        self.Back_button.setFocusPolicy(QtCore.Qt.StrongFocus)
-        self.Back_button.setStyleSheet("QPushButton {\n"
-            "     background-color: rgb(255, 255, 255);\n"
-            "    border-style: outset;\n"
-            "    border: 2px;\n"
-            "    border-width: 1px;\n"
-            "    border-radius: 10px;\n"
-            "    border-color: beige;\n"
-            "    font: bold 14px;\n"
-            "    padding: 6px;\n"
-            "}\n"
-            "\n"
-            "QPushButton:pressed {\n"
-            "    background-color: rgb(180, 180, 180);\n"
-            "}\n"
-            "")
-        icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap("Icon/back_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.Back_button.setIcon(icon5)
-        self.Back_button.setIconSize(QtCore.QSize(60, 35))
-        self.Back_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Back to binarized images </span></p></body></html>")
-        self.Back_button.setStatusTip("Back to binarized images")
+        icon4.addPixmap(QtGui.QPixmap("Icon/back.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.Undo_button.setIcon(icon4)
+        self.Undo_button.setIconSize(QtCore.QSize(30, 35))
 
         self.Remove_button = QtWidgets.QPushButton(self.segmentation_widget)
         self.Remove_button.setGeometry(QtCore.QRect(30, 130, 41, 41))
@@ -588,7 +572,7 @@ class Processing_cellService(QMainWindow):
         self.Close_canc.setIcon(icon1)
         
         self.segmentation_edit = QtWidgets.QLineEdit(self.segmentation_widget)
-        self.segmentation_edit.setGeometry(QtCore.QRect(0, 0, 261, 41))
+        self.segmentation_edit.setGeometry(QtCore.QRect(0, 0, 245, 41))
         self.segmentation_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
             "border-radius:15px;\n"
             "    padding: 6px;\n"
@@ -644,18 +628,19 @@ class Processing_cellService(QMainWindow):
         self.Close_edit.setReadOnly(True)
         
         self.Add_title = QtWidgets.QLabel(self.segmentation_widget)
-        self.Add_title.setGeometry(QtCore.QRect(20, 513, 91, 21))
+        self.Add_title.setGeometry(QtCore.QRect(30, 513, 91, 21))
         self.Add_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
-        self.Add_title.setText("Add Change")
-        self.New_button.setIconSize(QtCore.QSize(60, 35))
-        self.new_title = QtWidgets.QLabel(self.segmentation_widget)
-        self.new_title.setGeometry(QtCore.QRect(120, 513, 121, 21))
-        self.new_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
-        self.new_title.setText("New Segmentation")
-        self.back_title = QtWidgets.QLabel(self.segmentation_widget)
-        self.back_title.setGeometry(QtCore.QRect(80, 593, 111, 21))
-        self.back_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
-        self.back_title.setText("Binarized images")
+        self.Add_title.setText("Apply Change")
+        self.No_title = QtWidgets.QLabel(self.segmentation_widget)
+        self.No_title.setGeometry(QtCore.QRect(140, 513, 91, 21))
+        self.No_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
+        self.No_title.setText("Not Change")
+        
+        self.undo_title = QtWidgets.QLabel(self.segmentation_widget)
+        self.undo_title.setGeometry(QtCore.QRect(90, 593, 121, 21))
+        self.undo_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
+        self.undo_title.setText("Undo Change")
+        
         self.remove_title = QtWidgets.QLineEdit(self.segmentation_widget)
         self.remove_title.setGeometry(QtCore.QRect(80, 120, 141, 20))
         self.remove_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
@@ -699,11 +684,12 @@ class Processing_cellService(QMainWindow):
         self.Radius_title.setReadOnly(True)
         self.Radius_title.setText("Radius")
         
-        self.setEnabled_False_Button()
+        self.setEnabled_Button(False)
+        self.Undo_button.setEnabled(False)
         
     def binary_processing(self):
         self.binary_widget = QtWidgets.QWidget(self.principal_widget)
-        self.binary_widget.setGeometry(QtCore.QRect(10, 80, 241, 361))
+        self.binary_widget.setGeometry(QtCore.QRect(10, 60, 241, 361))
         self.binary_widget.setGraphicsEffect(self.applyShadow())
         self.binary_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n" "border-radius: 30px;")
 
@@ -728,7 +714,7 @@ class Processing_cellService(QMainWindow):
         
         self.fontSizeSpinBox = QtWidgets.QDoubleSpinBox(self.binary_widget_3)
         self.fontSizeSpinBox.setGeometry(QtCore.QRect(10, 30, 91, 31))
-        self.fontSizeSpinBox.setDecimals(3)
+        self.fontSizeSpinBox.setDecimals(2)
         self.fontSizeSpinBox.setMaximum(255.0)
         self.fontSizeSpinBox.setStyleSheet("background-color: white;\n"
             "border: 2px solid rgb(128, 183, 255);\n"
@@ -739,7 +725,7 @@ class Processing_cellService(QMainWindow):
             "color: blue;")
         self.fontSizeSpinBox2 = QtWidgets.QDoubleSpinBox(self.binary_widget_3)
         self.fontSizeSpinBox2.setGeometry(QtCore.QRect(10, 70, 91, 31))
-        self.fontSizeSpinBox2.setDecimals(3)
+        self.fontSizeSpinBox2.setDecimals(2)
         self.fontSizeSpinBox2.setMaximum(255.0)
         self.fontSizeSpinBox2.setStyleSheet("background-color: white;\n"
             "border: 2px solid rgb(128, 183, 255);\n"
@@ -832,14 +818,6 @@ class Processing_cellService(QMainWindow):
         self.parent.set_image(self.parent.red_image, self.Original_Label, "red", mask=False)
         self.parent.set_image(self.parent.green_image, self.Original_Label1, "green", mask=False)
         self.parent.set_image(self.parent.blue_image, self.Original_Label2, "blue", mask=False)
-        self.Repeat_Red=False
-        self.Repeat_Green=False
-        self.Repeat_Blue=False
-    
-    def back_binary(self):
-        self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
-        self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
-        self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
     
     def runIntensityBinarization(self):
         if self.radioRed.isChecked():
@@ -884,12 +862,12 @@ class Processing_cellService(QMainWindow):
     
     def control(self, number):
         error=False
-        if (self.valore==0):
-            self.setEnabled_True_Button()
         for i in range (0, self.valore):
             if(self.selezioni[i]==number):
                 self.error_message("Choice already selected, delete one to continue")
                 error=True
+        if(error==False):
+            self.No_button.setEnabled(True)
         return error
     
     def set_edit_remove(self):
@@ -897,202 +875,197 @@ class Processing_cellService(QMainWindow):
             self.valore=self.valore+1
             self.selezioni[(self.valore-1)]=1
             self.Remove_edit.setText(str(self.valore))
+            self.Remove_canc.setEnabled(True)
     
     def set_edit_erosion(self):
         if(self.control(2)==False):
             self.valore=self.valore+1
             self.selezioni[(self.valore-1)]=2
             self.Erosion_edit.setText(str(self.valore))
+            self.Erosion_canc.setEnabled(True)
     
     def set_edit_dilation(self):
         if(self.control(3)==False):
             self.valore=self.valore+1
             self.selezioni[(self.valore-1)]=3
             self.Dilation_edit.setText(str(self.valore))
+            self.Dilation_canc.setEnabled(True)
     
     def set_edit_open(self):
         if(self.control(4)==False):
             self.valore=self.valore+1
             self.selezioni[(self.valore-1)]=4
             self.Open_edit.setText(str(self.valore))
+            self.Open_canc.setEnabled(True)
     
     def set_edit_close(self):
         if(self.control(5)==False):
             self.valore=self.valore+1
             self.selezioni[(self.valore-1)]=5
             self.Close_edit.setText(str(self.valore))
+            self.Close_canc.setEnabled(True)
         
     def apply_segmentation(self):
-        self.notRed=True
-        self.notGreen=True
-        self.notBlue=True
-        error=False
-        if self.radioRed.isChecked():
-            if(self.parent.red_mask is None):
-                self.error_message("Binarize red image")
-                error=True
-            if(self.Repeat_Red):
-                self.mask_red=None
-        if self.radioGreen.isChecked():
-            if(self.parent.green_mask is None):
-                self.error_message("Binarize green image")
-                error=True
-            if(self.Repeat_Green):
-                self.mask_green=None
-        if self.radioBlue.isChecked():
-            if(self.parent.blue_mask is None):
-                self.error_message("Binarize blue image")
-                error=True
-            if(self.Repeat_Blue):
-                self.mask_green=None
-        if (error is False):
-            for i in range (0,5):
+        error=False #controlla errori
+        
+        #controlla che l'immagine selezionata sia stata binarizzata, altrimenti errore
+        if self.radioRed.isChecked() and self.parent.red_mask is None:
+            self.error_message("Binarize red image")
+            error=True
+        if self.radioGreen.isChecked() and self.parent.green_mask is None:
+            self.error_message("Binarize green image")
+            error=True
+        if self.radioBlue.isChecked() and self.parent.blue_mask is None:
+            self.error_message("Binarize blue image")
+            error=True
+        
+        #serve per vedere se è stato selezionato il button remove small object, 
+        #in questo caso il raggio deve essere != da 0, altrimenti è errore
+        for i in range (0,5):
+            if(self.selezioni[i]==1):
+                raggio=self.Raggio.value()
+                if raggio==0:
+                    self.error_message("Insert a radius!")
+                    error=True
+                    
+        if (error is False): #se ci sono stati degli errori in precedenza non devi continuare
+            self.clear=False #parametro utile nella funzione back se vengono cancellate tutte le immagini e si vuole tornare indietro
+            if(self.radioRed.isChecked()):
+                self.filtred_red_mask=self.parent.red_mask
+                self.Undo_button.setEnabled(True)
+            if(self.radioGreen.isChecked()):
+                self.filtred_green_mask=self.parent.green_mask
+                self.Undo_button.setEnabled(True)
+            if(self.radioBlue.isChecked()):
+                self.filtred_blue_mask=self.parent.blue_mask
+                self.Undo_button.setEnabled(True)
+            for i in range (0,5): #scorrere il vettore delle selezioni per svolgere in ordine quanto richiesto
                 if (self.selezioni[i]==1):
-                    raggio=self.Raggio.value()
-                    if raggio==0:
-                        self.error_message("Insert a radius!")
-                        error=True
-                    elif (self.radioRed.isChecked() and error==False):
-                        if(self.mask_red is not None):
-                            self.mask_red= morphology.remove_small_objects(self.mask_red.astype(np.bool), raggio)
-                        else:
-                            self.mask_red= morphology.remove_small_objects(self.parent.red_mask.astype(np.bool), raggio)
-                        self.notRed=False
-                        self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
-                    if (self.radioGreen.isChecked() and error==False):
-                        if(self.mask_green is not None):
-                            self.mask_green= morphology.remove_small_objects(self.mask_green.astype(np.bool), raggio)
-                        else:
-                            self.mask_green= morphology.remove_small_objects(self.parent.green_mask.astype(np.bool), raggio)
-                        self.notGreen=False
-                        self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
-                    elif (self.radioBlue.isChecked() and error==False):
-                        raggio=self.Raggio.value()
-                        if (self.mask_blue is not None):
-                            self.mask_blue= morphology.remove_small_objects(self.mask_blue.astype(np.bool), raggio)
-                        else:
-                            self.mask_blue= morphology.remove_small_objects(self.parent.blue_mask.astype(np.bool), raggio)
-                        self.notBlue=False
-                        self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True) 
-                elif (self.selezioni[i]==2 and error==False):
+                    if (self.radioRed.isChecked()):
+                        self.parent.red_mask= morphology.remove_small_objects(self.parent.red_mask.astype(np.bool), raggio)
+                    if (self.radioGreen.isChecked()):
+                        self.parent.green_mask= morphology.remove_small_objects(self.parent.green_mask.astype(np.bool), raggio)
+                    if (self.radioBlue.isChecked()):
+                        self.parent.blue_mask= morphology.remove_small_objects(self.parent.blue_mask.astype(np.bool), raggio)
+                elif (self.selezioni[i]==2):
                     if self.radioRed.isChecked():
-                        if(self.mask_blue is not None):
-                            self.mask_red=morphology.binary_erosion(self.mask_red)
-                        else:
-                            self.mask_red=morphology.binary_erosion(self.parent.red_mask)
-                        self.notRed=False
-                        self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
+                        self.parent.red_mask=morphology.binary_erosion(self.parent.red_mask)
                     if self.radioGreen.isChecked():
-                        if(self.mask_green is not None):
-                            self.mask_green=morphology.binary_erosion(self.mask_green)
-                        else:
-                            self.mask_green=morphology.binary_erosion(self.parent.green_mask)
-                        self.notGreen=False
-                        self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
+                        self.parent.green_mask=morphology.binary_erosion(self.parent.green_mask)
                     if self.radioBlue.isChecked():
-                        if(self.mask_blue is not None):
-                            self.mask_blue=morphology.binary_erosion(self.mask_blue)
-                        else:
-                            self.mask_blue=morphology.binary_erosion(self.parent.blue_mask)
-                        self.notBlue=False
-                        self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True) 
-                elif (self.selezioni[i]==3 and error==False):
+                        self.parent.blue_mask=morphology.binary_erosion(self.parent.blue_mask)
+                elif (self.selezioni[i]==3):
                     if self.radioRed.isChecked():
-                        if(self.mask_blue is not None):
-                            self.mask_red=morphology.binary_dilation(self.mask_red)
-                        else:
-                            self.mask_red=morphology.binary_dilation(self.parent.red_mask)
-                        self.notRed=False
-                        self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
+                        self.parent.red_mask=morphology.binary_dilation(self.parent.red_mask)
                     if self.radioGreen.isChecked():
-                        if(self.mask_green is not None):
-                            self.mask_green=morphology.binary_dilation(self.mask_green)
-                        else:
-                            self.mask_green=morphology.binary_dilation(self.parent.green_mask)
-                        self.notGreen=False
-                        self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
+                        self.parent.green_mask=morphology.binary_dilation(self.parent.green_mask)
                     if self.radioBlue.isChecked():
-                        if(self.mask_blue is not None):
-                            self.mask_blue=morphology.binary_dilation(self.mask_blue)
-                        else:
-                            self.mask_blue=morphology.binary_dilation(self.parent.blue_mask)
-                        self.notBlue=False
-                        self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True) 
-                elif (self.selezioni[i]==4 and error==False):
+                        self.parent.blue_mask=morphology.binary_dilation(self.parent.blue_mask)
+                elif (self.selezioni[i]==4):
                     if self.radioRed.isChecked():
-                        if(self.mask_blue is not None):
-                            self.mask_red=morphology.binary_opening(self.mask_red)
-                        else:
-                            self.mask_red=morphology.binary_opening(self.parent.red_mask)
-                        self.notRed=False
-                        self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
+                        self.parent.red_mask=morphology.binary_opening(self.parent.red_mask)
                     if self.radioGreen.isChecked():
-                        if(self.mask_green is not None):
-                            self.mask_green=morphology.binary_opening(self.mask_green)
-                        else:
-                            self.mask_green=morphology.binary_opening(self.parent.green_mask)
-                        self.notGreen=False
-                        self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
+                        self.parent.green_mask=morphology.binary_opening(self.parent.green_mask)
                     if self.radioBlue.isChecked():
-                        if(self.mask_blue is not None):
-                            self.mask_blue=morphology.binary_opening(self.mask_blue)
-                        else:
-                            self.mask_blue=morphology.binary_opening(self.parent.blue_mask)
-                        self.notBlue=False
-                        self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True) 
-                elif (self.selezioni[i]==5 and error==False):
+                        self.parent.blue_mask=morphology.binary_opening(self.parent.blue_mask)
+                elif (self.selezioni[i]==5):
                     if self.radioRed.isChecked():
-                        if(self.mask_blue is not None):
-                            self.mask_red=morphology.binary_closing(self.mask_red)
-                        else:
-                            self.mask_red=morphology.binary_closing(self.parent.red_mask)
-                        self.notRed=False
-                        self.parent.set_image(self.mask_red, self.Filtred_Label, "red", mask=True)
+                        self.parent.red_mask=morphology.binary_closing(self.parent.red_mask)
                     if self.radioGreen.isChecked():
-                        if(self.mask_green is not None):
-                            self.mask_green=morphology.binary_closing(self.mask_green)
-                        else:
-                            self.mask_green=morphology.binary_closing(self.parent.green_mask)
-                        self.notGreen=False
-                        self.parent.set_image(self.mask_green, self.Filtred_Label1, "green", mask=True)
+                        self.parent.green_mask=morphology.binary_closing(self.parent.green_mask)
                     if self.radioBlue.isChecked():
-                        if(self.mask_blue is not None):
-                            self.mask_blue=morphology.binary_closing(self.mask_blue)
-                        else:
-                            self.mask_blue=morphology.binary_closing(self.parent.blue_mask)
-                        self.notBlue=False
-                        self.parent.set_image(self.mask_blue, self.Filtred_Label2, "blue", mask=True)
-            if(error==False):
-                if self.radioRed.isChecked() and self.notRed:
-                    self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
-                if self.radioGreen.isChecked() and self.notGreen:
-                    self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
-                if self.radioBlue.isChecked() and self.notBlue:
-                    self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True) 
-                self.Label_Save.setText("Don't forget to save image!")
-                self.Repeat_Red=True
-                self.Repeat_Green=True
-                self.Repeat_Blue=True
-                self.notRed=True
-                self.notGreen=True
-                self.notBlue=True
-                self.clear_edit_label()
-                self.setEnabled_False_Button()
+                        self.parent.blue_mask=morphology.binary_closing(self.parent.blue_mask)
+            #setto le immagini con il nuovo contenuto
+            if self.radioRed.isChecked():
+                self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
+            if self.radioGreen.isChecked():
+                self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
+            if self.radioBlue.isChecked():
+                self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
+            self.clear_edit_label() #ripulisce label numerazione dopo aver apportato modifiche
     
-    def setEnabled_False_Button(self):
+    #delete numeration
+    def clear_edit_label(self):
+        self.valore=0
+        self.selezioni=np.array([0,0,0,0,0])
+        self.Remove_edit.clear()
+        self.Erosion_edit.clear()
+        self.Dilation_edit.clear()
+        self.Open_edit.clear()
+        self.Close_edit.clear()
+        self.setEnabled_Button(False)
+    
+    #delete all
+    def Clear_filtred_label(self):
+        self.Filtred_Label.clear()
+        self.Filtred_Label1.clear()
+        self.Filtred_Label2.clear()
+        self.clear_edit_label()
+        self.filtred_red_mask=self.parent.red_mask
+        self.filtred_green_mask=self.parent.green_mask
+        self.filtred_blue_mask=self.parent.blue_mask
+        self.parent.red_mask=None
+        self.parent.green_mask=None
+        self.parent.blue_mask=None
+        self.clear=True
+        self.Undo_button.setEnabled(True)
+        
+    #back to the last segmentation
+    def back(self):
+        if (self.clear): #se in passato è stato cancellato tutto allora riportami al cambiamento più recente
+            self.parent.red_mask=self.filtred_red_mask
+            self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
+            self.parent.green_mask=self.filtred_green_mask
+            self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
+            self.parent.blue_mask=self.filtred_blue_mask
+            self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
+            self.clear=False
+        elif(self.radioRed.isChecked()):
+            self.parent.red_mask=self.filtred_red_mask
+            self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
+        elif(self.radioGreen.isChecked()):
+            self.parent.green_mask=self.filtred_green_mask
+            self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
+        elif(self.radioBlue.isChecked()):
+            self.parent.blue_mask=self.filtred_blue_mask
+            self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
+        self.Undo_button.setEnabled(False)
+    
+    #attivare/disattivare button canc
+    def setEnabled_Button(self, b):
+        self.Remove_canc.setEnabled(b)
+        self.Dilation_canc.setEnabled(b)
+        self.Erosion_canc.setEnabled(b)
+        self.Open_canc.setEnabled(b)
+        self.Close_canc.setEnabled(b)
+        self.No_button.setEnabled(b)
+
+    #canc button
+    def delete_edit_remove(self):
+        self.delete(self.Remove_edit)
+        self.Remove_edit.clear()
         self.Remove_canc.setEnabled(False)
-        self.Dilation_canc.setEnabled(False)
+        
+    def delete_edit_erosion(self):
+        self.delete(self.Erosion_edit)
+        self.Erosion_edit.clear()
         self.Erosion_canc.setEnabled(False)
+    
+    def delete_edit_dilation(self):
+        self.delete(self.Dilation_edit)
+        self.Dilation_edit.clear()
+        self.Dilation_canc.setEnabled(False)
+    
+    def delete_edit_open(self):
+        self.delete(self.Open_edit)
+        self.Open_edit.clear()
         self.Open_canc.setEnabled(False)
+    
+    def delete_edit_close(self):
+        self.delete(self.Close_edit)
+        self.Close_edit.clear()
         self.Close_canc.setEnabled(False)
-    
-    def setEnabled_True_Button(self):
-        self.Remove_canc.setEnabled(True)
-        self.Dilation_canc.setEnabled(True)
-        self.Erosion_canc.setEnabled(True)
-        self.Open_canc.setEnabled(True)
-        self.Close_canc.setEnabled(True)
-    
+        
     def delete(self, label):
         current_number=int(label.text())-1
         for i in range (current_number, (len(self.selezioni))):
@@ -1116,73 +1089,16 @@ class Processing_cellService(QMainWindow):
                 stringa=str(i+1)
                 self.Close_edit.setText(stringa)
         self.valore=self.valore-1
+        if (self.valore==0):
+            self.setEnabled_Button(False)
     
-    def delete_edit_remove(self):
-        self.delete(self.Remove_edit)
-        self.Remove_edit.clear()
-        
-    def delete_edit_erosion(self):
-        self.delete(self.Erosion_edit)
-        self.Erosion_edit.clear()
-    
-    def delete_edit_dilation(self):
-        self.delete(self.Dilation_edit)
-        self.Dilation_edit.clear()
-    
-    def delete_edit_open(self):
-        self.delete(self.Open_edit)
-        self.Open_edit.clear()
-    
-    def delete_edit_close(self):
-        self.delete(self.Close_edit)
-        self.Close_edit.clear()
-    
-    def add_change(self):
-        self.Repeat_Red=False
-        self.Repeat_Green=False
-        self.Repeat_Blue=False
-        self.apply_segmentation()        
-    
-    def clear_edit_label(self):
-        self.valore=0
-        self.selezioni=np.array([0,0,0,0,0])
-        self.Remove_edit.clear()
-        self.Erosion_edit.clear()
-        self.Dilation_edit.clear()
-        self.Open_edit.clear()
-        self.Close_edit.clear()
-        
-    def set_all_mask(self):
-        self.parent.set_image(self.parent.red_mask, self.parent.RED_QLabel, "red", mask=True)
-        self.parent.set_image(self.parent.green_mask, self.parent.GREEN_QLabel, "green", mask=True)
-        self.parent.set_image(self.parent.blue_mask, self.parent.BLUE_QLabel, "blue", mask=True)
-    
+    #save all
     def save(self):
         if((self.parent.red_mask is not None) and (self.parent.green_mask is not None) and (self.parent.blue_mask is not None)):
             self.save_message()
         else:
             self.error_message("Attention: the images haven't been binarized")
-    
-    def Clear_filtred_label(self):
-        if (self.local_red_mask is not None):
-            self.parent.red_mask = self.local_red_mask
-        if (self.local_green_mask is not None):
-            self.parent.green_mask = self.local_green_mask
-        if (self.local_blue_mask is not None):
-            self.parent.blue_mask = self.local_blue_mask
-        self.Filtred_Label.clear()
-        self.Filtred_Label1.clear()
-        self.Filtred_Label2.clear()
-        self.clear_edit_label()
-    
-    def error_message(self, text_error):
-        msg = QMessageBox(self)
-        msg.setIcon(QMessageBox.Critical)
-        msg.setText("Error")
-        msg.setInformativeText(text_error)
-        msg.setWindowTitle("Error")
-        msg.exec_()
-    
+            
     def save_message(self):
         mbox = QMessageBox(self)
         mbox.setIcon(QMessageBox.Question)
@@ -1193,20 +1109,20 @@ class Processing_cellService(QMainWindow):
         mbox.setStandardButtons(QMessageBox.Save | QMessageBox.Cancel)
         returnValue = mbox.exec()
         if returnValue == QMessageBox.Save:
-            self.Label_Save.setText("SAVED IMAGES!")
-            if(self.mask_red is not None):
-                self.local_red_mask= self.parent.red_mask
-                self.parent.red_mask = self.mask_red
-            if(self.mask_green is not None):
-                self.local_green_mask= self.parent.green_mask
-                self.parent.green_mask = self.mask_green
-            if(self.mask_blue is not None):
-                self.local_blue_mask= self.parent.blue_mask
-                self.parent.blue_mask = self.mask_blue
-            self.set_all_mask()
+            self.parent.set_image(self.parent.red_mask, self.parent.RED_QLabel, "red", mask=True)
+            self.parent.set_image(self.parent.green_mask, self.parent.GREEN_QLabel, "green", mask=True)
+            self.parent.set_image(self.parent.blue_mask, self.parent.BLUE_QLabel, "blue", mask=True)
         else:
             pass
-    
+        
+    def error_message(self, text_error):
+        msg = QMessageBox(self)
+        msg.setIcon(QMessageBox.Critical)
+        msg.setText("Error")
+        msg.setInformativeText(text_error)
+        msg.setWindowTitle("Error")
+        msg.exec_()
+        
     def remove_message(self):
         mbox = QMessageBox(self)
         mbox.setIcon(QMessageBox.Information)
