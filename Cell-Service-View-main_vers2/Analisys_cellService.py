@@ -125,14 +125,14 @@ class Ui_Analisys_cellService(QMainWindow):
         icon14 = QtGui.QIcon("Icon/canc icon.png")
         #icon14.addPixmap(QtGui.QPixmap("canc icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.canc_image_button.setIcon(icon14)
-        self.canc_image_button.setIconSize(QtCore.QSize(35, 23))
+        self.canc_image_button.setIconSize(QtCore.QSize(35, 27))
         self.canc_image_button.setObjectName("canc_image_button")
         self.canc_image_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Clear all (Ctrl+Del)</span></p></body></html>")
         self.canc_image_button.setStatusTip("Clear all (Ctrl+Del)")
-        self.canc_image_button.clicked.connect(self.clearAll)
+        self.canc_image_button.clicked.connect(self.save_message)
         self.canc_image_button.setGraphicsEffect(self.applyShadow())
         self.ctrl_canc = QtWidgets.QShortcut(QKeySequence('Ctrl+Delete'), self)
-        self.ctrl_canc.activated.connect(self.clearAll)
+        self.ctrl_canc.activated.connect(self.save_message)
         
         self.help_button = QtWidgets.QPushButton(self.principal_widget)
         self.help_button.setGeometry(QtCore.QRect(70, 10, 31, 31))
@@ -207,7 +207,7 @@ class Ui_Analisys_cellService(QMainWindow):
         icon = QtGui.QIcon("Icon/icon bio.png")
         #icon.addPixmap(QtGui.QPixmap("icon bio.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.red_buttonBC.setIcon(icon)
-        self.red_buttonBC.setIconSize(QtCore.QSize(60, 35))
+        self.red_buttonBC.setIconSize(QtCore.QSize(60, 45))
         self.red_buttonBC.setObjectName("red_buttonBC")
         self.green_buttonBC = QtWidgets.QPushButton(self.biological_widget)
         self.green_buttonBC.setGeometry(QtCore.QRect(10, 130, 41, 41))
@@ -236,7 +236,7 @@ class Ui_Analisys_cellService(QMainWindow):
         icon1 = QtGui.QIcon("Icon/icon bio 3.png")
         #icon1.addPixmap(QtGui.QPixmap("icon bio 3.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.green_buttonBC.setIcon(icon1)
-        self.green_buttonBC.setIconSize(QtCore.QSize(60, 35))
+        self.green_buttonBC.setIconSize(QtCore.QSize(60, 45))
         self.green_buttonBC.setObjectName("green_buttonBC")
         self.blue_buttonBC = QtWidgets.QPushButton(self.biological_widget)
         self.blue_buttonBC.setGeometry(QtCore.QRect(10, 200, 41, 41))
@@ -265,7 +265,7 @@ class Ui_Analisys_cellService(QMainWindow):
         icon2 = QtGui.QIcon("Icon/icon bio 2.png")
         #icon2.addPixmap(QtGui.QPixmap("icon bio 2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.blue_buttonBC.setIcon(icon2)
-        self.blue_buttonBC.setIconSize(QtCore.QSize(60, 35))
+        self.blue_buttonBC.setIconSize(QtCore.QSize(60, 45))
         self.blue_buttonBC.setObjectName("blue_buttonBC")
         self.Red_PercentBC_edit = QtWidgets.QLineEdit(self.biological_widget)
         self.Red_PercentBC_edit.setGeometry(QtCore.QRect(55, 70, 130, 31))
@@ -1157,6 +1157,19 @@ class Ui_Analisys_cellService(QMainWindow):
         self.Green_intensity_edit_max.clear()
         self.Blue_intensity_edit_min.clear()
         self.Blue_intensity_edit_max.clear()
+        
+    def save_message(self):
+        mbox = QMessageBox(self)
+        mbox.setIcon(QMessageBox.Question)
+        mbox.setWindowTitle("Confirm")
+        mbox.setText("You are deleting image analysis")
+        mbox.setInformativeText("Do you want to delate your analysis?")
+        mbox.setStandardButtons(QMessageBox.Save | QMessageBox.Cancel)
+        returnValue = mbox.exec()
+        if returnValue == QMessageBox.Save:
+            self.clearAll()
+        else:
+            pass
         
     def error_message(self, text_error):
         msg = QMessageBox(self)
