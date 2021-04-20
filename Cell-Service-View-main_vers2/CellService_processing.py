@@ -173,7 +173,7 @@ class Processing_cellService(QMainWindow):
         icon1.addPixmap(QtGui.QPixmap("Icon/canc_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.delete_button.setIcon(icon1)
         self.delete_button.setIconSize(QtCore.QSize(35, 30))
-        self.delete_button.clicked.connect(self.Clear_filtred_label)
+        self.delete_button.clicked.connect(self.deleteall_message)
         self.setCentralWidget(self.principal_widget)
         
         self.selezioni=np.array([0,0,0,0,0])
@@ -668,7 +668,7 @@ class Processing_cellService(QMainWindow):
         self.close_title.setText("Closing")
         
         self.Raggio = QtWidgets.QDoubleSpinBox(self.segmentation_widget)
-        self.Raggio.setGeometry(QtCore.QRect(120, 60, 91, 31))
+        self.Raggio.setGeometry(QtCore.QRect(140, 60, 91, 31))
         self.Raggio.setStyleSheet("background-color: rgb(255, 255, 255);\n"
             "border: 2px solid rgb(128, 183, 255);\n"
             "    border-radius: 15px;\n"
@@ -677,12 +677,12 @@ class Processing_cellService(QMainWindow):
             "font: 10pt \"Varela\";\n"
             "color: blue;")
         self.Raggio.setDecimals(3)
-        self.Raggio.setMaximum(255.0)
+        self.Raggio.setMaximum(500.0)
         self.Radius_title = QtWidgets.QLineEdit(self.segmentation_widget)
-        self.Radius_title.setGeometry(QtCore.QRect(40, 60, 71, 31))
-        self.Radius_title.setStyleSheet("font: 10pt \"Arial\";\n" "color: rgb(19, 82, 255);")
+        self.Radius_title.setGeometry(QtCore.QRect(15, 60, 121, 31))
+        self.Radius_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.Radius_title.setReadOnly(True)
-        self.Radius_title.setText("Radius")
+        self.Radius_title.setText("Minimum island size")
         
         self.setEnabled_Button(False)
         self.Undo_button.setEnabled(False)
@@ -915,7 +915,7 @@ class Processing_cellService(QMainWindow):
             if(self.selezioni[i]==1):
                 self.raggio=self.Raggio.value()
                 if self.raggio==0:
-                    self.error_message("Insert a radius!")
+                    self.error_message("Insert a minimum island size!")
                     error=True
         return error
     
@@ -1071,23 +1071,21 @@ class Processing_cellService(QMainWindow):
     #save all
     def save(self):
         if((self.parent.red_mask is not None) and (self.parent.green_mask is not None) and (self.parent.blue_mask is not None)):
-            self.save_message()
-        else:
-            self.error_message("Attention: the images haven't been binarized")
-            
-    def save_message(self):
-        mbox = QMessageBox(self)
-        mbox.setIcon(QMessageBox.Question)
-        mbox.setWindowTitle("Save Dialog")
-        mbox.setText("Document has been modified!")
-        mbox.setInformativeText("Do you want to save your changes?")
-        mbox.setDetailedText("Click on Save button to save changes.")
-        mbox.setStandardButtons(QMessageBox.Save | QMessageBox.Cancel)
-        returnValue = mbox.exec()
-        if returnValue == QMessageBox.Save:
             self.parent.set_image(self.parent.red_mask, self.parent.RED_QLabel, "red", mask=True)
             self.parent.set_image(self.parent.green_mask, self.parent.GREEN_QLabel, "green", mask=True)
             self.parent.set_image(self.parent.blue_mask, self.parent.BLUE_QLabel, "blue", mask=True)
+        else:
+            self.error_message("Attention: the images haven't been binarized")
+            
+    def deleteall_message(self):
+        mbox = QMessageBox(self)
+        mbox.setIcon(QMessageBox.Question)
+        mbox.setWindowTitle("Delete All Dialog")
+        mbox.setText("Do you want to delete your changes?")
+        mbox.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
+        returnValue = mbox.exec()
+        if returnValue == QMessageBox.Yes:
+            self.Clear_filtred_label()
         else:
             pass
         
