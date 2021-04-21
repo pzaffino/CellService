@@ -704,13 +704,13 @@ class Processing_cellService(QMainWindow):
             "color: rgb(19, 82, 255);")
 
         self.Min_Label = QtWidgets.QLabel(self.binary_widget_3)
-        self.Min_Label.setText("Min Threashold")
+        self.Min_Label.setText("Min Threshold")
         self.Min_Label.setGeometry(QtCore.QRect(100, 30, 111, 31))
         self.Min_Label.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.Max_Label = QtWidgets.QLabel(self.binary_widget_3)
         self.Max_Label.setGeometry(QtCore.QRect(100, 70, 111, 31))
         self.Max_Label.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
-        self.Max_Label.setText("Max Threashold")
+        self.Max_Label.setText("Max Threshold")
         
         self.fontSizeSpinBox = QtWidgets.QDoubleSpinBox(self.binary_widget_3)
         self.fontSizeSpinBox.setGeometry(QtCore.QRect(10, 30, 91, 31))
@@ -737,7 +737,7 @@ class Processing_cellService(QMainWindow):
         
         self.automatic_button = QtWidgets.QPushButton(self.binary_widget)
         self.automatic_button.setGraphicsEffect(self.applyShadow())
-        self.automatic_button.setGeometry(QtCore.QRect(90, 200, 41, 41))
+        self.automatic_button.setGeometry(QtCore.QRect(90, 273, 41, 41))
         self.automatic_button.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.automatic_button.setStyleSheet("QPushButton {\n"
             "     background-color: rgb(255, 255, 255);\n"
@@ -762,7 +762,7 @@ class Processing_cellService(QMainWindow):
         
         self.apply = QtWidgets.QPushButton(self.binary_widget)
         self.apply.setGraphicsEffect(self.applyShadow())
-        self.apply.setGeometry(QtCore.QRect(90, 273, 41, 41))
+        self.apply.setGeometry(QtCore.QRect(90, 200, 41, 41))
         self.apply.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.apply.clicked.connect(self.runIntensityBinarization)
         self.apply.setStyleSheet("QPushButton {\n"
@@ -787,12 +787,12 @@ class Processing_cellService(QMainWindow):
         self.apply.setStatusTip("Binarize Image")
         
         self.Automatic_title = QtWidgets.QLabel(self.binary_widget)
-        self.Automatic_title.setGeometry(QtCore.QRect(50, 242, 131, 21))
+        self.Automatic_title.setGeometry(QtCore.QRect(50, 315, 131, 21))
         self.Automatic_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
-        self.Automatic_title.setText("Automatic Threashold")
+        self.Automatic_title.setText("Automatic Threshold")
         self.Apply_title = QtWidgets.QLabel(self.binary_widget)
         self.Apply_title.setText("Binarize Image")
-        self.Apply_title.setGeometry(QtCore.QRect(70, 315, 101, 21))
+        self.Apply_title.setGeometry(QtCore.QRect(70, 242, 101, 21))
         self.Apply_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.binary_edit = QtWidgets.QLineEdit(self.binary_widget)
         self.binary_edit.setGeometry(QtCore.QRect(0, 0, 241, 41))
@@ -845,6 +845,7 @@ class Processing_cellService(QMainWindow):
         else:
             pass
         self.fontSizeSpinBox.setValue(self.soglia1)
+        self.runIntensityBinarization()
     
     def binarizeImage(self,img):
         valore1 = self.fontSizeSpinBox.value()
