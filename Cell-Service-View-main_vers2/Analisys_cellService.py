@@ -32,8 +32,6 @@ class Ui_Analisys_cellService(QMainWindow):
         
         self.set_intensityWidget()
         
-        self.set_insertWidget()
-        
         self.statusBar()
         
         self.set_all_images()
@@ -44,7 +42,7 @@ class Ui_Analisys_cellService(QMainWindow):
     def setupUi(self):
         # set the window's style
         self.setObjectName("Analisys_cellService")
-        self.setFixedSize(1129, 715)
+        self.setFixedSize(1129, 690)
         self.setWindowTitle("Analisys")
         
         # set principa widget's style
@@ -101,7 +99,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.principal_layout.addWidget(self.RED_Label, 0, 0, 1, 1)
         
         self.canc_image_button = QtWidgets.QPushButton(self.principal_widget)
-        self.canc_image_button.setGeometry(QtCore.QRect(20, 10, 31, 31))
+        self.canc_image_button.setGeometry(QtCore.QRect(920, 20, 41, 41))
         self.canc_image_button.setMouseTracking(True)
         self.canc_image_button.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.canc_image_button.setToolTipDuration(-1)
@@ -126,7 +124,7 @@ class Ui_Analisys_cellService(QMainWindow):
         icon14 = QtGui.QIcon("Icon/canc icon.png")
         #icon14.addPixmap(QtGui.QPixmap("canc icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.canc_image_button.setIcon(icon14)
-        self.canc_image_button.setIconSize(QtCore.QSize(35, 27))
+        self.canc_image_button.setIconSize(QtCore.QSize(35, 40))
         self.canc_image_button.setObjectName("canc_image_button")
         self.canc_image_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Clear all (Ctrl+Del)</span></p></body></html>")
         self.canc_image_button.setStatusTip("Clear all (Ctrl+Del)")
@@ -136,7 +134,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.ctrl_canc.activated.connect(self.save_message)
         
         self.help_button = QtWidgets.QPushButton(self.principal_widget)
-        self.help_button.setGeometry(QtCore.QRect(70, 10, 31, 31))
+        self.help_button.setGeometry(QtCore.QRect(990, 20, 41, 41))
         self.help_button.setMouseTracking(True)
         self.help_button.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.help_button.setToolTipDuration(-1)
@@ -163,14 +161,14 @@ class Ui_Analisys_cellService(QMainWindow):
         icon15 = QtGui.QIcon("Icon/help.png")
         #icon15.addPixmap(QtGui.QPixmap("help.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.help_button.setIcon(icon15)
-        self.help_button.setIconSize(QtCore.QSize(35, 30))
+        self.help_button.setIconSize(QtCore.QSize(35, 35))
         self.help_button.setObjectName("help_button")
         self.help_button.setGraphicsEffect(self.applyShadow())
         #self.ctrl_help = QtWidgets.QShortcut(QKeySequence('Ctrl+Delete'), self)
         #self.ctrl_help.activated.connect(self.clearAll)
         
         self.label = QtWidgets.QLabel(self.principal_widget)
-        self.label.setGeometry(QtCore.QRect(20, 670, 191, 16))
+        self.label.setGeometry(QtCore.QRect(20, 20, 191, 16))
         self.label.setObjectName("label")
         self.label.setText("Image size: ")
         
@@ -566,7 +564,7 @@ class Ui_Analisys_cellService(QMainWindow):
         
     def set_numberIslands(self):
         self.number_widget = QtWidgets.QWidget(self.principal_widget)
-        self.number_widget.setGeometry(QtCore.QRect(920, 120, 191, 261))
+        self.number_widget.setGeometry(QtCore.QRect(920, 90, 191, 261))
         self.number_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "border-radius: 35px;")
         self.number_widget.setGraphicsEffect(self.applyShadow())
@@ -934,61 +932,6 @@ class Ui_Analisys_cellService(QMainWindow):
         self.Blue_intensity_edit_max.setObjectName("Blue_intensity_edit_max")
         self.setCentralWidget(self.principal_widget)
         
-    def set_insertWidget(self):
-        self.parameter_widget = QtWidgets.QWidget(self.principal_widget)
-        self.parameter_widget.setGeometry(QtCore.QRect(920, 30, 191, 71))
-        self.parameter_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"border-radius: 35px;")
-        self.parameter_widget.setObjectName("parameter_widget")
-        #self.parameter_widget.setGraphicsEffect(self.applyShadow())
-        self.parameter_edit = QtWidgets.QLineEdit(self.parameter_widget)
-        self.parameter_edit.setGeometry(QtCore.QRect(40, 30, 91, 31))
-        self.parameter_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
-"    border-radius: 15px;\n"
-"    font: bold 14px;\n"
-"    padding: 6px;\n"
-"font: 10pt \"Varela\";\n"
-"color: rgb(255, 255, 255);")
-        self.parameter_edit.setReadOnly(False)
-        self.parameter_edit.setObjectName("RGB_PercentS_edit_2")
-        self.parameter_title = QtWidgets.QLineEdit(self.parameter_widget)
-        self.parameter_title.setGeometry(QtCore.QRect(20, 10, 165, 16))
-        self.parameter_title.setStyleSheet("font: 7pt \"Arial\";\n"
-"color: rgb(19, 82, 255);")
-        self.parameter_title.setReadOnly(True)
-        self.parameter_title.setObjectName("parameter_title")
-        self.confirm_button = QtWidgets.QPushButton(self.parameter_widget)
-        self.confirm_button.setGeometry(QtCore.QRect(140, 30, 31, 31))
-        self.confirm_button.setFocusPolicy(QtCore.Qt.StrongFocus)
-        self.confirm_button.setStyleSheet("QPushButton {\n"
-"     background-color: rgb(255, 255, 255);\n"
-"    border-style: outset;\n"
-"    border: 2px;\n"
-"    border-width: 1px;\n"
-"    border-radius: 15px;\n"
-"    border-color: beige;\n"
-"    font: bold 14px;\n"
-"    padding: 6px;\n"
-"}\n"
-"QPushButton::hover {\n"
-"    background-color: rgb(204, 204, 204);\n"
-"}"
-"QPushButton:pressed {\n"
-"    background-color: rgb(180, 180, 180);\n"
-"}")
-        self.buttonPressed = False
-        #self.confirm_button.clicked.connect(self.confirm_parameter)
-        self.confirm_button.setGraphicsEffect(self.applyShadow())
-        self.confirm_button.setText("")
-        icon16 = QtGui.QIcon("Icon/confirm.png")
-        #icon16.addPixmap(QtGui.QPixmap("confirm.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.confirm_button.setIcon(icon16)
-        self.confirm_button.setIconSize(QtCore.QSize(60, 30))
-        self.confirm_button.setObjectName("confirm_button")
-        self.confirm_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Confirm parameter</span></p></body></html>")
-        self.confirm_button.setStatusTip("Confirm parameter")
-        self.parameter_title.setText("Parameter number of islands")
-        
     def applyShadow(self):
         shadow = QtWidgets.QGraphicsDropShadowEffect()
         shadow.setBlurRadius(40)
@@ -1002,33 +945,25 @@ class Ui_Analisys_cellService(QMainWindow):
         self.parent.set_image(self.parent.green_mask, self.GREEN_Label, "green", mask=True)
         self.parent.set_image(self.parent.blue_mask, self.BLUE_Label, "blue", mask=True)
     
-    def two_similarity_overlap(self, image1, image2, edit):
+    def two_similarity_overlap(self, image1, image2, edit, overlap_type):
         similarity = 0
         overlapping = np.zeros_like(self.parent.red_mask, dtype=np.uint8)
         mask=np.logical_and(image1==1, image2==1)
         overlapping[mask]=1
-        overlapping_dstack = np.dstack((image1, image2, np.zeros_like(self.parent.red_mask)))
+        if(overlap_type=="RG"):
+            overlapping_dstack = np.dstack((image1, image2, np.zeros_like(self.parent.red_mask)))
+        elif(overlap_type=="RB"):
+            overlapping_dstack = np.dstack((image1, np.zeros_like(self.parent.red_mask), image2))
+        elif(overlap_type=="GB"):
+            overlapping_dstack = np.dstack((np.zeros_like(self.parent.red_mask), image1, image2))
         similarity=overlapping.sum()
         edit.setText(str(round((similarity*100)/(self.parent.red_mask.shape[0] 
                                                  * self.parent.red_mask.shape[1]), 2))
                      + "% - " + str(similarity) + " pixels")
         return overlapping_dstack
     
-    def runSimilarity(self, buttonPressed):
-        if self.red_blue_buttonS.isChecked():
-            self.parent.set_image(self.two_similarity_overlap(self.parent.red_mask, self.parent.blue_mask), self.RGB_Label, "red", mask=True)
-        elif self.red_green_buttonS.isChecked():
-            self.parent.set_image(self.two_similarity_overlap(self.parent.red_mask, self.parent.green_mask), self.RGB_Label, "green", mask=True)
-        elif self.blue_green_buttonS.isChecked():
-            self.parent.set_image(self.two_similarity_overlap(self.parent.blue_mask, self.parent.green_mask), self.RGB_Label, "blue", mask=True)
-        elif self.total_buttonS.isChecked():
-            self.parent.set_image(self.AllimagesOverlap(), self.RGB_Label, "blue", mask=True)
-        else:
-            pass
-        self.RGB_Label.setScaledContents(True)
-    
     def similarity_buttonRB(self):
-        image = self.two_similarity_overlap(self.parent.red_mask, self.parent.blue_mask, self.RB_PercentS_edit)
+        image = self.two_similarity_overlap(self.parent.red_mask, self.parent.blue_mask, self.RB_PercentS_edit, "RB")
         image_visualize = image*255
         self.convert_npToQimage(image_visualize)
     
@@ -1038,12 +973,12 @@ class Ui_Analisys_cellService(QMainWindow):
         self.RGB_Label.setPixmap(qt_pixmap)
     
     def similarity_buttonRG(self):
-        image = self.two_similarity_overlap(self.parent.red_mask, self.parent.green_mask, self.RG_PercentS_edit)
+        image = self.two_similarity_overlap(self.parent.red_mask, self.parent.green_mask, self.RG_PercentS_edit, "RG")
         image_visualize = image*255
         self.convert_npToQimage(image_visualize)
     
     def similarity_buttonGB(self):
-        image = self.two_similarity_overlap(self.parent.green_mask, self.parent.blue_mask, self.BG_PercentS_edit)
+        image = self.two_similarity_overlap(self.parent.green_mask, self.parent.blue_mask, self.BG_PercentS_edit, "GB")
         image_visualize = image*255
         self.convert_npToQimage(image_visualize)
     
