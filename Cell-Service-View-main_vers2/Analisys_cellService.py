@@ -11,6 +11,7 @@ from skimage import exposure
 import skimage.morphology
 from skimage import filters
 from scipy import ndimage
+from scipy.ndimage import label, generate_binary_structure
 
 class Ui_Analisys_cellService(QMainWindow):
         
@@ -597,7 +598,7 @@ class Ui_Analisys_cellService(QMainWindow):
         icon7 = QtGui.QIcon("Icon/icon n 2.png")
         #icon7.addPixmap(QtGui.QPixmap("icon n 2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.number_button_red.setIcon(icon7)
-        self.number_button_red.setIconSize(QtCore.QSize(60, 35))
+        self.number_button_red.setIconSize(QtCore.QSize(60, 45))
         self.number_button_red.setObjectName("number_button_red")
         self.number_button_green = QtWidgets.QPushButton(self.number_widget)
         self.number_button_green.setGeometry(QtCore.QRect(10, 130, 41, 41))
@@ -626,7 +627,7 @@ class Ui_Analisys_cellService(QMainWindow):
         icon8 = QtGui.QIcon("Icon/icon n 4.png")
         #icon8.addPixmap(QtGui.QPixmap("icon n 4.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.number_button_green.setIcon(icon8)
-        self.number_button_green.setIconSize(QtCore.QSize(60, 35))
+        self.number_button_green.setIconSize(QtCore.QSize(60, 45))
         self.number_button_green.setObjectName("number_button_green")
         self.number_button_blue = QtWidgets.QPushButton(self.number_widget)
         self.number_button_blue.setGeometry(QtCore.QRect(10, 200, 41, 41))
@@ -656,7 +657,7 @@ class Ui_Analisys_cellService(QMainWindow):
         icon9 = QtGui.QIcon("Icon/icon n 3.png")
         #icon9.addPixmap(QtGui.QPixmap("icon n 3.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.number_button_blue.setIcon(icon9)
-        self.number_button_blue.setIconSize(QtCore.QSize(60, 35))
+        self.number_button_blue.setIconSize(QtCore.QSize(60, 45))
         self.number_button_blue.setObjectName("number_button_blue")
         self.Red_number_edit = QtWidgets.QLineEdit(self.number_widget)
         self.Red_number_edit.setGeometry(QtCore.QRect(60, 70, 100, 31))
@@ -976,7 +977,7 @@ class Ui_Analisys_cellService(QMainWindow):
 "    background-color: rgb(180, 180, 180);\n"
 "}")
         self.buttonPressed = False
-        self.confirm_button.clicked.connect(self.confirm_parameter)
+        #self.confirm_button.clicked.connect(self.confirm_parameter)
         self.confirm_button.setGraphicsEffect(self.applyShadow())
         self.confirm_button.setText("")
         icon16 = QtGui.QIcon("Icon/confirm.png")
@@ -1003,14 +1004,15 @@ class Ui_Analisys_cellService(QMainWindow):
     
     def two_similarity_overlap(self, image1, image2, edit):
         similarity = 0
-        overlapping = np.zeros_like(image1, dtype=np.uint8)
+        overlapping = np.zeros_like(self.parent.red_mask, dtype=np.uint8)
         mask=np.logical_and(image1==1, image2==1)
         overlapping[mask]=1
+        overlapping_dstack = np.dstack((image1, image2, np.zeros_like(self.parent.red_mask)))
         similarity=overlapping.sum()
         edit.setText(str(round((similarity*100)/(self.parent.red_mask.shape[0] 
                                                  * self.parent.red_mask.shape[1]), 2))
                      + "% - " + str(similarity) + " pixels")
-        return overlapping
+        return overlapping_dstack
     
     def runSimilarity(self, buttonPressed):
         if self.red_blue_buttonS.isChecked():
@@ -1031,7 +1033,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.convert_npToQimage(image_visualize)
     
     def convert_npToQimage(self, image_visualize):
-        qt_image = QImage(image_visualize.data, image_visualize.shape[1], image_visualize.shape[0], image_visualize.strides[0], QImage.Format_Grayscale8)
+        qt_image = QImage(image_visualize.data, image_visualize.shape[1], image_visualize.shape[0], image_visualize.strides[0], QImage.Format_RGB888)
         qt_pixmap = QPixmap.fromImage(qt_image)
         self.RGB_Label.setPixmap(qt_pixmap)
     
@@ -1052,15 +1054,18 @@ class Ui_Analisys_cellService(QMainWindow):
     
     def AllimagesOverlap(self):
         similarity = 0
+        #3d_matrix_rgb = np.zeros((2, 3))
         overlapping = np.zeros_like(self.parent.red_mask, dtype=np.uint8)
         mask=np.logical_and(self.parent.red_mask==1, self.parent.green_mask==1, self.parent.blue_mask==1)
         overlapping[mask]=1
+        overlapping_stack = np.dstack((self.parent.red_mask, self.parent.green_mask, 
+                                       self.parent.blue_mask))
         similarity=overlapping.sum()                          
         self.RGB_Label.setScaledContents(True)
         self.RGB_PercentS_edit.setText(str(round((similarity*100)/(self.parent.red_mask.shape[0] * 
                                                                    self.parent.red_mask.shape[1]), 2))+ 
                                        "% - " + str(similarity) + " pixels")
-        return overlapping
+        return overlapping_stack
     
     def biologicalContents(self, imageMatrix, edit):
         count = imageMatrix.sum();
@@ -1078,16 +1083,11 @@ class Ui_Analisys_cellService(QMainWindow):
         self.biologicalContents(self.parent.blue_mask, self.Blue_PercentBC_edit) 
     
     def countCells(self, matrixMask, edit):
-        if self.parameter!=None:
-            if self.buttonPressed==True:
-                imageFiltered = ndimage.gaussian_filter(matrixMask, self.parameter)
-                cells, number_of_cells = ndimage.label(imageFiltered)
-                edit.setText(str(number_of_cells) + " islands")
-                self.parent.set_image(cells, self.RGB_Label, "red", mask=True)
-            else:
-                self.error_message("Please, click confirm button!")
-        else:
-            self.error_message("Please, insert a correct number!")
+        #imageFiltered = ndimage.gaussian_filter(matrixMask, self.parameter)
+        #cells, number_of_cells = ndimage.label(imageFiltered)
+        labeled_array, num_features = label(matrixMask)
+        edit.setText(str(num_features) + " islands")
+        self.parent.set_image(labeled_array, self.RGB_Label, "red", mask=True)
         
     def confirm_parameter(self):
         self.buttonPressed=True
