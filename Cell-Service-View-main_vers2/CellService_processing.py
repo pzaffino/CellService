@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import (QMessageBox, QMainWindow)
 from PyQt5 import QtWidgets
 from PyQt5 import QtGui, QtCore
 import numpy as np
-from skimage import filters,morphology
+from skimage import filters, morphology
 
 class Processing_cellService(QMainWindow):
     
@@ -821,45 +821,69 @@ class Processing_cellService(QMainWindow):
     
     def runIntensityBinarization(self):
         if self.radioRed.isChecked():
-            self.parent.red_mask = self.binarizeImage(self.parent.red_image)
-            self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
+            if (self.parent.red_image is None):
+                self.error_message("Missing red image! Insert an image")
+            else:
+                self.mask=self.binarizeImage(self.parent.red_image)
+                if (self.mask is not None):
+                    self.parent.red_mask = self.mask
+                    self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
         elif self.radioGreen.isChecked():
-            self.parent.green_mask = self.binarizeImage(self.parent.green_image)
-            self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
+            if (self.parent.green_image is None):
+                self.error_message("Missing green image! Insert an image")
+            else:
+                self.mask=self.binarizeImage(self.parent.green_image)
+                if (self.mask is not None):
+                    self.parent.green_mask = self.mask
+                    self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
         elif self.radioBlue.isChecked():
-            self.parent.blue_mask = self.binarizeImage(self.parent.blue_image)
-            self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
+            if (self.parent.blue_image is None):
+                self.error_message("Missing blue image! Insert an image")
+            else:
+                self.mask=self.binarizeImage(self.parent.blue_image)
+                if (self.mask is not None):
+                    self.parent.blue_mask = self.mask
+                    self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
         else:
             pass
     
     def Automatic_threshold(self):
-        if(self.parent.red_image is None):
-            self.error_message("Missing images! Upload images to continue.")
         self.soglia1=0
         if self.radioRed.isChecked():
-            self.soglia1 = filters.threshold_otsu(self.parent.red_image)
+            if(self.parent.red_image is None):
+                self.error_message("Missing red image! Upload image to continue.")
+            else:
+                self.soglia1 = filters.threshold_otsu(self.parent.red_image)
         elif self.radioGreen.isChecked():
-            self.soglia1 = filters.threshold_otsu(self.parent.green_image)
+            if(self.parent.green_image is None):
+                self.error_message("Missing green image! Upload image to continue.")
+            else:
+                self.soglia1 = filters.threshold_otsu(self.parent.green_image)
         elif self.radioBlue.isChecked():
-            self.soglia1 = filters.threshold_otsu(self.parent.blue_image)
+            if(self.parent.blue_image is None):
+                self.error_message("Missing blue image! Upload image to continue.")
+            else:
+                self.soglia1 = filters.threshold_otsu(self.parent.blue_image)
         else:
             pass
-        self.fontSizeSpinBox.setValue(self.soglia1)
-        self.runIntensityBinarization()
+        if (self.soglia1!=0):
+            self.fontSizeSpinBox.setValue(self.soglia1)
+            self.runIntensityBinarization()
     
     def binarizeImage(self,img):
         valore1 = self.fontSizeSpinBox.value()
         valore2 =self.fontSizeSpinBox2.value()
         binarymat = np.zeros_like(img, dtype=np.uint8)
         if (valore1==0):
-            valore1=filters.threshold_otsu(img)
-        if (valore2!=0):
-            mask=np.logical_and(img > valore1, img < valore2)
-            binarymat[mask]=1
-        if (valore2==0):
-            mask=img>valore1
-            binarymat[mask]=1
-        return binarymat
+            self.error_message("Insert a minimum threshold")
+        else:
+            if (valore2!=0):
+                mask=np.logical_and(img > valore1, img < valore2)
+                binarymat[mask]=1
+            if (valore2==0):
+                mask=img>valore1
+                binarymat[mask]=1
+            return binarymat
     
     def control(self, number):
         error=False
@@ -1071,12 +1095,12 @@ class Processing_cellService(QMainWindow):
     
     #save all
     def save(self):
-        if((self.parent.red_mask is not None) and (self.parent.green_mask is not None) and (self.parent.blue_mask is not None)):
+        if((self.parent.red_mask is None) and (self.parent.green_mask is None) and (self.parent.blue_mask is None)):
+            self.error_message("Attention: the images haven't been binarized")
+        else:
             self.parent.set_image(self.parent.red_mask, self.parent.RED_QLabel, "red", mask=True)
             self.parent.set_image(self.parent.green_mask, self.parent.GREEN_QLabel, "green", mask=True)
             self.parent.set_image(self.parent.blue_mask, self.parent.BLUE_QLabel, "blue", mask=True)
-        else:
-            self.error_message("Attention: the images haven't been binarized")
             
     def deleteall_message(self):
         mbox = QMessageBox(self)

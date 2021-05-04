@@ -66,6 +66,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.RGB_Label.setStyleSheet("border: 2px solid black")
         self.RGB_Label.setFrameShape(QtWidgets.QFrame.Panel)
         self.RGB_Label.setLineWidth(2)
+        self.RGB_Label.setFixedSize(315,315)
         self.RGB_Label.setText("")
         self.RGB_Label.setScaledContents(True)
         self.RGB_Label.setObjectName("RGB_Label")
@@ -75,6 +76,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.BLUE_Label = QtWidgets.QLabel(self.gridLayoutWidget)
         self.BLUE_Label.setStyleSheet("border: 2px solid blue")
         self.BLUE_Label.setText("")
+        self.BLUE_Label.setFixedSize(315,315)
         self.BLUE_Label.setScaledContents(True)
         self.BLUE_Label.setObjectName("BLUE_Label")
         self.principal_layout.addWidget(self.BLUE_Label, 1, 0, 1, 1)
@@ -83,6 +85,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.GREEN_Label = QtWidgets.QLabel(self.gridLayoutWidget)
         self.GREEN_Label.setStyleSheet("border: 2px solid green")
         self.GREEN_Label.setText("")
+        self.GREEN_Label.setFixedSize(315,315)
         self.GREEN_Label.setScaledContents(True)
         self.GREEN_Label.setObjectName("GREEN_Label")
         self.principal_layout.addWidget(self.GREEN_Label, 0, 1, 1, 1)
@@ -92,6 +95,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.RED_Label.setStyleSheet("border: 2px solid red")
         self.RED_Label.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.RED_Label.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.RED_Label.setFixedSize(315,315)
         self.RED_Label.setLineWidth(2)
         self.RED_Label.setText("")
         self.RED_Label.setScaledContents(True)
@@ -732,6 +736,13 @@ class Ui_Analisys_cellService(QMainWindow):
         self.green_number_title.setObjectName("green_number_title")
         self.green_number_title.setText("Green numbers of islands")
         self.intensity_widget = QtWidgets.QWidget(self.principal_widget)
+        
+        if (self.parent.red_mask is not None):
+            self.parent.red_mask=self.parent.red_mask.astype(np.uint8)
+        if (self.parent.green_mask is not None):
+            self.parent.green_mask=self.parent.green_mask.astype(np.uint8)
+        if (self.parent.blue_mask is not None):
+            self.parent.blue_mask=self.parent.blue_mask.astype(np.uint8)
     
     def set_intensityWidget(self):
         self.intensity_widget.setGeometry(QtCore.QRect(920, 400, 191, 261))
@@ -947,18 +958,18 @@ class Ui_Analisys_cellService(QMainWindow):
     
     def two_similarity_overlap(self, image1, image2, edit, overlap_type):
         similarity = 0
-        overlapping = np.zeros_like(self.parent.red_mask, dtype=np.uint8)
+        overlapping = np.zeros_like(self.parent.red_image, dtype=np.uint8)
         mask=np.logical_and(image1==1, image2==1)
         overlapping[mask]=1
         if(overlap_type=="RG"):
-            overlapping_dstack = np.dstack((image1, image2, np.zeros_like(self.parent.red_mask)))
+            overlapping_dstack = np.dstack((image1, image2, np.zeros_like(self.parent.red_image)))
         elif(overlap_type=="RB"):
-            overlapping_dstack = np.dstack((image1, np.zeros_like(self.parent.red_mask), image2))
+            overlapping_dstack = np.dstack((image1, np.zeros_like(self.parent.red_image), image2))
         elif(overlap_type=="GB"):
-            overlapping_dstack = np.dstack((np.zeros_like(self.parent.red_mask), image1, image2))
+            overlapping_dstack = np.dstack((np.zeros_like(self.parent.red_image), image1, image2))
         similarity=overlapping.sum()
-        edit.setText(str(round((similarity*100)/(self.parent.red_mask.shape[0] 
-                                                 * self.parent.red_mask.shape[1]), 2))
+        edit.setText(str(round((similarity*100)/(self.parent.red_image.shape[0] 
+                                                 * self.parent.red_image.shape[1]), 2))
                      + "% - " + str(similarity) + " pixels")
         return overlapping_dstack
     
@@ -990,15 +1001,16 @@ class Ui_Analisys_cellService(QMainWindow):
     def AllimagesOverlap(self):
         similarity = 0
         #3d_matrix_rgb = np.zeros((2, 3))
-        overlapping = np.zeros_like(self.parent.red_mask, dtype=np.uint8)
+        overlapping = np.zeros_like(self.parent.red_image, dtype=np.uint8)
+        self.parent.red_mask=self.parent.red_mask.astype(np.uint8)
         mask=np.logical_and(self.parent.red_mask==1, self.parent.green_mask==1, self.parent.blue_mask==1)
         overlapping[mask]=1
         overlapping_stack = np.dstack((self.parent.red_mask, self.parent.green_mask, 
                                        self.parent.blue_mask))
         similarity=overlapping.sum()                          
         self.RGB_Label.setScaledContents(True)
-        self.RGB_PercentS_edit.setText(str(round((similarity*100)/(self.parent.red_mask.shape[0] * 
-                                                                   self.parent.red_mask.shape[1]), 2))+ 
+        self.RGB_PercentS_edit.setText(str(round((similarity*100)/(self.parent.red_image.shape[0] * 
+                                                                   self.parent.red_image.shape[1]), 2))+ 
                                        "% - " + str(similarity) + " pixels")
         return overlapping_stack
     
