@@ -290,8 +290,8 @@ class CellService(QMainWindow):
             self.processing.show()
         
     def analisysWindow(self):
-        if (self.red_mask is None and self.green_mask is None and self.blue_mask is None):
-            self.error_message("Missing binary image! Binarize an image")
+        if (self.red_image is None and self.green_image is None and self.blue_image is None):
+            self.error_message("Missing image! Insert an image")
         else:
             self.analysis = Analisys_cellService.Ui_Analisys_cellService(self)
             self.analysis.show()
@@ -356,7 +356,7 @@ class CellService(QMainWindow):
 
         # Manage if the user do not open three channels
         # Figure out image shape (even if a single image has been open)
-        '''if self.red_image is not None:
+        if self.red_image is not None:
             matrix_shape = self.red_image.shape
         elif self.green_image is not None:
             matrix_shape = self.green_image.shape
@@ -367,7 +367,7 @@ class CellService(QMainWindow):
             return
 
         # if a channel was not open create zeros matrix
-        if self.red_image is None:
+        '''if self.red_image is None:
             self.red_image = np.zeros(matrix_shape, dtype=np.uint8)
         if self.green_image is None:
             self.green_image = np.zeros(matrix_shape, dtype=np.uint8)
@@ -385,7 +385,20 @@ class CellService(QMainWindow):
         # RGB
         if (self.red_image is not None and self.green_image is not None and self.blue_image is not None):
             self.rgb_image = np.dstack((self.red_image, self.green_image, self.blue_image)).astype(np.uint8)
-
+        if (self.red_image is not None and self.green_image is not None and self.blue_image is None):
+            self.rgb_image = np.dstack((self.red_image, self.green_image, np.zeros(matrix_shape, dtype=np.uint8))).astype(np.uint8)
+        if (self.red_image is None and self.green_image is not None and self.blue_image is not None):
+            self.rgb_image = np.dstack((np.zeros(matrix_shape, dtype=np.uint8), self.green_image, self.blue_image)).astype(np.uint8)
+        if (self.red_image is not None and self.green_image is None and self.blue_image is not None):
+            self.rgb_image = np.dstack((self.red_image, np.zeros(matrix_shape, dtype=np.uint8), self.blue_image)).astype(np.uint8)
+        if (self.red_image is not None and self.green_image is None and self.blue_image is None):
+            self.rgb_image = np.dstack((self.red_image, np.zeros(matrix_shape, dtype=np.uint8), np.zeros(matrix_shape, dtype=np.uint8))).astype(np.uint8)
+        if (self.red_image is None and self.green_image is not None and self.blue_image is None):
+            self.rgb_image = np.dstack((np.zeros(matrix_shape, dtype=np.uint8), self.green_image, np.zeros(matrix_shape, dtype=np.uint8))).astype(np.uint8)
+        if (self.red_image is None and self.green_image is None and self.blue_image is not None):
+            self.rgb_image = np.dstack((np.zeros(matrix_shape, dtype=np.uint8), np.zeros(matrix_shape, dtype=np.uint8), self.blue_image)).astype(np.uint8)
+          
+        
         # Set images
         self.set_all_images()
 
