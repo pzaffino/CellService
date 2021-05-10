@@ -36,6 +36,8 @@ class Ui_Analisys_cellService(QMainWindow):
         
         self.set_all_images()
         
+        self.image_None()
+        
         if self.parent.red_mask is not None:
             self.image_size()
     
@@ -168,6 +170,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.help_button.setIconSize(QtCore.QSize(35, 35))
         self.help_button.setObjectName("help_button")
         self.help_button.setGraphicsEffect(self.applyShadow())
+        self.help_button.clicked.connect(self.help_message)
         #self.ctrl_help = QtWidgets.QShortcut(QKeySequence('Ctrl+Delete'), self)
         #self.ctrl_help.activated.connect(self.clearAll)
         
@@ -958,18 +961,18 @@ class Ui_Analisys_cellService(QMainWindow):
     
     def two_similarity_overlap(self, image1, image2, edit, overlap_type):
         similarity = 0
-        overlapping = np.zeros_like(self.parent.red_image, dtype=np.uint8)
+        overlapping = np.zeros_like(image1, dtype=np.uint8)
         mask=np.logical_and(image1==1, image2==1)
         overlapping[mask]=1
         if(overlap_type=="RG"):
-            overlapping_dstack = np.dstack((image1, image2, np.zeros_like(self.parent.red_image)))
+            overlapping_dstack = np.dstack((image1, image2, np.zeros_like(image1)))
         elif(overlap_type=="RB"):
-            overlapping_dstack = np.dstack((image1, np.zeros_like(self.parent.red_image), image2))
+            overlapping_dstack = np.dstack((image1, np.zeros_like(image1), image2))
         elif(overlap_type=="GB"):
-            overlapping_dstack = np.dstack((np.zeros_like(self.parent.red_image), image1, image2))
+            overlapping_dstack = np.dstack((np.zeros_like(image1), image1, image2))
         similarity=overlapping.sum()
-        edit.setText(str(round((similarity*100)/(self.parent.red_image.shape[0] 
-                                                 * self.parent.red_image.shape[1]), 2))
+        edit.setText(str(round((similarity*100)/(image1.shape[0] 
+                                                 * image1.shape[1]), 2))
                      + "% - " + str(similarity) + " pixels")
         return overlapping_dstack
     
@@ -1016,8 +1019,8 @@ class Ui_Analisys_cellService(QMainWindow):
     
     def biologicalContents(self, imageMatrix, edit):
         count = imageMatrix.sum();
-        edit.setText(str(round((count*100)/(self.parent.red_mask.shape[0] * 
-                                            self.parent.red_mask.shape[1]), 2))
+        edit.setText(str(round((count*100)/(imageMatrix.shape[0] * 
+                                            imageMatrix.shape[1]), 2))
                      + "% - " + str(count) + " pixels")
         
     def set_biologicalRED(self):
@@ -1029,12 +1032,12 @@ class Ui_Analisys_cellService(QMainWindow):
     def set_biologicalBLUE(self):
         self.biologicalContents(self.parent.blue_mask, self.Blue_PercentBC_edit) 
     
-    def countCells(self, matrixMask, edit):
+    def countCells(self, matrixMask, edit, color_image):
         #imageFiltered = ndimage.gaussian_filter(matrixMask, self.parameter)
         #cells, number_of_cells = ndimage.label(imageFiltered)
         labeled_array, num_features = label(matrixMask)
         edit.setText(str(num_features) + " islands")
-        self.parent.set_image(labeled_array, self.RGB_Label, "red", mask=True)
+        self.parent.set_image(labeled_array, self.RGB_Label, color_image, mask=True)
         
     def confirm_parameter(self):
         self.buttonPressed=True
@@ -1046,13 +1049,13 @@ class Ui_Analisys_cellService(QMainWindow):
             self.error_message("Insert a number!")
     
     def set_number_RED(self):
-        self.countCells(self.parent.red_mask, self.Red_number_edit)
+        self.countCells(self.parent.red_mask, self.Red_number_edit, "red")
     
     def set_number_GREEN(self):
-        self.countCells(self.parent.green_mask, self.Green_number_edit)
+        self.countCells(self.parent.green_mask, self.Green_number_edit, "green")
     
     def set_number_BLUE(self):
-        self.countCells(self.parent.blue_mask, self.Blue_number_edit)
+        self.countCells(self.parent.blue_mask, self.Blue_number_edit, "blue")
         
     def set_min_max_intensityRED(self):
         self.Red_intensity_edit_min.setText("Min: " + str(np.min(self.parent.red_image)))
@@ -1089,9 +1092,6 @@ class Ui_Analisys_cellService(QMainWindow):
         self.Green_PercentBC_edit.clear()
         self.Blue_PercentBC_edit.clear()
         
-        # clear QLineEdit insertWidget
-        self.parameter_edit.clear()
-        
         # clear QLineEdit numberOfIslands
         self.Red_number_edit.clear()
         self.Green_number_edit.clear()
@@ -1111,9 +1111,9 @@ class Ui_Analisys_cellService(QMainWindow):
         mbox.setWindowTitle("Confirm")
         mbox.setText("You are deleting image analysis")
         mbox.setInformativeText("Do you want to delate your analysis?")
-        mbox.setStandardButtons(QMessageBox.Save | QMessageBox.Cancel)
+        mbox.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
         returnValue = mbox.exec()
-        if returnValue == QMessageBox.Save:
+        if returnValue == QMessageBox.Yes:
             self.clearAll()
         else:
             pass
@@ -1125,3 +1125,43 @@ class Ui_Analisys_cellService(QMainWindow):
         msg.setInformativeText(text_error)
         msg.setWindowTitle("Error")
         msg.exec_()   
+        
+    def image_None(self):
+        
+        if (self.parent.red_mask is None):
+            self.red_blue_buttonS.setEnabled(False)
+            self.red_green_buttonS.setEnabled(False)
+            self.total_buttonS.setEnabled(False)
+            self.red_buttonBC.setEnabled(False)
+            self.number_button_red.setEnabled(False)
+            self.intensity_button_red.setEnabled(False)
+            
+        elif (self.parent.green_mask is None):
+            self.blue_green_buttonS.setEnabled(False)
+            self.red_green_buttonS.setEnabled(False)
+            self.total_buttonS.setEnabled(False)
+            self.green_buttonBC.setEnabled(False)
+            self.number_button_green.setEnabled(False)
+            self.intensity_button_green.setEnabled(False)
+            
+        elif (self.parent.blue_mask is None):
+            self.blue_green_buttonS.setEnabled(False)
+            self.red_blue_buttonS.setEnabled(False)
+            self.total_buttonS.setEnabled(False)
+            self.blue_buttonBC.setEnabled(False)
+            self.number_button_blue.setEnabled(False)
+            self.intensity_button_blue.setEnabled(False)
+    
+    def help_message(self):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Information)
+        msg.setText("Function information")
+        msg.setWindowTitle("Function information")
+        msg.setText("INTERSECT FUNCTION: the intersection function overlaps images and returns an image whose colors represent the parts in common between the images themselves. \
+                                                                                                               DENSITY FUNCTION: density is a function that returns the percentage and number of pixels of the biological content in the image \
+                                                                                     NUMBER OF ISLANDS FUNCTION: returns an approximate number of cells in the image. It is necessary to perform the image processing operation in the best way, to obtain a more reliable result. \
+                                                                                         INTENSITY FUNCTION: returns the maximum and minimum intensity of the unbinarized image")
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.exec_()
+    
+    

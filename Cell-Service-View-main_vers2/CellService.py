@@ -37,29 +37,28 @@ class CellService(QMainWindow):
         self.principal_layout.setContentsMargins(0, 0, 0, 0)
         
         self.GREEN_QLabel = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.GREEN_QLabel.setStyleSheet("border: 3px solid green")
+        self.GREEN_QLabel.setStyleSheet("border: 2px solid green")
         self.GREEN_QLabel.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.GREEN_QLabel.setFixedSize(465,415)
         self.GREEN_QLabel.setFrameShadow(QtWidgets.QFrame.Plain)
         self.GREEN_QLabel.setLineWidth(2)
         self.GREEN_QLabel.setScaledContents(True)
         self.principal_layout.addWidget(self.GREEN_QLabel, 1, 0, 1, 1)
         
         self.RGB_QLabel = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.RGB_QLabel.setStyleSheet("border: 3px solid black")
+        self.RGB_QLabel.setStyleSheet("border: 2px solid black")
         self.RGB_QLabel.setFixedSize(465,415)
         self.RGB_QLabel.setScaledContents(True)
         self.principal_layout.addWidget(self.RGB_QLabel, 0, 0, 1, 1)
         
         self.BLUE_QLabel = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.BLUE_QLabel.setStyleSheet("border: 3px solid blue")
+        self.BLUE_QLabel.setStyleSheet("border: 2px solid blue")
         self.BLUE_QLabel.setFixedSize(465,415)
         self.BLUE_QLabel.setScaledContents(True)
         self.principal_layout.addWidget(self.BLUE_QLabel, 1, 1, 1, 1)
         
         self.RED_QLabel = QtWidgets.QLabel(self.gridLayoutWidget)
         self.RED_QLabel.setTabletTracking(True)
-        self.RED_QLabel.setStyleSheet("border: 3px solid red")
+        self.RED_QLabel.setStyleSheet("border: 2px solid red")
         self.RED_QLabel.setFrameShape(QtWidgets.QFrame.Panel)
         self.RED_QLabel.setFixedSize(465,415)
         self.RED_QLabel.setLineWidth(2)
@@ -67,7 +66,7 @@ class CellService(QMainWindow):
         self.principal_layout.addWidget(self.RED_QLabel, 0, 1, 1, 1)
         
         self.option_widget = QtWidgets.QWidget(self.centralwidget)
-        self.option_widget.setGeometry(QtCore.QRect(28, 50, 180, 551))
+        self.option_widget.setGeometry(QtCore.QRect(28, 30, 180, 551))
         self.option_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n" "border-radius: 40px;")
         self.option_widget.setGraphicsEffect(self.applyShadow())
         
@@ -223,6 +222,7 @@ class CellService(QMainWindow):
         self.help_button.setIconSize(QtCore.QSize(60, 55))
         self.help_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Help page</span></p></body></html>")
         self.help_button.setStatusTip("Help page")
+        self.help_button.clicked.connect(self.help_message)
         
         self.open_title = QtWidgets.QLineEdit(self.option_widget)
         self.open_title.setGeometry(QtCore.QRect(10, 80, 141, 20))
@@ -275,7 +275,12 @@ class CellService(QMainWindow):
     
     def maximize_window(self):
         screen = QDesktopWidget().screenGeometry()
-        self.setFixedSize(int(screen.height()*1.2), int(screen.height()*0.9))
+        self.setFixedSize(int(screen.height()*1.3), int(screen.height()*0.8))
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(257, 30, int(screen.height()*0.93), int(screen.height()*0.73)))
+        self.RED_QLabel.setFixedSize(int(screen.height()*0.45),int(screen.height()*0.35))
+        self.GREEN_QLabel.setFixedSize(int(screen.height()*0.45),int(screen.height()*0.35))
+        self.BLUE_QLabel.setFixedSize(int(screen.height()*0.45),int(screen.height()*0.35))
+        self.RGB_QLabel.setFixedSize(int(screen.height()*0.45),int(screen.height()*0.35))
     
     def processingWindow(self):
         if (self.red_image is None and self.green_image is None and self.blue_image is None):
@@ -351,7 +356,7 @@ class CellService(QMainWindow):
 
         # Manage if the user do not open three channels
         # Figure out image shape (even if a single image has been open)
-        if self.red_image is not None:
+        '''if self.red_image is not None:
             matrix_shape = self.red_image.shape
         elif self.green_image is not None:
             matrix_shape = self.green_image.shape
@@ -362,7 +367,7 @@ class CellService(QMainWindow):
             return
 
         # if a channel was not open create zeros matrix
-        '''if self.red_image is None:
+        if self.red_image is None:
             self.red_image = np.zeros(matrix_shape, dtype=np.uint8)
         if self.green_image is None:
             self.green_image = np.zeros(matrix_shape, dtype=np.uint8)
@@ -386,14 +391,24 @@ class CellService(QMainWindow):
 
     def error_message(self, text_error):
         msg = QMessageBox(self)
+        msg.setFixedSize(200, 200)
         msg.setIcon(QMessageBox.Critical)
         msg.setText("Error")
         msg.setInformativeText(text_error)
         msg.setWindowTitle("Error")
         msg.exec_()
+    
+    def help_message(self):
+        mbox = QMessageBox(self)
+        mbox.setIcon(QMessageBox.Information)
+        mbox.setWindowTitle("Help")
+        mbox.setText("Cell Service")
+        mbox.setInformativeText ("Application for image analysis. Insert the image in RGB format or the individual channels (red, green and blue) to continue. Alternatively, you can also open a single channel but you can only take advantage of the intensity, percentage of biological content and count functions. Remember that before the analysis you have to do the processing operation.")
+        mbox.exec_()
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = CellService()
     MainWindow.show()
     sys.exit(app.exec_())
+    
