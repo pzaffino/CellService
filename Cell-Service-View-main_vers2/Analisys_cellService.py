@@ -39,7 +39,11 @@ class Ui_Analisys_cellService(QMainWindow):
         self.image_None()
         
         if self.parent.red_mask is not None:
-            self.image_size()
+            self.image_size(self.parent.red_mask)
+        elif self.parent.green_mask is not None:
+            self.image_size(self.parent.green_mask)
+        elif self.parent.blue_mask is not None:
+            self.image_size(self.parent.blue_mask)
     
     def setupUi(self):
         # set the window's style
@@ -1073,9 +1077,9 @@ class Ui_Analisys_cellService(QMainWindow):
         if event.key() == Qt.Key_Enter:
             self.confirm_parameter()
             
-    def image_size(self):
-        self.label.setText("Images size: " + str(self.parent.red_mask.shape[0]) + " x "
-                   + str(self.parent.red_mask.shape[1]) + " pixels")
+    def image_size(self, image):
+        self.label.setText("Images size: " + str(image.shape[0]) + " x "
+                   + str(image.shape[1]) + " pixels")
         
     def clearAll(self):
         # clear labels
@@ -1136,7 +1140,7 @@ class Ui_Analisys_cellService(QMainWindow):
             self.number_button_red.setEnabled(False)
             self.intensity_button_red.setEnabled(False)
             
-        elif (self.parent.green_mask is None):
+        if (self.parent.green_mask is None):
             self.blue_green_buttonS.setEnabled(False)
             self.red_green_buttonS.setEnabled(False)
             self.total_buttonS.setEnabled(False)
@@ -1144,7 +1148,7 @@ class Ui_Analisys_cellService(QMainWindow):
             self.number_button_green.setEnabled(False)
             self.intensity_button_green.setEnabled(False)
             
-        elif (self.parent.blue_mask is None):
+        if (self.parent.blue_mask is None):
             self.blue_green_buttonS.setEnabled(False)
             self.red_blue_buttonS.setEnabled(False)
             self.total_buttonS.setEnabled(False)
@@ -1163,5 +1167,3 @@ class Ui_Analisys_cellService(QMainWindow):
                                                                                          INTENSITY FUNCTION: returns the maximum and minimum intensity of the unbinarized image")
         msg.setStandardButtons(QMessageBox.Ok)
         msg.exec_()
-    
-    
