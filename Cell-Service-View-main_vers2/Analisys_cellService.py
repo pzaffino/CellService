@@ -1138,7 +1138,6 @@ class Ui_Analisys_cellService(QMainWindow):
             self.total_buttonS.setEnabled(False)
             self.red_buttonBC.setEnabled(False)
             self.number_button_red.setEnabled(False)
-            self.intensity_button_red.setEnabled(False)
             
         if (self.parent.green_mask is None):
             self.blue_green_buttonS.setEnabled(False)
@@ -1146,7 +1145,6 @@ class Ui_Analisys_cellService(QMainWindow):
             self.total_buttonS.setEnabled(False)
             self.green_buttonBC.setEnabled(False)
             self.number_button_green.setEnabled(False)
-            self.intensity_button_green.setEnabled(False)
             
         if (self.parent.blue_mask is None):
             self.blue_green_buttonS.setEnabled(False)
@@ -1154,7 +1152,6 @@ class Ui_Analisys_cellService(QMainWindow):
             self.total_buttonS.setEnabled(False)
             self.blue_buttonBC.setEnabled(False)
             self.number_button_blue.setEnabled(False)
-            self.intensity_button_blue.setEnabled(False)
     
     def help_message(self):
         msg = QMessageBox()
