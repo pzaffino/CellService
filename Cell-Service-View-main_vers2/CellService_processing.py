@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import (QMessageBox, QMainWindow)
+from PyQt5.QtWidgets import (QMessageBox, QMainWindow, qApp)
 from PyQt5 import QtWidgets
 from PyQt5 import QtGui, QtCore
 import numpy as np
@@ -89,6 +89,12 @@ class Processing_cellService(QMainWindow):
         self.radioBlue.setGeometry(QtCore.QRect(670, 10, 101, 20))
         self.radioBlue.setStyleSheet("font: 8pt \"Arial\";\n" "color: Blue;")
         self.radioBlue.setText("Blue Image")
+        if (self.parent.red_image is None):
+            self.radioRed.setEnabled(False)
+        if (self.parent.green_image is None):
+            self.radioGreen.setEnabled(False)
+        if (self.parent.blue_image is None):
+            self.radioBlue.setEnabled(False)
         
         self.help_button = QtWidgets.QPushButton(self.principal_widget)
         self.help_button.setGraphicsEffect(self.applyShadow())
@@ -120,7 +126,7 @@ class Processing_cellService(QMainWindow):
        
         self.save_button = QtWidgets.QPushButton(self.principal_widget)
         self.save_button.setGraphicsEffect(self.applyShadow())
-        self.save_button.setGeometry(QtCore.QRect(945, 625, 41, 41))
+        self.save_button.setGeometry(QtCore.QRect(1015, 625, 41, 41))
         self.save_button.setMouseTracking(True)
         self.save_button.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.save_button.setStyleSheet("QPushButton {\n"
@@ -150,7 +156,7 @@ class Processing_cellService(QMainWindow):
         self.delete_button.setGraphicsEffect(self.applyShadow())
         self.delete_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Delete </span></p></body></html>")
         self.delete_button.setStatusTip("Delete")
-        self.delete_button.setGeometry(QtCore.QRect(1015, 625, 41, 41))
+        self.delete_button.setGeometry(QtCore.QRect(945, 625, 41, 41))
         self.delete_button.setMouseTracking(True)
         self.delete_button.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.delete_button.setToolTipDuration(-1)
@@ -193,7 +199,7 @@ class Processing_cellService(QMainWindow):
         self.Add_button.setStatusTip("Add Changes to the filtred image")
         self.Add_button.clicked.connect(self.apply_segmentation)
         self.Add_button.setGraphicsEffect(self.applyShadow())
-        self.Add_button.setGeometry(QtCore.QRect(50, 470, 35, 35))
+        self.Add_button.setGeometry(QtCore.QRect(150, 470, 35, 35))
         self.Add_button.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.Add_button.setStyleSheet("QPushButton {\n"
             "     background-color: rgb(255, 255, 255);\n"
@@ -214,10 +220,10 @@ class Processing_cellService(QMainWindow):
         icon_not.addPixmap(QtGui.QPixmap("Icon/non confermare.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.No_button = QtWidgets.QPushButton(self.segmentation_widget)
         self.No_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Not Changes to the filtred image</span></p></body></html>")
-        self.No_button.setStatusTip("Not Changed")
+        self.No_button.setStatusTip("Clear Numeration Step")
         self.No_button.clicked.connect(self.clear_edit_label)
         self.No_button.setGraphicsEffect(self.applyShadow())
-        self.No_button.setGeometry(QtCore.QRect(150, 470, 35, 35))
+        self.No_button.setGeometry(QtCore.QRect(100, 535, 35, 35))
         self.No_button.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.No_button.setStyleSheet("QPushButton {\n"
             "     background-color: rgb(255, 255, 255);\n"
@@ -239,7 +245,7 @@ class Processing_cellService(QMainWindow):
         self.Undo_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Undo Change</span></p></body></html>")
         self.Undo_button.setStatusTip("Undo change")
         self.Undo_button.clicked.connect(self.back)
-        self.Undo_button.setGeometry(QtCore.QRect(100, 535, 35, 35))
+        self.Undo_button.setGeometry(QtCore.QRect(50, 470, 35, 35))
         self.Undo_button.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.Undo_button.setStyleSheet("QPushButton {\n"
             "     background-color: rgb(255, 255, 255);\n"
@@ -596,7 +602,7 @@ class Processing_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 10pt \"Varela\";\n"
+            "font: 7pt \"Varela\";\n"
             "color: rgb(255, 255, 255);")
         self.Remove_edit.setReadOnly(True)
         self.Erosion_edit = QtWidgets.QLineEdit(self.segmentation_widget)
@@ -605,7 +611,7 @@ class Processing_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 10pt \"Varela\";\n"
+            "font: 7pt \"Varela\";\n"
             "color: rgb(255, 255, 255);")
         self.Erosion_edit.setReadOnly(True)
         self.Dilation_edit = QtWidgets.QLineEdit(self.segmentation_widget)
@@ -614,7 +620,7 @@ class Processing_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 10pt \"Varela\";\n"
+            "font: 7pt \"Varela\";\n"
             "color: rgb(255, 255, 255);")
         self.Dilation_edit.setReadOnly(True)
         self.Open_edit = QtWidgets.QLineEdit(self.segmentation_widget)
@@ -623,7 +629,7 @@ class Processing_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 10pt \"Varela\";\n"
+            "font: 7pt \"Varela\";\n"
             "color: rgb(255, 255, 255);")
         self.Open_edit.setReadOnly(True)
         self.Close_edit = QtWidgets.QLineEdit(self.segmentation_widget)
@@ -632,21 +638,21 @@ class Processing_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 10pt \"Varela\";\n"
+            "font: 7pt \"Varela\";\n"
             "color: rgb(255, 255, 255);")
         self.Close_edit.setReadOnly(True)
         
         self.Add_title = QtWidgets.QLabel(self.segmentation_widget)
-        self.Add_title.setGeometry(QtCore.QRect(30, 508, 91, 21))
+        self.Add_title.setGeometry(QtCore.QRect(140, 508, 91, 21))
         self.Add_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.Add_title.setText("Apply Change")
         self.No_title = QtWidgets.QLabel(self.segmentation_widget)
-        self.No_title.setGeometry(QtCore.QRect(140, 508, 91, 21))
+        self.No_title.setGeometry(QtCore.QRect(60, 573, 135, 21))
         self.No_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
-        self.No_title.setText("Not Change")
+        self.No_title.setText("Clear Numeration Step")
         
         self.undo_title = QtWidgets.QLabel(self.segmentation_widget)
-        self.undo_title.setGeometry(QtCore.QRect(90, 573, 121, 21))
+        self.undo_title.setGeometry(QtCore.QRect(30, 508, 91, 21))
         self.undo_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.undo_title.setText("Undo Change")
         
@@ -676,6 +682,12 @@ class Processing_cellService(QMainWindow):
         self.close_title.setReadOnly(True)
         self.close_title.setText("Closing")
         
+        if(self.parent.red_image is not None):
+            maximum=(self.parent.red_image.shape[0]*self.parent.red_image.shape[1])/5
+        if(self.parent.green_image is not None):
+            maximum=(self.parent.red_image.shape[0]*self.parent.red_image.shape[1])/5
+        if(self.parent.blue_image is not None):
+            maximum=(self.parent.red_image.shape[0]*self.parent.red_image.shape[1])/5
         self.Raggio = QtWidgets.QDoubleSpinBox(self.segmentation_widget)
         self.Raggio.setGeometry(QtCore.QRect(140, 60, 91, 31))
         self.Raggio.setStyleSheet("background-color: rgb(255, 255, 255);\n"
@@ -685,14 +697,18 @@ class Processing_cellService(QMainWindow):
             "    padding: 6px;\n"
             "font: 10pt \"Varela\";\n"
             "color: blue;")
-        self.Raggio.setDecimals(3)
-        self.Raggio.setMaximum(500.0)
+        self.Raggio.setMaximum(maximum)
         self.Radius_title = QtWidgets.QLineEdit(self.segmentation_widget)
         self.Radius_title.setGeometry(QtCore.QRect(15, 60, 121, 31))
         self.Radius_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.Radius_title.setReadOnly(True)
         self.Radius_title.setText("Minimum island size")
         
+        self.Remove_edit.setText("No")
+        self.Erosion_edit.setText("No")
+        self.Dilation_edit.setText("No")
+        self.Open_edit.setText("No")
+        self.Close_edit.setText("No")
         self.setEnabled_Button(False)
         self.Undo_button.setEnabled(False)
         
@@ -908,35 +924,35 @@ class Processing_cellService(QMainWindow):
         if(self.control(1)==False):
             self.valore=self.valore+1
             self.selezioni[(self.valore-1)]=1
-            self.Remove_edit.setText(str(self.valore))
+            self.Remove_edit.setText("Step " + str(self.valore))
             self.Remove_canc.setEnabled(True)
     
     def set_edit_erosion(self):
         if(self.control(2)==False):
             self.valore=self.valore+1
             self.selezioni[(self.valore-1)]=2
-            self.Erosion_edit.setText(str(self.valore))
+            self.Erosion_edit.setText("Step " + str(self.valore))
             self.Erosion_canc.setEnabled(True)
     
     def set_edit_dilation(self):
         if(self.control(3)==False):
             self.valore=self.valore+1
             self.selezioni[(self.valore-1)]=3
-            self.Dilation_edit.setText(str(self.valore))
+            self.Dilation_edit.setText("Step " + str(self.valore))
             self.Dilation_canc.setEnabled(True)
     
     def set_edit_open(self):
         if(self.control(4)==False):
             self.valore=self.valore+1
             self.selezioni[(self.valore-1)]=4
-            self.Open_edit.setText(str(self.valore))
+            self.Open_edit.setText("Step " + str(self.valore))
             self.Open_canc.setEnabled(True)
     
     def set_edit_close(self):
         if(self.control(5)==False):
             self.valore=self.valore+1
             self.selezioni[(self.valore-1)]=5
-            self.Close_edit.setText(str(self.valore))
+            self.Close_edit.setText("Step " + str(self.valore))
             self.Close_canc.setEnabled(True)
     
     #controlla errori prima di procedere per la segmentazione
@@ -998,11 +1014,11 @@ class Processing_cellService(QMainWindow):
     def clear_edit_label(self):
         self.valore=0
         self.selezioni=np.array([0,0,0,0,0])
-        self.Remove_edit.clear()
-        self.Erosion_edit.clear()
-        self.Dilation_edit.clear()
-        self.Open_edit.clear()
-        self.Close_edit.clear()
+        self.Remove_edit.setText("No")
+        self.Erosion_edit.setText("No")
+        self.Dilation_edit.setText("No")
+        self.Open_edit.setText("No")
+        self.Close_edit.setText("No")
         self.setEnabled_Button(False)
     
     #delete all
@@ -1053,54 +1069,68 @@ class Processing_cellService(QMainWindow):
     #canc button
     def delete_edit_remove(self):
         self.delete(self.Remove_edit)
-        self.Remove_edit.clear()
+        self.Remove_edit.setText("No")
         self.Remove_canc.setEnabled(False)
         
     def delete_edit_erosion(self):
         self.delete(self.Erosion_edit)
-        self.Erosion_edit.clear()
+        self.Erosion_edit.setText("No")
         self.Erosion_canc.setEnabled(False)
     
     def delete_edit_dilation(self):
         self.delete(self.Dilation_edit)
-        self.Dilation_edit.clear()
+        self.Dilation_edit.setText("No")
         self.Dilation_canc.setEnabled(False)
     
     def delete_edit_open(self):
         self.delete(self.Open_edit)
-        self.Open_edit.clear()
+        self.Open_edit.setText("No")
         self.Open_canc.setEnabled(False)
     
     def delete_edit_close(self):
         self.delete(self.Close_edit)
-        self.Close_edit.clear()
+        self.Close_edit.setText("No")
         self.Close_canc.setEnabled(False)
         
     def delete(self, label):
-        current_number=int(label.text())-1 #legge numero dalla label
+        #current_number=int(label.text())-1 #legge numero dalla 
+        current_number=self.selected_vector(label)
         for i in range (current_number, (len(self.selezioni))): #scala tutto ciò che sta dopo questo numero (valore corrente-1)
             if(i==(len(self.selezioni)-1)):
                 self.selezioni[i]=0
             else:
                 self.selezioni[i]=self.selezioni[i+1]
             if(self.selezioni[i]==1):
-                stringa=str(i+1)
+                stringa="Step " + str(i+1)
                 self.Remove_edit.setText(stringa)
             if(self.selezioni[i]==2):
-                stringa=str(i+1)
+                stringa="Step " + str(i+1)
                 self.Erosion_edit.setText(stringa)
             if(self.selezioni[i]==3):
-                stringa=str(i+1)
+                stringa="Step " + str(i+1)
                 self.Dilation_edit.setText(stringa)
             if(self.selezioni[i]==4):
-                stringa=str(i+1)
+                stringa="Step " + str(i+1)
                 self.Open_edit.setText(stringa)
             if(self.selezioni[i]==5):
-                stringa=str(i+1)
+                stringa="Step " + str(i+1)
                 self.Close_edit.setText(stringa)
         self.valore=self.valore-1
         if (self.valore==0):
             self.setEnabled_Button(False)
+    
+    def selected_vector(self,label):
+        if (label.text()=="Step 1"):
+            current_number=0
+        if (label.text()=="Step 2"):
+            current_number=1
+        if (label.text()=="Step 3"):
+            current_number=2
+        if (label.text()=="Step 4"):
+            current_number=3
+        if (label.text()=="Step 5"):
+            current_number=4
+        return current_number
     
     #save all
     def save(self):
@@ -1110,18 +1140,13 @@ class Processing_cellService(QMainWindow):
             self.parent.set_image(self.parent.red_mask, self.parent.RED_QLabel, "red", mask=True)
             self.parent.set_image(self.parent.green_mask, self.parent.GREEN_QLabel, "green", mask=True)
             self.parent.set_image(self.parent.blue_mask, self.parent.BLUE_QLabel, "blue", mask=True)
+            self.parent.processing.close()
             
     def deleteall_message(self):
-        mbox = QMessageBox(self)
-        mbox.setIcon(QMessageBox.Question)
-        mbox.setWindowTitle("Delete All Dialog")
-        mbox.setText("Do you want to delete your changes?")
-        mbox.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
-        returnValue = mbox.exec()
-        if returnValue == QMessageBox.Yes:
-            self.Clear_filtred_label()
-        else:
-            pass
+        self.Clear_filtred_label()
+        self.parent.set_image(self.parent.red_image, self.parent.RED_QLabel, "red", mask=False)
+        self.parent.set_image(self.parent.green_image, self.parent.GREEN_QLabel, "green", mask=False)
+        self.parent.set_image(self.parent.blue_image, self.parent.BLUE_QLabel, "blue", mask=False)
         
     def error_message(self, text_error):
         msg = QMessageBox(self)
