@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import (QMessageBox, QMainWindow, qApp)
+from PyQt5.QtWidgets import (QMessageBox, QMainWindow)
 from PyQt5 import QtWidgets
 from PyQt5 import QtGui, QtCore
 import numpy as np
@@ -117,7 +117,7 @@ class Processing_cellService(QMainWindow):
             "}\n"
             "")
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("Icon/help.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(self.parent.resource_path("Icon/help.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.help_button.setIcon(icon2)
         self.help_button.setIconSize(QtCore.QSize(65, 30))
         self.help_button.clicked.connect(self.help_message)
@@ -145,7 +145,7 @@ class Processing_cellService(QMainWindow):
             "}\n"
             "")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("Icon/images (1).png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap(self.parent.resource_path("Icon/images (1).png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.save_button.setIcon(icon3)
         self.save_button.setIconSize(QtCore.QSize(65, 30))
         self.save_button.clicked.connect(self.save)
@@ -176,7 +176,7 @@ class Processing_cellService(QMainWindow):
             "}\n"
             "")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("Icon/canc icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(self.parent.resource_path("Icon/canc icon.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.delete_button.setIcon(icon1)
         self.delete_button.setIconSize(QtCore.QSize(35, 30))
         self.delete_button.clicked.connect(self.deleteall_message)
@@ -192,7 +192,7 @@ class Processing_cellService(QMainWindow):
         self.segmentation_widget.setGraphicsEffect(self.applyShadow())
         self.segmentation_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n" "border-radius: 35px;")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("Icon/save changes.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap(self.parent.resource_path("Icon/save changes.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 
         self.Add_button = QtWidgets.QPushButton(self.segmentation_widget)
         self.Add_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Add Changes to the filtred image</span></p></body></html>")
@@ -217,7 +217,7 @@ class Processing_cellService(QMainWindow):
         self.Add_button.setIcon(icon3)
         self.Add_button.setIconSize(QtCore.QSize(40, 55))
         icon_not = QtGui.QIcon()
-        icon_not.addPixmap(QtGui.QPixmap("Icon/non confermare.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon_not.addPixmap(QtGui.QPixmap(self.parent.resource_path("Icon/non confermare.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.No_button = QtWidgets.QPushButton(self.segmentation_widget)
         self.No_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Not Changes to the filtred image</span></p></body></html>")
         self.No_button.setStatusTip("Clear Numeration Step")
@@ -261,7 +261,7 @@ class Processing_cellService(QMainWindow):
             "    background-color: rgb(180, 180, 180);\n"
             "}")
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("Icon/undo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap(self.parent.resource_path("Icon/undo.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.Undo_button.setIcon(icon4)
         self.Undo_button.setIconSize(QtCore.QSize(40, 55))
 
@@ -283,7 +283,7 @@ class Processing_cellService(QMainWindow):
             "    background-color: rgb(180, 180, 180);\n"
             "}")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("Icon/remove small object.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(self.parent.resource_path("Icon/remove small object.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.Remove_button.setIcon(icon)
         self.Remove_button.clicked.connect(self.set_edit_remove)
         self.Remove_button.setGraphicsEffect(self.applyShadow())
@@ -309,7 +309,7 @@ class Processing_cellService(QMainWindow):
             "}")
         self.Erosion_button.setGraphicsEffect(self.applyShadow())
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("Icon/riduce spazi bianchi.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(self.parent.resource_path("Icon/riduce spazi bianchi.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.Erosion_button.setIcon(icon2)
         self.Erosion_button.setIconSize(QtCore.QSize(60, 35))
         self.Erosion_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Erosion</p></body></html>")
@@ -334,7 +334,7 @@ class Processing_cellService(QMainWindow):
             "    background-color: rgb(180, 180, 180);\n"
             "}")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("Icon/riduce spazi neri.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap(self.parent.resource_path("Icon/riduce spazi neri.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.Dilation_button.setIcon(icon3)
         self.Dilation_button.clicked.connect(self.set_edit_dilation)
         self.Dilation_button.setToolTip( "<html><head/><body><p><span style=\" color:#80b7ff;\">Dilation</p></body></html>")
@@ -360,7 +360,7 @@ class Processing_cellService(QMainWindow):
             "    background-color: rgb(180, 180, 180);\n"
             "}")
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap("Icon/rimuove i piccoli spots e connette zone scure.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon4.addPixmap(QtGui.QPixmap(self.parent.resource_path("Icon/rimuove i piccoli spots e connette zone scure.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.Open_button.setIcon(icon4)
         self.Open_button.setIconSize(QtCore.QSize(60, 35))
         self.Open_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Opening</span></p></body></html>")
@@ -384,7 +384,7 @@ class Processing_cellService(QMainWindow):
             "    background-color: rgb(180, 180, 180);\n"
             "}")
         icon5 = QtGui.QIcon()
-        icon5.addPixmap(QtGui.QPixmap("Icon/closing.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon5.addPixmap(QtGui.QPixmap(self.parent.resource_path("Icon/closing.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.Close_button.setIcon(icon5)
         self.Close_button.setIconSize(QtCore.QSize(60, 35))
         self.Close_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Closing</span></p></body></html>")
@@ -408,7 +408,7 @@ class Processing_cellService(QMainWindow):
             "    background-color: rgb(180, 180, 180);\n"
             "}")
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap("Icon/help.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon2.addPixmap(QtGui.QPixmap(self.parent.resource_path("Icon/help.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.Close_help.setIcon(icon2)
         self.Close_help.clicked.connect(self.close_message)
         self.Open_help = QtWidgets.QPushButton(self.segmentation_widget)
@@ -506,7 +506,7 @@ class Processing_cellService(QMainWindow):
             "    background-color: rgb(180, 180, 180);\n"
             "}")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap("Icon/canc icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon1.addPixmap(QtGui.QPixmap(self.parent.resource_path("Icon/canc icon.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.Remove_canc.setIcon(icon1)
         self.Remove_canc.clicked.connect(self.delete_edit_remove)
         self.Erosion_canc = QtWidgets.QPushButton(self.segmentation_widget)
@@ -778,7 +778,7 @@ class Processing_cellService(QMainWindow):
             "    background-color: rgb(180, 180, 180);\n"
             "}")
         icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap("Icon/processing.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon6.addPixmap(QtGui.QPixmap(self.parent.resource_path("Icon/processing.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.automatic_button.setIcon(icon6)
         self.automatic_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Automatic Threashold</span></p></body></html>")
         self.automatic_button.setIconSize(QtCore.QSize(60, 35))
@@ -805,7 +805,7 @@ class Processing_cellService(QMainWindow):
             "}")
         self.apply.setText("")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap("Icon/confirm.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap(self.parent.resource_path("Icon/confirm.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.apply.setIcon(icon3)
         self.apply.setIconSize(QtCore.QSize(60, 35))
         self.apply.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Binarize Image</span></p></body></html>")
