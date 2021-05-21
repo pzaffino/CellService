@@ -179,7 +179,7 @@ class Ui_Analisys_cellService(QMainWindow):
         #self.ctrl_help.activated.connect(self.clearAll)
         
         self.label = QtWidgets.QLabel(self.principal_widget)
-        self.label.setGeometry(QtCore.QRect(20, 20, 191, 16))
+        self.label.setGeometry(QtCore.QRect(10, 20, 191, 16))
         self.label.setObjectName("label")
         self.label.setText("Image size: ")
         
@@ -885,9 +885,9 @@ class Ui_Analisys_cellService(QMainWindow):
         self.intensity_edit.setAlignment(QtCore.Qt.AlignCenter)
         self.intensity_edit.setReadOnly(True)
         self.intensity_edit.setObjectName("intensity_edit")
-        self.intensity_edit.setText("Intensity")
+        self.intensity_edit.setText("Intensity (no mask)")
         self.intensity_red_title = QtWidgets.QLineEdit(self.intensity_widget)
-        self.intensity_red_title.setGeometry(QtCore.QRect(85, 50, 80, 20))
+        self.intensity_red_title.setGeometry(QtCore.QRect(75, 50, 80, 20))
         self.intensity_red_title.setText("Red intensity")
         self.intensity_red_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
@@ -1078,8 +1078,8 @@ class Ui_Analisys_cellService(QMainWindow):
             self.confirm_parameter()
             
     def image_size(self, image):
-        self.label.setText("Images size: " + str(image.shape[0]) + " x "
-                   + str(image.shape[1]) + " pixels")
+        self.label.setText("Images size: " + str(image.shape[0]) + "x"
+                   + str(image.shape[1]) + "=" + str(image.shape[0]*image.shape[1]) + " pixels")
         
     def clearAll(self):
         # clear labels
