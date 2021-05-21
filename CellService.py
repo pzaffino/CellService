@@ -1,4 +1,4 @@
-import sys
+import sys, os
 from copy import deepcopy
 from PyQt5.QtWidgets import QFileDialog, QMainWindow, QDesktopWidget, QMessageBox
 from PyQt5.QtGui import QPixmap, QImage, QKeySequence
@@ -26,6 +26,15 @@ class CellService(QMainWindow):
         self.blue_mask = None
         
         self.maximize_window()
+    
+    def resource_path(self, relative_path):
+        try:
+            # PyInstaller creates a temp folder and stores path in _MEIPASS
+            base_path = sys._MEIPASS
+        except Exception:
+            base_path = os.path.abspath(".")
+        return os.path.join(base_path, relative_path)
+    
     
     def setupUi(self):
         self.setWindowTitle("CellService")
@@ -93,7 +102,7 @@ class CellService(QMainWindow):
             "}\n"
             "")
         self.open_file_button.setGraphicsEffect(self.applyShadow())
-        icon = QtGui.QIcon("Icon/file_icon.png")
+        icon = QtGui.QIcon(self.resource_path("Icon/file_icon.png"))
         self.open_file_button.setIcon(icon)
         self.open_file_button.setIconSize(QtCore.QSize(60, 55))
         self.open_file_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Open RGB Image (Ctrl+O)</span></p></body></html>")
@@ -125,7 +134,7 @@ class CellService(QMainWindow):
             "}\n"
             "")
         self.openSingle_button.setGraphicsEffect(self.applyShadow())
-        icon1 = QtGui.QIcon("Icon/file icon rgb.png")
+        icon1 = QtGui.QIcon(self.resource_path("Icon/file icon rgb.png"))
         self.openSingle_button.setIcon(icon1)
         self.openSingle_button.setIconSize(QtCore.QSize(60, 55))
         self.openSingle_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Open singles channels (Ctrl+Shift+O)</span></p></body></html>")
@@ -157,7 +166,7 @@ class CellService(QMainWindow):
             "}\n"
             "")
         self.processing_button.setGraphicsEffect(self.applyShadow())
-        icon3 = QtGui.QIcon("Icon/processing.png")
+        icon3 = QtGui.QIcon(self.resource_path("Icon/processing.png"))
         self.processing_button.setIcon(icon3)
         self.processing_button.setIconSize(QtCore.QSize(60, 50))
         self.processing_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Open processing window</span></p></body></html>")
@@ -187,7 +196,7 @@ class CellService(QMainWindow):
             "}\n"
             "")
         self.analisys_button.setGraphicsEffect(self.applyShadow())
-        icon2 = QtGui.QIcon("Icon/analizer.png")
+        icon2 = QtGui.QIcon(self.resource_path("Icon/analizer.png"))
         self.analisys_button.setIcon(icon2)
         self.analisys_button.setIconSize(QtCore.QSize(60, 55))
         self.analisys_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Open analisys window</span></p></body></html>")
@@ -217,7 +226,7 @@ class CellService(QMainWindow):
             "}\n"
             "")
         self.help_button.setGraphicsEffect(self.applyShadow())
-        icon4 = QtGui.QIcon("Icon/help.png")
+        icon4 = QtGui.QIcon(self.resource_path("Icon/help.png"))
         self.help_button.setIcon(icon4)
         self.help_button.setIconSize(QtCore.QSize(60, 55))
         self.help_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Help page</span></p></body></html>")
