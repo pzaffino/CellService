@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QFileDialog, QMainWindow, QDesktopWidget, QMessageBo
 from PyQt5.QtGui import QPixmap, QImage, QKeySequence
 from PyQt5 import QtWidgets
 import CellService_processing
-import Analisys_cellService
+import CellService_analisys
 from PyQt5 import QtCore, QtGui
 import numpy as np
 import skimage.io
@@ -285,6 +285,7 @@ class CellService(QMainWindow):
     def maximize_window(self):
         screen = QDesktopWidget().screenGeometry()
         self.setFixedSize(int(screen.height()*1.3), int(screen.height()*0.8))
+        print(int(screen.height()*1.3), int(screen.height()*0.8))
         self.gridLayoutWidget.setGeometry(QtCore.QRect(257, 30, int(screen.height()*0.93), int(screen.height()*0.73)))
         self.RED_QLabel.setFixedSize(int(screen.height()*0.45),int(screen.height()*0.35))
         self.GREEN_QLabel.setFixedSize(int(screen.height()*0.45),int(screen.height()*0.35))
@@ -302,7 +303,7 @@ class CellService(QMainWindow):
         if (self.red_image is None and self.green_image is None and self.blue_image is None):
             self.error_message("Missing image! Insert an image")
         else:
-            self.analysis = Analisys_cellService.Ui_Analisys_cellService(self)
+            self.analysis = CellService_analisys.Ui_CellService_analisys(self)
             self.analysis.show()
         
     def set_image(self, np_array, qt_label, channel, mask=False):

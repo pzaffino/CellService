@@ -13,7 +13,7 @@ from skimage import filters
 from scipy import ndimage
 from scipy.ndimage import label, generate_binary_structure
 
-class Ui_Analisys_cellService(QMainWindow):
+class Ui_CellService_analisys(QMainWindow):
         
     def __init__(self, parent):
         super().__init__()
@@ -47,7 +47,7 @@ class Ui_Analisys_cellService(QMainWindow):
     
     def setupUi(self):
         # set the window's style
-        self.setObjectName("Analisys_cellService")
+        self.setObjectName("CellService_analisys")
         self.setFixedSize(1129, 690)
         self.setWindowTitle("Analisys")
         
