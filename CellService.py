@@ -9,6 +9,7 @@ from PyQt5 import QtCore, QtGui
 import numpy as np
 import skimage.io
 
+
 class CellService(QMainWindow):
 
     def __init__(self):
@@ -26,6 +27,7 @@ class CellService(QMainWindow):
         self.blue_mask = None
         
         self.maximize_window()
+        self.setWindowIcon(QtGui.QIcon('Icon/CellService_icon.ico'))
     
     def resource_path(self, relative_path):
         try:
