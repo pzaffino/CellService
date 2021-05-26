@@ -353,12 +353,11 @@ class Ui_Analisys_cellService(QMainWindow):
     
     def set_overlapWidget(self):
         self.similarity_widget = QtWidgets.QWidget(self.principal_widget)
-        self.similarity_widget.setGeometry(QtCore.QRect(20, 50, 200, 331))
+        
         self.similarity_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n" "border-radius: 35px;")
         self.similarity_widget.setGraphicsEffect(self.applyShadow())
         self.similarity_widget.setObjectName("similarity_widget")
         self.red_blue_buttonS = QtWidgets.QPushButton(self.similarity_widget)
-        self.red_blue_buttonS.setGeometry(QtCore.QRect(10, 60, 41, 41))
         self.red_blue_buttonS.setMouseTracking(True)
         self.red_blue_buttonS.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.red_blue_buttonS.setToolTipDuration(-1)
@@ -386,12 +385,10 @@ class Ui_Analisys_cellService(QMainWindow):
         icon3 = QtGui.QIcon(self.parent.resource_path("Icon/icon 1.png"))
         #icon3.addPixmap(QtGui.QPixmap("icon 1.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.red_blue_buttonS.setIcon(icon3)
-        self.red_blue_buttonS.setIconSize(QtCore.QSize(60, 35))
         self.red_blue_buttonS.setObjectName("red_blue_buttonS")
         self.red_blue_buttonS.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED and BLUE intersect</span></p></body></html>")
         self.red_blue_buttonS.setStatusTip("RED and BLUE intersect")
         self.red_green_buttonS = QtWidgets.QPushButton(self.similarity_widget)
-        self.red_green_buttonS.setGeometry(QtCore.QRect(10, 130, 41, 41))
         self.red_green_buttonS.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.red_green_buttonS.setToolTipDuration(-1)
         self.red_green_buttonS.setStyleSheet("QPushButton {\n"
@@ -418,10 +415,12 @@ class Ui_Analisys_cellService(QMainWindow):
         icon4 = QtGui.QIcon(self.parent.resource_path("Icon/icon 2.png"))
         #icon4.addPixmap(QtGui.QPixmap("icon 2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.red_green_buttonS.setIcon(icon4)
-        self.red_green_buttonS.setIconSize(QtCore.QSize(60, 35))
         self.red_green_buttonS.setObjectName("red_green_buttonS")
         self.blue_green_buttonS = QtWidgets.QPushButton(self.similarity_widget)
-        self.blue_green_buttonS.setGeometry(QtCore.QRect(10, 200, 41, 41))
+        
+        self.red_blue_buttonS.setIconSize(QtCore.QSize(60, 35))
+        self.red_green_buttonS.setIconSize(QtCore.QSize(60, 35))
+    
         self.blue_green_buttonS.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.blue_green_buttonS.setStyleSheet("QPushButton {\n"
             "    background-color: rgb(255, 255, 255);\n"
@@ -451,7 +450,6 @@ class Ui_Analisys_cellService(QMainWindow):
         self.blue_green_buttonS.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">GREEN and BLUE intersect</span></p></body></html>")
         self.blue_green_buttonS.setStatusTip("GREEN and BLUE intersect")
         self.total_buttonS = QtWidgets.QPushButton(self.similarity_widget)
-        self.total_buttonS.setGeometry(QtCore.QRect(10, 270, 41, 41))
         self.total_buttonS.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.total_buttonS.setStyleSheet("QPushButton {\n"
             "    background-color: rgb(255, 255, 255);\n"
@@ -479,7 +477,6 @@ class Ui_Analisys_cellService(QMainWindow):
         self.total_buttonS.setIconSize(QtCore.QSize(60, 35))
         self.total_buttonS.setObjectName("total_buttonS")
         self.RB_PercentS_edit = QtWidgets.QLineEdit(self.similarity_widget)
-        self.RB_PercentS_edit.setGeometry(QtCore.QRect(55, 70, 130, 31))
         self.RB_PercentS_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
@@ -490,7 +487,6 @@ class Ui_Analisys_cellService(QMainWindow):
         self.RB_PercentS_edit.setReadOnly(True)
         self.RB_PercentS_edit.setObjectName("RB_PercentS_edit")
         self.RG_PercentS_edit = QtWidgets.QLineEdit(self.similarity_widget)
-        self.RG_PercentS_edit.setGeometry(QtCore.QRect(55, 140, 130, 31))
         self.RG_PercentS_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
@@ -500,7 +496,6 @@ class Ui_Analisys_cellService(QMainWindow):
         self.RG_PercentS_edit.setReadOnly(True)
         self.RG_PercentS_edit.setObjectName("RG_PercentS_edit")
         self.BG_PercentS_edit = QtWidgets.QLineEdit(self.similarity_widget)
-        self.BG_PercentS_edit.setGeometry(QtCore.QRect(55, 210, 130, 31))
         self.BG_PercentS_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
@@ -510,7 +505,6 @@ class Ui_Analisys_cellService(QMainWindow):
         self.BG_PercentS_edit.setReadOnly(True)
         self.BG_PercentS_edit.setObjectName("BG_PercentS_edit")
         self.RGB_PercentS_edit = QtWidgets.QLineEdit(self.similarity_widget)
-        self.RGB_PercentS_edit.setGeometry(QtCore.QRect(55, 280, 130, 31))
         self.RGB_PercentS_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
@@ -520,7 +514,6 @@ class Ui_Analisys_cellService(QMainWindow):
         self.RGB_PercentS_edit.setReadOnly(True)
         self.RGB_PercentS_edit.setObjectName("RGB_PercentS_edit")
         self.compensate_edit = QtWidgets.QLineEdit(self.similarity_widget)
-        self.compensate_edit.setGeometry(QtCore.QRect(0, 20, 200, 16))
         self.compensate_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
             "\n"
             "    font: bold 14px;\n"
@@ -531,7 +524,6 @@ class Ui_Analisys_cellService(QMainWindow):
         self.compensate_edit.setReadOnly(True)
         self.compensate_edit.setObjectName("compensate_edit")
         self.similarity_edit = QtWidgets.QLineEdit(self.similarity_widget)
-        self.similarity_edit.setGeometry(QtCore.QRect(0, 0, 200, 31))
         self.similarity_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
             "border-radius:15px;\n"
             "    padding: 6px;\n"
@@ -542,43 +534,54 @@ class Ui_Analisys_cellService(QMainWindow):
         self.similarity_edit.setObjectName("similarity_edit")
         self.similarity_edit.setText("Intersect")
         self.redBlue_overlap_title = QtWidgets.QLineEdit(self.similarity_widget)
-        self.redBlue_overlap_title.setGeometry(QtCore.QRect(55, 50, 100, 20))
         self.redBlue_overlap_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.redBlue_overlap_title.setReadOnly(True)
         self.redBlue_overlap_title.setObjectName("redBlue_overlap_title")
         self.redBlue_overlap_title.setText("Blue-red intersect")
         self.redGreen_overlap_title = QtWidgets.QLineEdit(self.similarity_widget)
-        self.redGreen_overlap_title.setGeometry(QtCore.QRect(55, 120, 120, 20))
         self.redGreen_overlap_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.redGreen_overlap_title.setReadOnly(True)
         self.redGreen_overlap_title.setObjectName("redGreen_overlap_title")
         self.redGreen_overlap_title.setText("Red-green intersect")
         self.blueGreen_overlap_title = QtWidgets.QLineEdit(self.similarity_widget)
-        self.blueGreen_overlap_title.setGeometry(QtCore.QRect(55, 190, 120, 20))
         self.blueGreen_overlap_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.blueGreen_overlap_title.setReadOnly(True)
         self.blueGreen_overlap_title.setObjectName("blueGreen_overlap_title")
         self.blueGreen_overlap_title.setText("Green-blue intersect")
         self.all_overlap_title = QtWidgets.QLineEdit(self.similarity_widget)
-        self.all_overlap_title.setGeometry(QtCore.QRect(55, 260, 120, 20))
         self.all_overlap_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.all_overlap_title.setReadOnly(True)
         self.all_overlap_title.setObjectName("all_overlap_title")
         self.all_overlap_title.setText("All images intersect")
         
+        self.red_green_buttonS.setGeometry(QtCore.QRect(10, 130, 41, 41))
+        self.similarity_widget.setGeometry(QtCore.QRect(20, 50, 200, 331))
+        self.red_blue_buttonS.setGeometry(QtCore.QRect(10, 60, 41, 41))
+        self.blue_green_buttonS.setGeometry(QtCore.QRect(10, 200, 41, 41))
+        self.total_buttonS.setGeometry(QtCore.QRect(10, 270, 41, 41))
+        self.RB_PercentS_edit.setGeometry(QtCore.QRect(55, 70, 130, 31))
+        self.RG_PercentS_edit.setGeometry(QtCore.QRect(55, 140, 130, 31))
+        self.BG_PercentS_edit.setGeometry(QtCore.QRect(55, 210, 130, 31))
+        self.RGB_PercentS_edit.setGeometry(QtCore.QRect(55, 280, 130, 31))
+        self.compensate_edit.setGeometry(QtCore.QRect(0, 20, 200, 16))
+        self.similarity_edit.setGeometry(QtCore.QRect(0, 0, 200, 31))
+        self.redBlue_overlap_title.setGeometry(QtCore.QRect(55, 50, 100, 20))
+        self.redGreen_overlap_title.setGeometry(QtCore.QRect(55, 120, 120, 20))
+        self.blueGreen_overlap_title.setGeometry(QtCore.QRect(55, 190, 120, 20))
+        self.all_overlap_title.setGeometry(QtCore.QRect(55, 260, 120, 20))
+        self.maximize_overlapWidget()
+        
     def set_numberIslands(self):
         self.number_widget = QtWidgets.QWidget(self.principal_widget)
-        self.number_widget.setGeometry(QtCore.QRect(920, 90, 191, 261))
         self.number_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "border-radius: 35px;")
         self.number_widget.setGraphicsEffect(self.applyShadow())
         self.number_widget.setObjectName("number_widget")
         self.number_button_red = QtWidgets.QPushButton(self.number_widget)
-        self.number_button_red.setGeometry(QtCore.QRect(10, 60, 41, 41))
         self.number_button_red.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.number_button_red.setStyleSheet("QPushButton {\n"
 "     background-color: rgb(255, 255, 255);\n"
@@ -607,7 +610,6 @@ class Ui_Analisys_cellService(QMainWindow):
         self.number_button_red.setIconSize(QtCore.QSize(60, 45))
         self.number_button_red.setObjectName("number_button_red")
         self.number_button_green = QtWidgets.QPushButton(self.number_widget)
-        self.number_button_green.setGeometry(QtCore.QRect(10, 130, 41, 41))
         self.number_button_green.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.number_button_green.setStyleSheet("QPushButton {\n"
 "     background-color: rgb(255, 255, 255);\n"
@@ -636,7 +638,6 @@ class Ui_Analisys_cellService(QMainWindow):
         self.number_button_green.setIconSize(QtCore.QSize(60, 45))
         self.number_button_green.setObjectName("number_button_green")
         self.number_button_blue = QtWidgets.QPushButton(self.number_widget)
-        self.number_button_blue.setGeometry(QtCore.QRect(10, 200, 41, 41))
         self.number_button_blue.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.number_button_blue.setStyleSheet("QPushButton {\n"
             "    background-color: rgb(255, 255, 255);\n"
@@ -666,7 +667,6 @@ class Ui_Analisys_cellService(QMainWindow):
         self.number_button_blue.setIconSize(QtCore.QSize(60, 45))
         self.number_button_blue.setObjectName("number_button_blue")
         self.Red_number_edit = QtWidgets.QLineEdit(self.number_widget)
-        self.Red_number_edit.setGeometry(QtCore.QRect(60, 70, 100, 31))
         self.Red_number_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
@@ -676,7 +676,6 @@ class Ui_Analisys_cellService(QMainWindow):
         self.Red_number_edit.setReadOnly(True)
         self.Red_number_edit.setObjectName("Red_number_edit")
         self.Blue_number_edit = QtWidgets.QLineEdit(self.number_widget)
-        self.Blue_number_edit.setGeometry(QtCore.QRect(60, 210, 100, 31))
         self.Blue_number_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
@@ -686,7 +685,6 @@ class Ui_Analisys_cellService(QMainWindow):
         self.Blue_number_edit.setReadOnly(True)
         self.Blue_number_edit.setObjectName("Blue_number_edit")
         self.compensate_edit2_2 = QtWidgets.QLineEdit(self.number_widget)
-        self.compensate_edit2_2.setGeometry(QtCore.QRect(0, 20, 191, 16))
         self.compensate_edit2_2.setStyleSheet("background-color: rgb(19, 82, 255);\n"
 "\n"
 "    font: bold 14px;\n"
@@ -697,7 +695,6 @@ class Ui_Analisys_cellService(QMainWindow):
         self.compensate_edit2_2.setReadOnly(True)
         self.compensate_edit2_2.setObjectName("compensate_edit2_2")
         self.number_edit = QtWidgets.QLineEdit(self.number_widget)
-        self.number_edit.setGeometry(QtCore.QRect(0, 0, 191, 31))
         self.number_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
 "border-radius:15px;\n"
 "    padding: 6px;\n"
@@ -708,21 +705,20 @@ class Ui_Analisys_cellService(QMainWindow):
         self.number_edit.setObjectName("number_edit")
         self.number_edit.setText("Number of islands")
         self.red_number_title = QtWidgets.QLineEdit(self.number_widget)
-        self.red_number_title.setGeometry(QtCore.QRect(50, 50, 140, 20))
+        
         self.red_number_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.red_number_title.setReadOnly(True)
         self.red_number_title.setObjectName("red_number_title")
         self.red_number_title.setText("Red numbers of islands")
         self.blue_number_title = QtWidgets.QLineEdit(self.number_widget)
-        self.blue_number_title.setGeometry(QtCore.QRect(50, 190, 140, 20))
         self.blue_number_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.blue_number_title.setReadOnly(True)
         self.blue_number_title.setObjectName("blue_number_title")
         self.blue_number_title.setText("Blue number of islands")
         self.Green_number_edit = QtWidgets.QLineEdit(self.number_widget)
-        self.Green_number_edit.setGeometry(QtCore.QRect(60, 140, 100, 31))
+        
         self.Green_number_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
@@ -733,7 +729,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.Green_number_edit.setReadOnly(True)
         self.Green_number_edit.setObjectName("Green_number_edit")
         self.green_number_title = QtWidgets.QLineEdit(self.number_widget)
-        self.green_number_title.setGeometry(QtCore.QRect(48, 120, 147, 20))
+        
         self.green_number_title.setStyleSheet("font: 7pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.green_number_title.setReadOnly(True)
@@ -747,15 +743,28 @@ class Ui_Analisys_cellService(QMainWindow):
             self.parent.green_mask=self.parent.green_mask.astype(np.uint8)
         if (self.parent.blue_mask is not None):
             self.parent.blue_mask=self.parent.blue_mask.astype(np.uint8)
+        
+        
+        self.number_widget.setGeometry(QtCore.QRect(920, 90, 191, 261))
+        self.number_button_red.setGeometry(QtCore.QRect(10, 60, 41, 41))
+        self.number_button_green.setGeometry(QtCore.QRect(10, 130, 41, 41))
+        self.number_button_blue.setGeometry(QtCore.QRect(10, 200, 41, 41))
+        self.Red_number_edit.setGeometry(QtCore.QRect(60, 70, 100, 31))
+        self.Blue_number_edit.setGeometry(QtCore.QRect(60, 210, 100, 31))
+        self.compensate_edit2_2.setGeometry(QtCore.QRect(0, 20, 191, 16))
+        self.number_edit.setGeometry(QtCore.QRect(0, 0, 191, 31))
+        self.red_number_title.setGeometry(QtCore.QRect(50, 50, 140, 20))
+        self.blue_number_title.setGeometry(QtCore.QRect(50, 190, 140, 20))
+        self.Green_number_edit.setGeometry(QtCore.QRect(60, 140, 100, 31))
+        self.green_number_title.setGeometry(QtCore.QRect(48, 120, 147, 20))
+        self.maximize_numberIslands()
     
     def set_intensityWidget(self):
-        self.intensity_widget.setGeometry(QtCore.QRect(920, 400, 191, 261))
         self.intensity_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "border-radius: 35px;")
         self.intensity_widget.setGraphicsEffect(self.applyShadow())
         self.intensity_widget.setObjectName("intensity_widget_2")
         self.intensity_button_red = QtWidgets.QPushButton(self.intensity_widget)
-        self.intensity_button_red.setGeometry(QtCore.QRect(10, 60, 41, 41))
         self.intensity_button_red.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.intensity_button_red.setStyleSheet("QPushButton {\n"
 "     background-color: rgb(255, 255, 255);\n"
@@ -784,7 +793,6 @@ class Ui_Analisys_cellService(QMainWindow):
         self.intensity_button_red.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">RED image min and max intensity</span></p></body></html>")
         self.intensity_button_red.setStatusTip("RED image min and max intensity")
         self.intensity_button_green = QtWidgets.QPushButton(self.intensity_widget)
-        self.intensity_button_green.setGeometry(QtCore.QRect(10, 130, 41, 41))
         self.intensity_button_green.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.intensity_button_green.setStyleSheet("QPushButton {\n"
 "     background-color: rgb(255, 255, 255);\n"
@@ -813,7 +821,6 @@ class Ui_Analisys_cellService(QMainWindow):
         self.intensity_button_green.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">GREEN image min and max intensity</span></p></body></html>")
         self.intensity_button_green.setStatusTip("GREEN image min and max intensity")
         self.intensity_button_blue = QtWidgets.QPushButton(self.intensity_widget)
-        self.intensity_button_blue.setGeometry(QtCore.QRect(10, 200, 41, 41))
         self.intensity_button_blue.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.intensity_button_blue.setStyleSheet("QPushButton {\n"
 "    background-color: rgb(255, 255, 255);\n"
@@ -842,7 +849,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.intensity_button_blue.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">BLUE image min and max intensity</span></p></body></html>")
         self.intensity_button_blue.setStatusTip("BLUE image min and max intensity")
         self.Red_intensity_edit_min = QtWidgets.QLineEdit(self.intensity_widget)
-        self.Red_intensity_edit_min.setGeometry(QtCore.QRect(60, 70, 61, 31))
+        
         self.Red_intensity_edit_min.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
@@ -852,7 +859,6 @@ class Ui_Analisys_cellService(QMainWindow):
         self.Red_intensity_edit_min.setReadOnly(True)
         self.Red_intensity_edit_min.setObjectName("Red_intensity_edit_min")
         self.Blue_intensity_edit_min = QtWidgets.QLineEdit(self.intensity_widget)
-        self.Blue_intensity_edit_min.setGeometry(QtCore.QRect(60, 210, 61, 31))
         self.Blue_intensity_edit_min.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
@@ -862,7 +868,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.Blue_intensity_edit_min.setReadOnly(True)
         self.Blue_intensity_edit_min.setObjectName("Blue_intensity_edit_min")
         self.compensate_edit2_3 = QtWidgets.QLineEdit(self.intensity_widget)
-        self.compensate_edit2_3.setGeometry(QtCore.QRect(0, 20, 191, 16))
+        
         self.compensate_edit2_3.setStyleSheet("background-color: rgb(19, 82, 255);\n"
 "\n"
 "    font: bold 14px;\n"
@@ -873,7 +879,6 @@ class Ui_Analisys_cellService(QMainWindow):
         self.compensate_edit2_3.setReadOnly(True)
         self.compensate_edit2_3.setObjectName("compensate_edit2_3")
         self.intensity_edit = QtWidgets.QLineEdit(self.intensity_widget)
-        self.intensity_edit.setGeometry(QtCore.QRect(0, 0, 191, 31))
         self.intensity_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
 "border-radius:15px;\n"
 "    padding: 6px;\n"
@@ -884,21 +889,19 @@ class Ui_Analisys_cellService(QMainWindow):
         self.intensity_edit.setObjectName("intensity_edit")
         self.intensity_edit.setText("Intensity (no mask)")
         self.intensity_red_title = QtWidgets.QLineEdit(self.intensity_widget)
-        self.intensity_red_title.setGeometry(QtCore.QRect(75, 50, 80, 20))
+        
         self.intensity_red_title.setText("Red intensity")
         self.intensity_red_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.intensity_red_title.setReadOnly(True)
         self.intensity_red_title.setObjectName("intensity_red_title")
         self.intensity_blue_title = QtWidgets.QLineEdit(self.intensity_widget)
-        self.intensity_blue_title.setGeometry(QtCore.QRect(85, 190, 85, 20))
         self.intensity_blue_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.intensity_blue_title.setReadOnly(True)
         self.intensity_blue_title.setObjectName("intensity_blue_title")
         self.intensity_blue_title.setText("Blue intensity")
         self.Green_intensity_edit_min = QtWidgets.QLineEdit(self.intensity_widget)
-        self.Green_intensity_edit_min.setGeometry(QtCore.QRect(60, 140, 61, 31))
         self.Green_intensity_edit_min.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
@@ -909,14 +912,12 @@ class Ui_Analisys_cellService(QMainWindow):
         self.Green_intensity_edit_min.setReadOnly(True)
         self.Green_intensity_edit_min.setObjectName("Green_intensity_edit_min")
         self.intensity_green_title = QtWidgets.QLineEdit(self.intensity_widget)
-        self.intensity_green_title.setGeometry(QtCore.QRect(85, 120, 90, 20))
         self.intensity_green_title.setStyleSheet("font: 7.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.intensity_green_title.setReadOnly(True)
         self.intensity_green_title.setObjectName("intensity_green_title")
         self.intensity_green_title.setText("Green intensity")
         self.Red_intensity_edit_max = QtWidgets.QLineEdit(self.intensity_widget)
-        self.Red_intensity_edit_max.setGeometry(QtCore.QRect(125, 70, 61, 31))
         self.Red_intensity_edit_max.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
@@ -926,7 +927,6 @@ class Ui_Analisys_cellService(QMainWindow):
         self.Red_intensity_edit_max.setReadOnly(True)
         self.Red_intensity_edit_max.setObjectName("Red_intensity_edit_max")
         self.Green_intensity_edit_max = QtWidgets.QLineEdit(self.intensity_widget)
-        self.Green_intensity_edit_max.setGeometry(QtCore.QRect(125, 140, 61, 31))
         self.Green_intensity_edit_max.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
@@ -936,7 +936,6 @@ class Ui_Analisys_cellService(QMainWindow):
         self.Green_intensity_edit_max.setReadOnly(True)
         self.Green_intensity_edit_max.setObjectName("Green_intensity_edit_max")
         self.Blue_intensity_edit_max = QtWidgets.QLineEdit(self.intensity_widget)
-        self.Blue_intensity_edit_max.setGeometry(QtCore.QRect(125, 210, 61, 31))
         self.Blue_intensity_edit_max.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
@@ -946,6 +945,23 @@ class Ui_Analisys_cellService(QMainWindow):
         self.Blue_intensity_edit_max.setReadOnly(True)
         self.Blue_intensity_edit_max.setObjectName("Blue_intensity_edit_max")
         self.setCentralWidget(self.principal_widget)
+        
+        self.intensity_widget.setGeometry(QtCore.QRect(920, 400, 191, 261))
+        self.intensity_button_red.setGeometry(QtCore.QRect(10, 60, 41, 41))
+        self.intensity_button_green.setGeometry(QtCore.QRect(10, 130, 41, 41))
+        self.intensity_button_blue.setGeometry(QtCore.QRect(10, 200, 41, 41))
+        self.Red_intensity_edit_min.setGeometry(QtCore.QRect(60, 70, 61, 31))
+        self.Blue_intensity_edit_min.setGeometry(QtCore.QRect(60, 210, 61, 31))
+        self.compensate_edit2_3.setGeometry(QtCore.QRect(0, 20, 191, 16))
+        self.intensity_edit.setGeometry(QtCore.QRect(0, 0, 191, 31))
+        self.intensity_red_title.setGeometry(QtCore.QRect(75, 50, 80, 20))
+        self.intensity_blue_title.setGeometry(QtCore.QRect(85, 190, 85, 20))
+        self.Green_intensity_edit_min.setGeometry(QtCore.QRect(60, 140, 61, 31))
+        self.intensity_green_title.setGeometry(QtCore.QRect(85, 120, 90, 20))
+        self.Red_intensity_edit_max.setGeometry(QtCore.QRect(125, 70, 61, 31))
+        self.Green_intensity_edit_max.setGeometry(QtCore.QRect(125, 140, 61, 31))
+        self.Blue_intensity_edit_max.setGeometry(QtCore.QRect(125, 210, 61, 31))
+        self.maximize_intensityWidget()
     
     def maximize_window(self):
         self.screen = QDesktopWidget().screenGeometry()
@@ -959,16 +975,87 @@ class Ui_Analisys_cellService(QMainWindow):
         self.BLUE_Label.setFixedSize((screen_height*1.3*0.577/2)-10, (screen_height*1.3*0.577/2)-10)
         self.GREEN_Label.setFixedSize((screen_height*1.3*0.577/2)-10, (screen_height*1.3*0.577/2)-10)
         self.RED_Label.setFixedSize((screen_height*1.3*0.577/2)-10, (screen_height*1.3*0.577/2)-10)
-        self.canc_image_button.setGeometry(QtCore.QRect(920, 20, 41, 41))
-        self.help_button.setGeometry(QtCore.QRect(990, 20, 41, 41))
+        self.canc_image_button.setGeometry(QtCore.QRect(screen_height*1.3*0.815, screen_height*1.3*0.0177, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
+        self.help_button.setGeometry(QtCore.QRect(screen_height*1.3*0.8769, screen_height*1.3*0.0177, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
         
     def maximize_biologicalWidget(self):
         if ((self.screen.height()*1.3)<=1920):
             screen_height=1076
         else:
             screen_height=1129/1.3
-        self.biological_widget.setGeometry(QtCore.QRect(20, screen_height*1.3*0.35, screen_height*1.3*0.177, screen_height*1.3*0.177))
-        
+        self.biological_widget.setGeometry(QtCore.QRect(20, screen_height*1.3*0.35, screen_height*1.3*0.177, screen_height*1.3*0.23))
+        self.compensate_edit2.setGeometry(QtCore.QRect(0, screen_height*1.3*0.0177, screen_height*1.3*0.177, screen_height*1.3*0.0142))
+        self.biological_edit.setGeometry(QtCore.QRect(0, 0, screen_height*1.3*0.177, screen_height*1.3*0.02745))
+        self.red_buttonBC.setGeometry(QtCore.QRect(10, screen_height*1.3*0.053, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
+        self.green_buttonBC.setGeometry(QtCore.QRect(10, screen_height*1.3*0.1151, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
+        self.blue_buttonBC.setGeometry(QtCore.QRect(10, screen_height*1.3*0.177, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
+        self.Red_PercentBC_edit.setGeometry(QtCore.QRect(screen_height*1.3*0.0487, screen_height*1.3*0.062, screen_height*1.3*0.115, screen_height*1.3*0.02745))
+        self.Blue_PercentBC_edit.setGeometry(QtCore.QRect(screen_height*1.3*0.0487, screen_height*1.3*0.186, screen_height*1.3*0.115, screen_height*1.3*0.02745))
+        self.red_biological_title.setGeometry(QtCore.QRect(screen_height*1.3*0.0487, screen_height*1.3*0.0443, screen_height*1.3*0.1196, screen_height*1.3*0.0177))
+        self.blue_biological_title.setGeometry(QtCore.QRect(screen_height*1.3*0.0487, screen_height*1.3*0.1683, screen_height*1.3*0.1196, screen_height*1.3*0.0177))
+        self.Green_PercentBC_edit.setGeometry(QtCore.QRect(screen_height*1.3*0.0487, screen_height*1.3*0.124, screen_height*1.3*0.115, screen_height*1.3*0.02745))
+        self.green_biological_title.setGeometry(QtCore.QRect(screen_height*1.3*0.0487, screen_height*1.3*0.106, screen_height*1.3*0.1258, screen_height*1.3*0.0177))
+    
+    def maximize_overlapWidget(self):
+        if ((self.screen.height()*1.3)<=1920):
+            screen_height=1076
+        else:
+            screen_height=1129/1.3
+        self.red_green_buttonS.setGeometry(QtCore.QRect(screen_height*1.3*0.00886, screen_height*1.3*0.115, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
+        self.similarity_widget.setGeometry(QtCore.QRect(screen_height*1.3*0.0177, screen_height*1.3*0.044, screen_height*1.3*0.177, screen_height*1.3*0.2932))
+        self.red_blue_buttonS.setGeometry(QtCore.QRect(screen_height*1.3*0.00886, screen_height*1.3*0.053, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
+        self.blue_green_buttonS.setGeometry(QtCore.QRect(screen_height*1.3*0.00886, screen_height*1.3*0.177, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
+        self.total_buttonS.setGeometry(QtCore.QRect(screen_height*1.3*0.00886, screen_height*1.3*0.239, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
+        self.RB_PercentS_edit.setGeometry(QtCore.QRect(screen_height*1.3*0.0487, screen_height*1.3*0.062, screen_height*1.3*0.115, screen_height*1.3*0.0275))
+        self.RG_PercentS_edit.setGeometry(QtCore.QRect(screen_height*1.3*0.0487, screen_height*1.3*0.124, screen_height*1.3*0.115, screen_height*1.3*0.0275))
+        self.BG_PercentS_edit.setGeometry(QtCore.QRect(screen_height*1.3*0.0487, screen_height*1.3*0.186, screen_height*1.3*0.115, screen_height*1.3*0.0275))
+        self.RGB_PercentS_edit.setGeometry(QtCore.QRect(screen_height*1.3*0.0487, screen_height*1.3*0.248, screen_height*1.3*0.115, screen_height*1.3*0.0275))
+        self.compensate_edit.setGeometry(QtCore.QRect(0, screen_height*1.3*0.0177, screen_height*1.3*0.177, screen_height*1.3*0.0142))
+        self.similarity_edit.setGeometry(QtCore.QRect(0, 0, screen_height*1.3*0.177, screen_height*1.3*0.0275))
+        self.redBlue_overlap_title.setGeometry(QtCore.QRect(screen_height*1.3*0.0487, screen_height*1.3*0.044, screen_height*1.3*0.0886, screen_height*1.3*0.0177))
+        self.redGreen_overlap_title.setGeometry(QtCore.QRect(screen_height*1.3*0.0487, screen_height*1.3*0.1063, screen_height*1.3*0.1063, screen_height*1.3*0.0177))
+        self.blueGreen_overlap_title.setGeometry(QtCore.QRect(screen_height*1.3*0.0487, screen_height*1.3*0.1683, screen_height*1.3*0.1063, screen_height*1.3*0.0177))
+        self.all_overlap_title.setGeometry(QtCore.QRect(screen_height*1.3*0.0487, screen_height*1.3*0.23, screen_height*1.3*0.1063, screen_height*1.3*0.0177))
+    
+    def maximize_numberIslands(self):
+        if ((self.screen.height()*1.3)<=1920):
+            screen_height=1076
+        else:
+            screen_height=1129/1.3
+        self.number_widget.setGeometry(QtCore.QRect(screen_height*1.3*0.8149, screen_height*1.3*0.0797, screen_height*1.3*0.1692, screen_height*1.3*0.2312))
+        self.number_button_red.setGeometry(QtCore.QRect(screen_height*1.3*0.0089, screen_height*1.3*0.053, screen_height*1.3*0.036, screen_height*1.3*0.036))
+        self.number_button_green.setGeometry(QtCore.QRect(screen_height*1.3*0.0089, screen_height*1.3*0.115, screen_height*1.3*0.036, screen_height*1.3*0.036))
+        self.number_button_blue.setGeometry(QtCore.QRect(screen_height*1.3*0.0089, screen_height*1.3*0.177, screen_height*1.3*0.036, screen_height*1.3*0.036))
+        self.Red_number_edit.setGeometry(QtCore.QRect(screen_height*1.3*0.053, screen_height*1.3*0.062, screen_height*1.3*0.0886, screen_height*1.3*0.0275))
+        self.Blue_number_edit.setGeometry(QtCore.QRect(screen_height*1.3*0.053, screen_height*1.3*0.186, screen_height*1.3*0.0886, screen_height*1.3*0.0275))
+        self.compensate_edit2_2.setGeometry(QtCore.QRect(0, screen_height*1.3*0.0177, screen_height*1.3*0.1692, screen_height*1.3*0.0142))
+        self.number_edit.setGeometry(QtCore.QRect(0, 0, screen_height*1.3*0.1692, screen_height*1.3*0.0275))
+        self.red_number_title.setGeometry(QtCore.QRect(screen_height*1.3*0.0443, screen_height*1.3*0.0443, screen_height*1.3*0.124, screen_height*1.3*0.0177))
+        self.blue_number_title.setGeometry(QtCore.QRect(screen_height*1.3*0.0443, screen_height*1.3*0.1683, screen_height*1.3*0.124, screen_height*1.3*0.0177))
+        self.Green_number_edit.setGeometry(QtCore.QRect(screen_height*1.3*0.053, screen_height*1.3*0.124, screen_height*1.3*0.0886, screen_height*1.3*0.0275))
+        self.green_number_title.setGeometry(QtCore.QRect(screen_height*1.3*0.043, screen_height*1.3*0.1063, screen_height*1.3*0.13, screen_height*1.3*0.0177))
+    
+    def maximize_intensityWidget(self):
+        if ((self.screen.height()*1.3)<=1920):
+            screen_height=1076
+        else:
+            screen_height=1129/1.3
+        self.intensity_widget.setGeometry(QtCore.QRect(screen_height*1.3*0.8149, screen_height*1.3*0.3543, screen_height*1.3*0.1692, screen_height*1.3*0.2312))
+        self.intensity_button_red.setGeometry(QtCore.QRect(screen_height*1.3*0.0089, screen_height*1.3*0.053, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
+        self.intensity_button_green.setGeometry(QtCore.QRect(screen_height*1.3*0.0089, screen_height*1.3*0.115, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
+        self.intensity_button_blue.setGeometry(QtCore.QRect(screen_height*1.3*0.0089, screen_height*1.3*0.177, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
+        self.Red_intensity_edit_min.setGeometry(QtCore.QRect(screen_height*1.3*0.053, screen_height*1.3*0.062, screen_height*1.3*0.054, screen_height*1.3*0.0275))
+        self.Blue_intensity_edit_min.setGeometry(QtCore.QRect(screen_height*1.3*0.053, screen_height*1.3*0.186, screen_height*1.3*0.054, screen_height*1.3*0.0275))
+        self.compensate_edit2_3.setGeometry(QtCore.QRect(0, screen_height*1.3*0.0177, screen_height*1.3*0.1692, screen_height*1.3*0.0142))
+        self.intensity_edit.setGeometry(QtCore.QRect(0, 0, screen_height*1.3*0.1692, screen_height*1.3*0.0275))
+        self.intensity_red_title.setGeometry(QtCore.QRect(screen_height*1.3*0.0664, screen_height*1.3*0.0443, screen_height*1.3*0.071, screen_height*1.3*0.0177))
+        self.intensity_blue_title.setGeometry(QtCore.QRect(screen_height*1.3*0.0753, screen_height*1.3*0.1683, screen_height*1.3*0.0753, screen_height*1.3*0.0177))
+        self.Green_intensity_edit_min.setGeometry(QtCore.QRect(screen_height*1.3*0.053, screen_height*1.3*0.124, screen_height*1.3*0.054, screen_height*1.3*0.0275))
+        self.intensity_green_title.setGeometry(QtCore.QRect(screen_height*1.3*0.0753, screen_height*1.3*0.1063, screen_height*1.3*0.0797, screen_height*1.3*0.0177))
+        self.Red_intensity_edit_max.setGeometry(QtCore.QRect(screen_height*1.3*0.1107, screen_height*1.3*0.062, screen_height*1.3*0.054, screen_height*1.3*0.0275))
+        self.Green_intensity_edit_max.setGeometry(QtCore.QRect(screen_height*1.3*0.1107, screen_height*1.3*0.124, screen_height*1.3*0.054, screen_height*1.3*0.0275))
+        self.Blue_intensity_edit_max.setGeometry(QtCore.QRect(screen_height*1.3*0.1107, screen_height*1.3*0.186, screen_height*1.3*0.054, screen_height*1.3*0.0275))
+    
     def applyShadow(self):
         shadow = QtWidgets.QGraphicsDropShadowEffect()
         shadow.setBlurRadius(40)
