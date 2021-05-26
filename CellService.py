@@ -310,7 +310,7 @@ class CellService(QMainWindow):
         if (self.red_image is None and self.green_image is None and self.blue_image is None):
             self.error_message("Missing image! Insert an image")
         else:
-            self.analysis = CellService_analisys.Ui_CellService_analisys(self)
+            self.analysis = Analisys_cellService.Ui_Analisys_cellService(self)
             self.analysis.show()
         
     def set_image(self, np_array, qt_label, channel, mask=False):
