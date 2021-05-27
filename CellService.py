@@ -290,14 +290,14 @@ class CellService(QMainWindow):
             screen_height=1076
         else:
             screen_height=screen.height()
-        self.setFixedSize(int(screen_height*1.3), int(screen_height*0.8))
+        self.setFixedSize(int(screen_height*1.25), int(screen_height*0.8))
         print(int(screen_height*0.05), int(screen_height*0.8))
         self.gridLayoutWidget.setGeometry(QtCore.QRect(257, 30, int(screen_height*0.93), int(screen_height*0.73)))
         self.RED_QLabel.setFixedSize(int(screen_height*0.45),int(screen_height*0.35))
         self.GREEN_QLabel.setFixedSize(int(screen_height*0.45),int(screen_height*0.35))
         self.BLUE_QLabel.setFixedSize(int(screen_height*0.45),int(screen_height*0.35))
         self.RGB_QLabel.setFixedSize(int(screen_height*0.45),int(screen_height*0.35))
-        self.option_widget.setGeometry(QtCore.QRect(28, int(screen_height*0.05), 180, 551))
+        self.option_widget.setGeometry(QtCore.QRect(40, int(screen_height*0.1), 180, 551))
     
     def processingWindow(self):
         if (self.red_image is None and self.green_image is None and self.blue_image is None):

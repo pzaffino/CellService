@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import (QMessageBox, QMainWindow)
+from PyQt5.QtWidgets import (QMessageBox, QMainWindow, QDesktopWidget)
 from PyQt5 import QtWidgets
 from PyQt5 import QtGui, QtCore
 import numpy as np
@@ -27,14 +27,12 @@ class Processing_cellService(QMainWindow):
         self.setFixedSize(1130, 695)
         self.principal_widget = QtWidgets.QWidget()
         self.gridLayoutWidget = QtWidgets.QWidget(self.principal_widget)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(280, 40, 521, 630))
         self.principal_layout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.principal_layout.setContentsMargins(0, 0, 0, 0)
         
         self.Original_Label = QtWidgets.QLabel(self.gridLayoutWidget)
         self.Original_Label.setTabletTracking(True)
         self.Original_Label.setStyleSheet("border: 2px solid red")
-        self.Original_Label.setFixedSize(245,205)
         self.Original_Label.setFrameShape(QtWidgets.QFrame.Panel)
         self.Original_Label.setLineWidth(2)
         self.Original_Label.setScaledContents(True)
@@ -44,13 +42,11 @@ class Processing_cellService(QMainWindow):
         self.Filtred_Label.setStyleSheet("border: 2px solid red")
         self.Filtred_Label.setFrameShape(QtWidgets.QFrame.Panel)
         self.Filtred_Label.setLineWidth(2)
-        self.Filtred_Label.setFixedSize(245,205)
         self.Filtred_Label.setScaledContents(True)
         self.principal_layout.addWidget(self.Filtred_Label, 1, 1, 1, 1)
         
         self.Original_Label1 = QtWidgets.QLabel(self.gridLayoutWidget)
         self.Original_Label1.setStyleSheet("border: 2px solid green")
-        self.Original_Label1.setFixedSize(245,205)
         self.Original_Label1.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.Original_Label1.setFrameShadow(QtWidgets.QFrame.Plain)
         self.Original_Label1.setLineWidth(2)
@@ -59,7 +55,6 @@ class Processing_cellService(QMainWindow):
         self.Filtred_Label1 = QtWidgets.QLabel(self.gridLayoutWidget)
         self.Filtred_Label1.setStyleSheet("border: 2px solid green")
         self.Filtred_Label1.setFrameShape(QtWidgets.QFrame.NoFrame)
-        self.Filtred_Label1.setFixedSize(245,205)
         self.Filtred_Label1.setFrameShadow(QtWidgets.QFrame.Plain)
         self.Filtred_Label1.setLineWidth(2)
         self.Filtred_Label1.setScaledContents(True)
@@ -68,26 +63,21 @@ class Processing_cellService(QMainWindow):
         self.Original_Label2 = QtWidgets.QLabel(self.gridLayoutWidget)
         self.Original_Label2.setStyleSheet("border: 2px solid blue")
         self.Original_Label2.setScaledContents(True)
-        self.Original_Label2.setFixedSize(245,205)
         self.principal_layout.addWidget(self.Original_Label2, 4, 0, 1, 1)
         self.Filtred_Label2 = QtWidgets.QLabel(self.gridLayoutWidget)
         self.Filtred_Label2.setStyleSheet("border: 2px solid blue")
         self.Filtred_Label2.setScaledContents(True)
-        self.Filtred_Label2.setFixedSize(245,205)
         self.principal_layout.addWidget(self.Filtred_Label2, 4, 1, 1, 1)
         
         self.radioRed = QtWidgets.QRadioButton(self.principal_widget)
         self.radioRed.setText("Red Image")
         self.radioRed.setChecked(True)
-        self.radioRed.setGeometry(QtCore.QRect(320, 10, 101, 20))
-        self.radioRed.setStyleSheet("font: 8pt \"Arial\";\n" "color: red;\n")
+        self.radioRed.setStyleSheet("font: 9pt \"Arial\";\n" "color: red;\n")
         self.radioGreen = QtWidgets.QRadioButton(self.principal_widget)
         self.radioGreen.setText("Green Image")
-        self.radioGreen.setGeometry(QtCore.QRect(490, 10, 101, 20))
-        self.radioGreen.setStyleSheet("font: 8pt \"Arial\";\n" "color: Green;")
+        self.radioGreen.setStyleSheet("font: 9pt \"Arial\";\n" "color: Green;")
         self.radioBlue = QtWidgets.QRadioButton(self.principal_widget)
-        self.radioBlue.setGeometry(QtCore.QRect(670, 10, 101, 20))
-        self.radioBlue.setStyleSheet("font: 8pt \"Arial\";\n" "color: Blue;")
+        self.radioBlue.setStyleSheet("font: 9pt \"Arial\";\n" "color: Blue;")
         self.radioBlue.setText("Blue Image")
         if (self.parent.red_image is None):
             self.radioRed.setEnabled(False)
@@ -98,7 +88,6 @@ class Processing_cellService(QMainWindow):
         
         self.help_button = QtWidgets.QPushButton(self.principal_widget)
         self.help_button.setGraphicsEffect(self.applyShadow())
-        self.help_button.setGeometry(QtCore.QRect(875, 625, 41, 41))
         self.help_button.setMouseTracking(True)
         self.help_button.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.help_button.setStyleSheet("QPushButton {\n"
@@ -126,7 +115,6 @@ class Processing_cellService(QMainWindow):
        
         self.save_button = QtWidgets.QPushButton(self.principal_widget)
         self.save_button.setGraphicsEffect(self.applyShadow())
-        self.save_button.setGeometry(QtCore.QRect(1015, 625, 41, 41))
         self.save_button.setMouseTracking(True)
         self.save_button.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.save_button.setStyleSheet("QPushButton {\n"
@@ -156,7 +144,6 @@ class Processing_cellService(QMainWindow):
         self.delete_button.setGraphicsEffect(self.applyShadow())
         self.delete_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Delete </span></p></body></html>")
         self.delete_button.setStatusTip("Delete")
-        self.delete_button.setGeometry(QtCore.QRect(945, 625, 41, 41))
         self.delete_button.setMouseTracking(True)
         self.delete_button.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.delete_button.setToolTipDuration(-1)
@@ -182,13 +169,27 @@ class Processing_cellService(QMainWindow):
         self.delete_button.clicked.connect(self.deleteall_message)
         self.setCentralWidget(self.principal_widget)
         
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(280, 40, 521, 630))
+        self.Original_Label.setFixedSize(245,205)
+        self.Filtred_Label.setFixedSize(245,205)
+        self.Original_Label1.setFixedSize(245,205)
+        self.Filtred_Label1.setFixedSize(245,205)
+        self.Original_Label2.setFixedSize(245,205)
+        self.Filtred_Label2.setFixedSize(245,205)
+        self.radioRed.setGeometry(QtCore.QRect(320, 10, 101, 20))
+        self.radioGreen.setGeometry(QtCore.QRect(490, 10, 101, 20))
+        self.radioBlue.setGeometry(QtCore.QRect(670, 10, 101, 20))
+        self.help_button.setGeometry(QtCore.QRect(875, 625, 41, 41))
+        self.save_button.setGeometry(QtCore.QRect(1015, 625, 41, 41))
+        self.delete_button.setGeometry(QtCore.QRect(945, 625, 41, 41))
+        self.maximize_window()
+        
         self.selezioni=np.array([0,0,0,0,0])
         self.valore=0
         self.set_all_images()
 
     def set_segmentation(self):
         self.segmentation_widget = QtWidgets.QWidget(self.principal_widget)
-        self.segmentation_widget.setGeometry(QtCore.QRect(840, 15, 245, 600))
         self.segmentation_widget.setGraphicsEffect(self.applyShadow())
         self.segmentation_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n" "border-radius: 35px;")
         icon3 = QtGui.QIcon()
@@ -199,7 +200,6 @@ class Processing_cellService(QMainWindow):
         self.Add_button.setStatusTip("Add Changes to the filtred image")
         self.Add_button.clicked.connect(self.apply_segmentation)
         self.Add_button.setGraphicsEffect(self.applyShadow())
-        self.Add_button.setGeometry(QtCore.QRect(150, 470, 35, 35))
         self.Add_button.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.Add_button.setStyleSheet("QPushButton {\n"
             "     background-color: rgb(255, 255, 255);\n"
@@ -223,7 +223,6 @@ class Processing_cellService(QMainWindow):
         self.No_button.setStatusTip("Clear Numeration Step")
         self.No_button.clicked.connect(self.clear_edit_label)
         self.No_button.setGraphicsEffect(self.applyShadow())
-        self.No_button.setGeometry(QtCore.QRect(100, 535, 35, 35))
         self.No_button.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.No_button.setStyleSheet("QPushButton {\n"
             "     background-color: rgb(255, 255, 255);\n"
@@ -245,7 +244,6 @@ class Processing_cellService(QMainWindow):
         self.Undo_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Undo Change</span></p></body></html>")
         self.Undo_button.setStatusTip("Undo change")
         self.Undo_button.clicked.connect(self.back)
-        self.Undo_button.setGeometry(QtCore.QRect(50, 470, 35, 35))
         self.Undo_button.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.Undo_button.setStyleSheet("QPushButton {\n"
             "     background-color: rgb(255, 255, 255);\n"
@@ -266,7 +264,6 @@ class Processing_cellService(QMainWindow):
         self.Undo_button.setIconSize(QtCore.QSize(40, 55))
 
         self.Remove_button = QtWidgets.QPushButton(self.segmentation_widget)
-        self.Remove_button.setGeometry(QtCore.QRect(30, 130, 41, 41))
         self.Remove_button.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.Remove_button.setGraphicsEffect(self.applyShadow())
         self.Remove_button.setStyleSheet("QPushButton {\n"
@@ -291,7 +288,6 @@ class Processing_cellService(QMainWindow):
         self.Remove_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Remove small object</span></p></body></html>")
         self.Remove_button.setStatusTip("Remove small object")
         self.Erosion_button = QtWidgets.QPushButton(self.segmentation_widget)
-        self.Erosion_button.setGeometry(QtCore.QRect(30, 200, 41, 41))
         self.Erosion_button.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.Erosion_button.setStyleSheet("QPushButton {\n"
             "    background-color: rgb(255, 255, 255);\n"
@@ -317,7 +313,6 @@ class Processing_cellService(QMainWindow):
         self.Erosion_button.clicked.connect(self.set_edit_erosion)
         
         self.Dilation_button = QtWidgets.QPushButton(self.segmentation_widget)
-        self.Dilation_button.setGeometry(QtCore.QRect(30, 270, 41, 41))
         self.Dilation_button.setGraphicsEffect(self.applyShadow())
         self.Dilation_button.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.Dilation_button.setStyleSheet("QPushButton {\n"
@@ -343,7 +338,6 @@ class Processing_cellService(QMainWindow):
         
         self.Open_button = QtWidgets.QPushButton(self.segmentation_widget)
         self.Open_button.setGraphicsEffect(self.applyShadow())
-        self.Open_button.setGeometry(QtCore.QRect(30, 340, 41, 41))
         self.Open_button.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.Open_button.clicked.connect(self.set_edit_open)
         self.Open_button.setStyleSheet("QPushButton {\n"
@@ -368,7 +362,6 @@ class Processing_cellService(QMainWindow):
         self.Close_button = QtWidgets.QPushButton(self.segmentation_widget)
         self.Close_button.clicked.connect(self.set_edit_close)
         self.Close_button.setGraphicsEffect(self.applyShadow())
-        self.Close_button.setGeometry(QtCore.QRect(30, 410, 41, 41))
         self.Close_button.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.Close_button.setStyleSheet("QPushButton {\n"
             "     background-color: rgb(255, 255, 255);\n"
@@ -392,7 +385,6 @@ class Processing_cellService(QMainWindow):
         
         self.Close_help = QtWidgets.QPushButton(self.segmentation_widget)
         self.Close_help.setGraphicsEffect(self.applyShadow())
-        self.Close_help.setGeometry(QtCore.QRect(190, 422, 31, 31))
         self.Close_help.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.Close_help.setStyleSheet("QPushButton {\n"
             "     background-color: rgb(255, 255, 255);\n"
@@ -413,7 +405,6 @@ class Processing_cellService(QMainWindow):
         self.Close_help.clicked.connect(self.close_message)
         self.Open_help = QtWidgets.QPushButton(self.segmentation_widget)
         self.Open_help.setGraphicsEffect(self.applyShadow())
-        self.Open_help.setGeometry(QtCore.QRect(190, 352, 31, 31))
         self.Open_help.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.Open_help.clicked.connect(self.open_message)
         self.Open_help.setStyleSheet("QPushButton {\n"
@@ -433,7 +424,6 @@ class Processing_cellService(QMainWindow):
         self.Dilation_help = QtWidgets.QPushButton(self.segmentation_widget)
         self.Dilation_help.setGraphicsEffect(self.applyShadow())
         self.Dilation_help.clicked.connect(self.dilation_message)
-        self.Dilation_help.setGeometry(QtCore.QRect(190, 282, 31, 31))
         self.Dilation_help.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.Dilation_help.setStyleSheet("QPushButton {\n"
             "     background-color: rgb(255, 255, 255);\n"
@@ -451,7 +441,6 @@ class Processing_cellService(QMainWindow):
         self.Dilation_help.setIcon(icon2)
         self.Erosion_help = QtWidgets.QPushButton(self.segmentation_widget)
         self.Erosion_help.setGraphicsEffect(self.applyShadow())
-        self.Erosion_help.setGeometry(QtCore.QRect(190, 212, 31, 31))
         self.Erosion_help.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.Erosion_help.clicked.connect(self.erosion_message)
         self.Erosion_help.setStyleSheet("QPushButton {\n"
@@ -471,7 +460,6 @@ class Processing_cellService(QMainWindow):
         self.Remove_help = QtWidgets.QPushButton(self.segmentation_widget)
         self.Remove_help.setGraphicsEffect(self.applyShadow())
         self.Remove_help.clicked.connect(self.remove_message)
-        self.Remove_help.setGeometry(QtCore.QRect(190, 142, 31, 31))
         self.Remove_help.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.Remove_help.setStyleSheet("QPushButton {\n"
             "     background-color: rgb(255, 255, 255);\n"
@@ -490,7 +478,6 @@ class Processing_cellService(QMainWindow):
         
         self.Remove_canc = QtWidgets.QPushButton(self.segmentation_widget)
         self.Remove_canc.setGraphicsEffect(self.applyShadow())
-        self.Remove_canc.setGeometry(QtCore.QRect(150, 142, 31, 31))
         self.Remove_canc.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.Remove_canc.setStyleSheet("QPushButton {\n"
             "     background-color: rgb(255, 255, 255);\n"
@@ -512,7 +499,6 @@ class Processing_cellService(QMainWindow):
         self.Erosion_canc = QtWidgets.QPushButton(self.segmentation_widget)
         self.Erosion_canc.setGraphicsEffect(self.applyShadow())
         self.Erosion_canc.clicked.connect(self.delete_edit_erosion)
-        self.Erosion_canc.setGeometry(QtCore.QRect(150, 212, 31, 31))
         self.Erosion_canc.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.Erosion_canc.setStyleSheet("QPushButton {\n"
             "     background-color: rgb(255, 255, 255);\n"
@@ -530,7 +516,6 @@ class Processing_cellService(QMainWindow):
         self.Erosion_canc.setIcon(icon1)
         self.Dilation_canc = QtWidgets.QPushButton(self.segmentation_widget)
         self.Dilation_canc.setGraphicsEffect(self.applyShadow())
-        self.Dilation_canc.setGeometry(QtCore.QRect(150, 282, 31, 31))
         self.Dilation_canc.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.Dilation_canc.clicked.connect(self.delete_edit_dilation)
         self.Dilation_canc.setStyleSheet("QPushButton {\n"
@@ -549,7 +534,6 @@ class Processing_cellService(QMainWindow):
         self.Dilation_canc.setIcon(icon1)
         self.Open_canc = QtWidgets.QPushButton(self.segmentation_widget)
         self.Open_canc.setGraphicsEffect(self.applyShadow())
-        self.Open_canc.setGeometry(QtCore.QRect(150, 350, 31, 31))
         self.Open_canc.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.Open_canc.clicked.connect(self.delete_edit_open)
         self.Open_canc.setStyleSheet("QPushButton {\n"
@@ -568,7 +552,6 @@ class Processing_cellService(QMainWindow):
         self.Open_canc.setIcon(icon1)
         self.Close_canc = QtWidgets.QPushButton(self.segmentation_widget)
         self.Close_canc.setGraphicsEffect(self.applyShadow())
-        self.Close_canc.setGeometry(QtCore.QRect(150, 420, 31, 31))
         self.Close_canc.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.Close_canc.clicked.connect(self.delete_edit_close)
         self.Close_canc.setStyleSheet("QPushButton {\n"
@@ -587,7 +570,6 @@ class Processing_cellService(QMainWindow):
         self.Close_canc.setIcon(icon1)
         
         self.segmentation_edit = QtWidgets.QLineEdit(self.segmentation_widget)
-        self.segmentation_edit.setGeometry(QtCore.QRect(0, 0, 245, 41))
         self.segmentation_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
             "border-radius:15px;\n"
             "    padding: 6px;\n"
@@ -597,7 +579,6 @@ class Processing_cellService(QMainWindow):
         self.segmentation_edit.setReadOnly(True)
         self.segmentation_edit.setText("Segmentation")
         self.Remove_edit = QtWidgets.QLineEdit(self.segmentation_widget)
-        self.Remove_edit.setGeometry(QtCore.QRect(80, 140, 61, 31))
         self.Remove_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
@@ -606,7 +587,6 @@ class Processing_cellService(QMainWindow):
             "color: rgb(255, 255, 255);")
         self.Remove_edit.setReadOnly(True)
         self.Erosion_edit = QtWidgets.QLineEdit(self.segmentation_widget)
-        self.Erosion_edit.setGeometry(QtCore.QRect(80, 210, 61, 31))
         self.Erosion_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
@@ -615,7 +595,6 @@ class Processing_cellService(QMainWindow):
             "color: rgb(255, 255, 255);")
         self.Erosion_edit.setReadOnly(True)
         self.Dilation_edit = QtWidgets.QLineEdit(self.segmentation_widget)
-        self.Dilation_edit.setGeometry(QtCore.QRect(80, 280, 61, 31))
         self.Dilation_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
@@ -624,7 +603,6 @@ class Processing_cellService(QMainWindow):
             "color: rgb(255, 255, 255);")
         self.Dilation_edit.setReadOnly(True)
         self.Open_edit = QtWidgets.QLineEdit(self.segmentation_widget)
-        self.Open_edit.setGeometry(QtCore.QRect(80, 350, 61, 31))
         self.Open_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
@@ -633,7 +611,6 @@ class Processing_cellService(QMainWindow):
             "color: rgb(255, 255, 255);")
         self.Open_edit.setReadOnly(True)
         self.Close_edit = QtWidgets.QLineEdit(self.segmentation_widget)
-        self.Close_edit.setGeometry(QtCore.QRect(80, 420, 61, 31))
         self.Close_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
@@ -643,42 +620,34 @@ class Processing_cellService(QMainWindow):
         self.Close_edit.setReadOnly(True)
         
         self.Add_title = QtWidgets.QLabel(self.segmentation_widget)
-        self.Add_title.setGeometry(QtCore.QRect(140, 508, 91, 21))
-        self.Add_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
+        self.Add_title.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.Add_title.setText("Apply Change")
         self.No_title = QtWidgets.QLabel(self.segmentation_widget)
-        self.No_title.setGeometry(QtCore.QRect(60, 573, 135, 21))
-        self.No_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
+        self.No_title.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.No_title.setText("Clear Numeration Step")
         
         self.undo_title = QtWidgets.QLabel(self.segmentation_widget)
-        self.undo_title.setGeometry(QtCore.QRect(30, 508, 91, 21))
-        self.undo_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
+        self.undo_title.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.undo_title.setText("Undo Change")
         
         self.remove_title = QtWidgets.QLineEdit(self.segmentation_widget)
-        self.remove_title.setGeometry(QtCore.QRect(80, 120, 141, 20))
-        self.remove_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
+        self.remove_title.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.remove_title.setReadOnly(True)
         self.remove_title.setText("Remove Small Object")
         self.dilation_title = QtWidgets.QLineEdit(self.segmentation_widget)
         self.dilation_title.setText("Dilation")
-        self.dilation_title.setGeometry(QtCore.QRect(90, 260, 91, 20))
-        self.dilation_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
+        self.dilation_title.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.dilation_title.setReadOnly(True)
         self.erosion_title = QtWidgets.QLineEdit(self.segmentation_widget)
-        self.erosion_title.setGeometry(QtCore.QRect(90, 190, 91, 20))
-        self.erosion_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
+        self.erosion_title.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.erosion_title.setReadOnly(True)
         self.erosion_title.setText("Erosion")
         self.open_title = QtWidgets.QLineEdit(self.segmentation_widget)
-        self.open_title.setGeometry(QtCore.QRect(90, 330, 91, 21))
-        self.open_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
+        self.open_title.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.open_title.setReadOnly(True) 
         self.open_title.setText("Opening")
         self.close_title = QtWidgets.QLineEdit(self.segmentation_widget)
-        self.close_title.setGeometry(QtCore.QRect(90, 399, 91, 21))
-        self.close_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
+        self.close_title.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.close_title.setReadOnly(True)
         self.close_title.setText("Closing")
         
@@ -689,7 +658,6 @@ class Processing_cellService(QMainWindow):
         if(self.parent.blue_image is not None):
             maximum=(self.parent.red_image.shape[0]*self.parent.red_image.shape[1])/5
         self.Raggio = QtWidgets.QDoubleSpinBox(self.segmentation_widget)
-        self.Raggio.setGeometry(QtCore.QRect(140, 60, 91, 31))
         self.Raggio.setStyleSheet("background-color: rgb(255, 255, 255);\n"
             "border: 2px solid rgb(128, 183, 255);\n"
             "    border-radius: 15px;\n"
@@ -699,10 +667,46 @@ class Processing_cellService(QMainWindow):
             "color: blue;")
         self.Raggio.setMaximum(maximum)
         self.Radius_title = QtWidgets.QLineEdit(self.segmentation_widget)
-        self.Radius_title.setGeometry(QtCore.QRect(15, 60, 121, 31))
-        self.Radius_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
+        self.Radius_title.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.Radius_title.setReadOnly(True)
         self.Radius_title.setText("Minimum island size")
+        
+        self.segmentation_widget.setGeometry(QtCore.QRect(840, 15, 245, 600))
+        self.Add_button.setGeometry(QtCore.QRect(150, 470, 35, 35))
+        self.No_button.setGeometry(QtCore.QRect(100, 535, 35, 35))
+        self.Undo_button.setGeometry(QtCore.QRect(50, 470, 35, 35))
+        self.Remove_button.setGeometry(QtCore.QRect(30, 130, 41, 41))
+        self.Erosion_button.setGeometry(QtCore.QRect(30, 200, 41, 41))
+        self.Dilation_button.setGeometry(QtCore.QRect(30, 270, 41, 41))
+        self.Open_button.setGeometry(QtCore.QRect(30, 340, 41, 41))
+        self.Close_button.setGeometry(QtCore.QRect(30, 410, 41, 41))
+        self.Close_help.setGeometry(QtCore.QRect(190, 422, 31, 31))
+        self.Open_help.setGeometry(QtCore.QRect(190, 352, 31, 31))
+        self.Dilation_help.setGeometry(QtCore.QRect(190, 282, 31, 31))
+        self.Erosion_help.setGeometry(QtCore.QRect(190, 212, 31, 31))
+        self.Remove_help.setGeometry(QtCore.QRect(190, 142, 31, 31))
+        self.Remove_canc.setGeometry(QtCore.QRect(150, 142, 31, 31))
+        self.Erosion_canc.setGeometry(QtCore.QRect(150, 212, 31, 31))
+        self.Dilation_canc.setGeometry(QtCore.QRect(150, 282, 31, 31))
+        self.Open_canc.setGeometry(QtCore.QRect(150, 350, 31, 31))
+        self.Close_canc.setGeometry(QtCore.QRect(150, 420, 31, 31))
+        self.segmentation_edit.setGeometry(QtCore.QRect(0, 0, 245, 41))
+        self.Remove_edit.setGeometry(QtCore.QRect(80, 140, 61, 31))
+        self.Erosion_edit.setGeometry(QtCore.QRect(80, 210, 61, 31))
+        self.Dilation_edit.setGeometry(QtCore.QRect(80, 280, 61, 31))
+        self.Open_edit.setGeometry(QtCore.QRect(80, 350, 61, 31))
+        self.Close_edit.setGeometry(QtCore.QRect(80, 420, 61, 31))
+        self.Add_title.setGeometry(QtCore.QRect(140, 508, 91, 21))
+        self.No_title.setGeometry(QtCore.QRect(60, 573, 135, 21))
+        self.undo_title.setGeometry(QtCore.QRect(30, 508, 91, 21))
+        self.remove_title.setGeometry(QtCore.QRect(80, 120, 141, 20))
+        self.dilation_title.setGeometry(QtCore.QRect(90, 260, 91, 20))
+        self.erosion_title.setGeometry(QtCore.QRect(90, 190, 91, 20))
+        self.open_title.setGeometry(QtCore.QRect(90, 330, 91, 21))
+        self.close_title.setGeometry(QtCore.QRect(90, 399, 91, 21))
+        self.Raggio.setGeometry(QtCore.QRect(140, 60, 91, 31))
+        self.Radius_title.setGeometry(QtCore.QRect(15, 60, 121, 31))
+        self.maximize_set_segmentation()
         
         self.Remove_edit.setText("No")
         self.Erosion_edit.setText("No")
@@ -714,13 +718,11 @@ class Processing_cellService(QMainWindow):
         
     def binary_processing(self):
         self.binary_widget = QtWidgets.QWidget(self.principal_widget)
-        self.binary_widget.setGeometry(QtCore.QRect(10, 60, 241, 361))
         self.binary_widget.setGraphicsEffect(self.applyShadow())
         self.binary_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n" "border-radius: 30px;")
 
         self.binary_widget_3 = QtWidgets.QWidget(self.binary_widget)
         self.binary_widget_3.setGraphicsEffect(self.applyShadow())
-        self.binary_widget_3.setGeometry(QtCore.QRect(10, 60, 211, 121))
         self.binary_widget_3.setStyleSheet("background-color: rgb(255, 255, 255);\n"
             "border-radius:15px;\n"
             "    font: bold 14px;\n"
@@ -730,15 +732,12 @@ class Processing_cellService(QMainWindow):
 
         self.Min_Label = QtWidgets.QLabel(self.binary_widget_3)
         self.Min_Label.setText("Min Threshold")
-        self.Min_Label.setGeometry(QtCore.QRect(100, 30, 111, 31))
-        self.Min_Label.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
+        self.Min_Label.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.Max_Label = QtWidgets.QLabel(self.binary_widget_3)
-        self.Max_Label.setGeometry(QtCore.QRect(100, 70, 111, 31))
-        self.Max_Label.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
+        self.Max_Label.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.Max_Label.setText("Max Threshold")
         
         self.fontSizeSpinBox = QtWidgets.QDoubleSpinBox(self.binary_widget_3)
-        self.fontSizeSpinBox.setGeometry(QtCore.QRect(10, 30, 91, 31))
         self.fontSizeSpinBox.setDecimals(2)
         self.fontSizeSpinBox.setMaximum(255.0)
         self.fontSizeSpinBox.setStyleSheet("background-color: white;\n"
@@ -749,7 +748,6 @@ class Processing_cellService(QMainWindow):
             "font: 10pt \"Varela\";\n"
             "color: blue;")
         self.fontSizeSpinBox2 = QtWidgets.QDoubleSpinBox(self.binary_widget_3)
-        self.fontSizeSpinBox2.setGeometry(QtCore.QRect(10, 70, 91, 31))
         self.fontSizeSpinBox2.setDecimals(2)
         self.fontSizeSpinBox2.setMaximum(255.0)
         self.fontSizeSpinBox2.setStyleSheet("background-color: white;\n"
@@ -762,7 +760,6 @@ class Processing_cellService(QMainWindow):
         
         self.automatic_button = QtWidgets.QPushButton(self.binary_widget)
         self.automatic_button.setGraphicsEffect(self.applyShadow())
-        self.automatic_button.setGeometry(QtCore.QRect(90, 273, 41, 41))
         self.automatic_button.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.automatic_button.setStyleSheet("QPushButton {\n"
             "     background-color: rgb(255, 255, 255);\n"
@@ -787,7 +784,6 @@ class Processing_cellService(QMainWindow):
         
         self.apply = QtWidgets.QPushButton(self.binary_widget)
         self.apply.setGraphicsEffect(self.applyShadow())
-        self.apply.setGeometry(QtCore.QRect(90, 200, 41, 41))
         self.apply.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.apply.clicked.connect(self.runIntensityBinarization)
         self.apply.setStyleSheet("QPushButton {\n"
@@ -812,15 +808,12 @@ class Processing_cellService(QMainWindow):
         self.apply.setStatusTip("Binarize Image")
         
         self.Automatic_title = QtWidgets.QLabel(self.binary_widget)
-        self.Automatic_title.setGeometry(QtCore.QRect(50, 315, 131, 21))
-        self.Automatic_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
+        self.Automatic_title.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.Automatic_title.setText("Automatic Threshold")
         self.Apply_title = QtWidgets.QLabel(self.binary_widget)
         self.Apply_title.setText("Binarize Image")
-        self.Apply_title.setGeometry(QtCore.QRect(70, 242, 101, 21))
-        self.Apply_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(19, 82, 255);")
+        self.Apply_title.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.binary_edit = QtWidgets.QLineEdit(self.binary_widget)
-        self.binary_edit.setGeometry(QtCore.QRect(0, 0, 241, 41))
         self.binary_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
             "border-radius:15px;\n"
             "    font: bold 14px;\n"
@@ -831,6 +824,99 @@ class Processing_cellService(QMainWindow):
         self.binary_edit.setReadOnly(True)
         self.binary_edit.setText("Binarize")
         
+        self.binary_widget.setGeometry(QtCore.QRect(10, 60, 241, 361))
+        self.binary_widget_3.setGeometry(QtCore.QRect(10, 60, 211, 121))
+        self.Min_Label.setGeometry(QtCore.QRect(100, 30, 111, 31))
+        self.Max_Label.setGeometry(QtCore.QRect(100, 70, 111, 31))
+        self.fontSizeSpinBox.setGeometry(QtCore.QRect(10, 30, 91, 31))
+        self.fontSizeSpinBox2.setGeometry(QtCore.QRect(10, 70, 91, 31))
+        self.automatic_button.setGeometry(QtCore.QRect(90, 273, 41, 41))
+        self.apply.setGeometry(QtCore.QRect(90, 200, 41, 41))
+        self.Automatic_title.setGeometry(QtCore.QRect(50, 315, 131, 21))
+        self.Apply_title.setGeometry(QtCore.QRect(70, 242, 101, 21))
+        self.binary_edit.setGeometry(QtCore.QRect(0, 0, 241, 41))
+        self.maximize_binary_processing()
+        
+    
+    def maximize_window(self):
+        self.screen = QDesktopWidget().screenGeometry()
+        if ((self.screen.height()*1.3)<=1920):
+            screen_height=1076
+        else:
+            screen_height=1130/1.3
+        self.setFixedSize(int(screen_height*1.35), int(screen_height*0.8))
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(screen_height*1.3*0.23, screen_height*1.3*0.0354, screen_height*1.3*0.54, screen_height*1.3*0.5575))
+        self.Original_Label.setFixedSize(screen_height*1.3*0.252,screen_height*1.3*0.18)
+        self.Filtred_Label.setFixedSize(screen_height*1.3*0.252,screen_height*1.3*0.18)
+        self.Original_Label1.setFixedSize(screen_height*1.3*0.252,screen_height*1.3*0.18)
+        self.Filtred_Label1.setFixedSize(screen_height*1.3*0.252,screen_height*1.3*0.18)
+        self.Original_Label2.setFixedSize(screen_height*1.3*0.252,screen_height*1.3*0.18)
+        self.Filtred_Label2.setFixedSize(screen_height*1.3*0.252,screen_height*1.3*0.18)
+        self.radioRed.setGeometry(QtCore.QRect(screen_height*1.3*0.28, screen_height*1.3*0.0088, screen_height*1.3*0.089, screen_height*1.3*0.0177))
+        self.radioGreen.setGeometry(QtCore.QRect(screen_height*1.3*0.434, screen_height*1.3*0.0088, screen_height*1.3*0.089, screen_height*1.3*0.0177))
+        self.radioBlue.setGeometry(QtCore.QRect(screen_height*1.3*0.593, screen_height*1.3*0.0088, screen_height*1.3*0.089, screen_height*1.3*0.0177))
+        self.help_button.setGeometry(QtCore.QRect(screen_height*1.3*0.83, screen_height*1.3*0.553, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
+        self.save_button.setGeometry(QtCore.QRect(screen_height*1.3*0.93, screen_height*1.3*0.553, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
+        self.delete_button.setGeometry(QtCore.QRect(screen_height*1.3*0.88, screen_height*1.3*0.553, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
+    
+    def maximize_binary_processing(self):
+        if ((self.screen.height()*1.3)<=1920):
+            screen_height=1076
+        else:
+            screen_height=1130/1.3
+        self.binary_widget.setGeometry(QtCore.QRect(screen_height*1.3*0.0088, screen_height*1.3*0.053, screen_height*1.3*0.21, screen_height*1.3*0.319))
+        self.binary_widget_3.setGeometry(QtCore.QRect(screen_height*1.3*0.0088, screen_height*1.3*0.053, screen_height*1.3*0.1867, screen_height*1.3*0.107))
+        self.Min_Label.setGeometry(QtCore.QRect(screen_height*1.3*0.0885, screen_height*1.3*0.0265, screen_height*1.3*0.098, screen_height*1.3*0.0274))
+        self.Max_Label.setGeometry(QtCore.QRect(screen_height*1.3*0.0885, screen_height*1.3*0.062, screen_height*1.3*0.098, screen_height*1.3*0.0274))
+        self.fontSizeSpinBox.setGeometry(QtCore.QRect(screen_height*1.3*0.0088, screen_height*1.3*0.0265, screen_height*1.3*0.0805, screen_height*1.3*0.0274))
+        self.fontSizeSpinBox2.setGeometry(QtCore.QRect(screen_height*1.3*0.0088, screen_height*1.3*0.062, screen_height*1.3*0.0805, screen_height*1.3*0.0274))
+        self.automatic_button.setGeometry(QtCore.QRect(screen_height*1.3*0.08, screen_height*1.3*0.24, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
+        self.apply.setGeometry(QtCore.QRect(screen_height*1.3*0.08, screen_height*1.3*0.177, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
+        self.Automatic_title.setGeometry(QtCore.QRect(screen_height*1.3*0.044, screen_height*1.3*0.2787, screen_height*1.3*0.1159, screen_height*1.3*0.0186))
+        self.Apply_title.setGeometry(QtCore.QRect(screen_height*1.3*0.062, screen_height*1.3*0.214, screen_height*1.3*0.089, screen_height*1.3*0.0186))
+        self.binary_edit.setGeometry(QtCore.QRect(0, 0, screen_height*1.3*0.21, screen_height*1.3*0.0363))
+    
+    def maximize_set_segmentation(self):
+        if ((self.screen.height()*1.3)<=1920):
+            screen_height=1076
+        else:
+            screen_height=1130/1.3
+        self.segmentation_widget.setGeometry(QtCore.QRect(screen_height*1.3*0.79, screen_height*1.3*0.0133, screen_height*1.3*0.2168, screen_height*1.3*0.53))
+        self.Add_button.setGeometry(QtCore.QRect(screen_height*1.3*0.133, screen_height*1.3*0.416, screen_height*1.3*0.031, screen_height*1.3*0.031))
+        self.No_button.setGeometry(QtCore.QRect(screen_height*1.3*0.0885, screen_height*1.3*0.47, screen_height*1.3*0.031, screen_height*1.3*0.031))
+        self.Undo_button.setGeometry(QtCore.QRect(screen_height*1.3*0.044, screen_height*1.3*0.416, screen_height*1.3*0.031, screen_height*1.3*0.031))
+        self.Remove_button.setGeometry(QtCore.QRect(screen_height*1.3*0.0265, screen_height*1.3*0.115, screen_height*1.3*0.036, screen_height*1.3*0.036))
+        self.Erosion_button.setGeometry(QtCore.QRect(screen_height*1.3*0.0265, screen_height*1.3*0.177, screen_height*1.3*0.036, screen_height*1.3*0.036))
+        self.Dilation_button.setGeometry(QtCore.QRect(screen_height*1.3*0.0265, screen_height*1.3*0.2389, screen_height*1.3*0.036, screen_height*1.3*0.036))
+        self.Open_button.setGeometry(QtCore.QRect(screen_height*1.3*0.0265, screen_height*1.3*0.3, screen_height*1.3*0.036, screen_height*1.3*0.036))
+        self.Close_button.setGeometry(QtCore.QRect(screen_height*1.3*0.0265, screen_height*1.3*0.363, screen_height*1.3*0.036, screen_height*1.3*0.036))
+        self.Close_help.setGeometry(QtCore.QRect(screen_height*1.3*0.168, screen_height*1.3*0.37, screen_height*1.3*0.027, screen_height*1.3*0.027))
+        self.Open_help.setGeometry(QtCore.QRect(screen_height*1.3*0.168, screen_height*1.3*0.3115, screen_height*1.3*0.027, screen_height*1.3*0.027))
+        self.Dilation_help.setGeometry(QtCore.QRect(screen_height*1.3*0.168, screen_height*1.3*0.2496, screen_height*1.3*0.027, screen_height*1.3*0.027))
+        self.Erosion_help.setGeometry(QtCore.QRect(screen_height*1.3*0.168, screen_height*1.3*0.1876, screen_height*1.3*0.027, screen_height*1.3*0.027))
+        self.Remove_help.setGeometry(QtCore.QRect(screen_height*1.3*0.168, screen_height*1.3*0.1257, screen_height*1.3*0.027, screen_height*1.3*0.027))
+        self.Remove_canc.setGeometry(QtCore.QRect(screen_height*1.3*0.133, screen_height*1.3*0.1257, screen_height*1.3*0.027, screen_height*1.3*0.027))
+        self.Erosion_canc.setGeometry(QtCore.QRect(screen_height*1.3*0.133, screen_height*1.3*0.1876, screen_height*1.3*0.027, screen_height*1.3*0.027))
+        self.Dilation_canc.setGeometry(QtCore.QRect(screen_height*1.3*0.133, screen_height*1.3*0.2496, screen_height*1.3*0.027, screen_height*1.3*0.027))
+        self.Open_canc.setGeometry(QtCore.QRect(screen_height*1.3*0.133, screen_height*1.3*0.31, screen_height*1.3*0.027, screen_height*1.3*0.027))
+        self.Close_canc.setGeometry(QtCore.QRect(screen_height*1.3*0.133, screen_height*1.3*0.37, screen_height*1.3*0.027, screen_height*1.3*0.027))
+        self.segmentation_edit.setGeometry(QtCore.QRect(0, 0, screen_height*1.3*0.217, screen_height*1.3*0.036))
+        self.Remove_edit.setGeometry(QtCore.QRect(screen_height*1.3*0.071, screen_height*1.3*0.12, screen_height*1.3*0.054, screen_height*1.3*0.027))
+        self.Erosion_edit.setGeometry(QtCore.QRect(screen_height*1.3*0.071, screen_height*1.3*0.186, screen_height*1.3*0.054, screen_height*1.3*0.027))
+        self.Dilation_edit.setGeometry(QtCore.QRect(screen_height*1.3*0.071, screen_height*1.3*0.25, screen_height*1.3*0.054, screen_height*1.3*0.027))
+        self.Open_edit.setGeometry(QtCore.QRect(screen_height*1.3*0.071, screen_height*1.3*0.31, screen_height*1.3*0.054, screen_height*1.3*0.027))
+        self.Close_edit.setGeometry(QtCore.QRect(screen_height*1.3*0.071, screen_height*1.3*0.37, screen_height*1.3*0.054, screen_height*1.3*0.027))
+        self.Add_title.setGeometry(QtCore.QRect(screen_height*1.3*0.124, screen_height*1.3*0.4496, screen_height*1.3*0.081, screen_height*1.3*0.0186))
+        self.No_title.setGeometry(QtCore.QRect(screen_height*1.3*0.053, screen_height*1.3*0.507, screen_height*1.3*0.1195, screen_height*1.3*0.0186))
+        self.undo_title.setGeometry(QtCore.QRect(screen_height*1.3*0.0265, screen_height*1.3*0.4496, screen_height*1.3*0.081, screen_height*1.3*0.0186))
+        self.remove_title.setGeometry(QtCore.QRect(screen_height*1.3*0.071, screen_height*1.3*0.106, screen_height*1.3*0.124, screen_height*1.3*0.0177))
+        self.dilation_title.setGeometry(QtCore.QRect(screen_height*1.3*0.0796, screen_height*1.3*0.23, screen_height*1.3*0.081, screen_height*1.3*0.0177))
+        self.erosion_title.setGeometry(QtCore.QRect(screen_height*1.3*0.0796, screen_height*1.3*0.168, screen_height*1.3*0.081, screen_height*1.3*0.0177))
+        self.open_title.setGeometry(QtCore.QRect(screen_height*1.3*0.0796, screen_height*1.3*0.292, screen_height*1.3*0.081, screen_height*1.3*0.0186))
+        self.close_title.setGeometry(QtCore.QRect(screen_height*1.3*0.0796, screen_height*1.3*0.353, screen_height*1.3*0.081, screen_height*1.3*0.0186))
+        self.Raggio.setGeometry(QtCore.QRect(screen_height*1.3*0.124, screen_height*1.3*0.053, screen_height*1.3*0.081, screen_height*1.3*0.027))
+        self.Radius_title.setGeometry(QtCore.QRect(screen_height*1.3*0.013, screen_height*1.3*0.053, screen_height*1.3*0.107, screen_height*1.3*0.027))
+    
     def applyShadow(self):
         shadow = QtWidgets.QGraphicsDropShadowEffect()
         shadow.setBlurRadius(40)
