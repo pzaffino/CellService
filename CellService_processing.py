@@ -22,6 +22,8 @@ class Processing_cellService(QMainWindow):
         self.set_segmentation()
         self.statusbar = QtWidgets.QStatusBar(self)
         self.setStatusBar(self.statusbar)
+        self.setWindowIcon(QtGui.QIcon(self.parent.resource_path("Icon/CellService_icon.ico")))
+        
         
     def setupUI(self):
         self.setFixedSize(1130, 695)
@@ -72,12 +74,12 @@ class Processing_cellService(QMainWindow):
         self.radioRed = QtWidgets.QRadioButton(self.principal_widget)
         self.radioRed.setText("Red Image")
         self.radioRed.setChecked(True)
-        self.radioRed.setStyleSheet("font: 12pt \"Arial\";\n" "color: red;\n")
+        self.radioRed.setStyleSheet("font: 9pt \"Arial\";\n" "color: red;\n")
         self.radioGreen = QtWidgets.QRadioButton(self.principal_widget)
         self.radioGreen.setText("Green Image")
-        self.radioGreen.setStyleSheet("font: 12pt \"Arial\";\n" "color: Green;")
+        self.radioGreen.setStyleSheet("font: 9pt \"Arial\";\n" "color: Green;")
         self.radioBlue = QtWidgets.QRadioButton(self.principal_widget)
-        self.radioBlue.setStyleSheet("font: 12pt \"Arial\";\n" "color: Blue;")
+        self.radioBlue.setStyleSheet("font: 9pt \"Arial\";\n" "color: Blue;")
         self.radioBlue.setText("Blue Image")
         if (self.parent.red_image is None):
             self.radioRed.setEnabled(False)
@@ -133,7 +135,7 @@ class Processing_cellService(QMainWindow):
             "}\n"
             "")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(self.parent.resource_path("Icon/images (1).png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon3.addPixmap(QtGui.QPixmap(self.parent.resource_path("Icon/conferma.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.save_button.setIcon(icon3)
         self.save_button.setIconSize(QtCore.QSize(65, 30))
         self.save_button.clicked.connect(self.save)
@@ -573,7 +575,7 @@ class Processing_cellService(QMainWindow):
         self.segmentation_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
             "border-radius:15px;\n"
             "    padding: 6px;\n"
-            "font: 15pt \"Arial\";\n"
+            "font: 14pt \"Arial\";\n"
             "color: rgb(255, 255, 255);")
         self.segmentation_edit.setAlignment(QtCore.Qt.AlignCenter)
         self.segmentation_edit.setReadOnly(True)
@@ -583,7 +585,7 @@ class Processing_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 12.5pt \"Arial\";\n"
+            "font: 7pt \"Varela\";\n"
             "color: rgb(255, 255, 255);")
         self.Remove_edit.setReadOnly(True)
         self.Erosion_edit = QtWidgets.QLineEdit(self.segmentation_widget)
@@ -591,7 +593,7 @@ class Processing_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 12.5pt \"Arial\";\n"
+            "font: 7pt \"Varela\";\n"
             "color: rgb(255, 255, 255);")
         self.Erosion_edit.setReadOnly(True)
         self.Dilation_edit = QtWidgets.QLineEdit(self.segmentation_widget)
@@ -599,7 +601,7 @@ class Processing_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 12.5pt \"Arial\";\n"
+            "font: 7pt \"Varela\";\n"
             "color: rgb(255, 255, 255);")
         self.Dilation_edit.setReadOnly(True)
         self.Open_edit = QtWidgets.QLineEdit(self.segmentation_widget)
@@ -607,7 +609,7 @@ class Processing_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 12.5pt \"Arial\";\n"
+            "font: 7pt \"Varela\";\n"
             "color: rgb(255, 255, 255);")
         self.Open_edit.setReadOnly(True)
         self.Close_edit = QtWidgets.QLineEdit(self.segmentation_widget)
@@ -615,7 +617,7 @@ class Processing_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 12.5pt \"Arial\";\n"
+            "font: 7pt \"Varela\";\n"
             "color: rgb(255, 255, 255);")
         self.Close_edit.setReadOnly(True)
         
@@ -666,7 +668,6 @@ class Processing_cellService(QMainWindow):
             "font: 10pt \"Varela\";\n"
             "color: blue;")
         self.Raggio.setMaximum(maximum)
-        self.Raggio.setMinimum(200)
         self.Radius_title = QtWidgets.QLineEdit(self.segmentation_widget)
         self.Radius_title.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.Radius_title.setReadOnly(True)
@@ -776,7 +777,7 @@ class Processing_cellService(QMainWindow):
             "    background-color: rgb(180, 180, 180);\n"
             "}")
         icon6 = QtGui.QIcon()
-        icon6.addPixmap(QtGui.QPixmap(self.parent.resource_path("Icon/processing.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon6.addPixmap(QtGui.QPixmap(self.parent.resource_path("Icon/Automatic.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.automatic_button.setIcon(icon6)
         self.automatic_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Automatic Threashold</span></p></body></html>")
         self.automatic_button.setIconSize(QtCore.QSize(60, 35))
@@ -854,7 +855,7 @@ class Processing_cellService(QMainWindow):
         self.Original_Label2.setFixedSize(screen_height*1.3*0.252,screen_height*1.3*0.18)
         self.Filtred_Label2.setFixedSize(screen_height*1.3*0.252,screen_height*1.3*0.18)
         self.radioRed.setGeometry(QtCore.QRect(screen_height*1.3*0.28, screen_height*1.3*0.0088, screen_height*1.3*0.089, screen_height*1.3*0.0177))
-        self.radioGreen.setGeometry(QtCore.QRect(screen_height*1.3*0.434, screen_height*1.3*0.0088, screen_height*1.3*0.1, screen_height*1.3*0.0177))
+        self.radioGreen.setGeometry(QtCore.QRect(screen_height*1.3*0.434, screen_height*1.3*0.0088, screen_height*1.3*0.089, screen_height*1.3*0.0177))
         self.radioBlue.setGeometry(QtCore.QRect(screen_height*1.3*0.593, screen_height*1.3*0.0088, screen_height*1.3*0.089, screen_height*1.3*0.0177))
         self.help_button.setGeometry(QtCore.QRect(screen_height*1.3*0.83, screen_height*1.3*0.553, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
         self.save_button.setGeometry(QtCore.QRect(screen_height*1.3*0.93, screen_height*1.3*0.553, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
@@ -1290,3 +1291,4 @@ class Processing_cellService(QMainWindow):
         mbox.setText("Processing")
         mbox.setInformativeText ("In the field of image processing, the ability to distinguish different objects, shapes and contours present in the image under analysis plays a fundamental role. This is possible thanks to thresholding techniques: techniques that consider pixels with intensity higher than a minimum threshold and, if this is present, lower than a maximum threshold. In this case, the threshold can be set by the user (choosing a minimum threshold and a maximum threshold of intensity of the pixels to be considered). If you don't know which one to choose, you can use the automatic threshold method: this uses the Otsu threshold to choose a minimum threshold, but does not set any maximum threshold. Remember to choose the image to binarize before applying the threshold to the images and to confirm the choice with the Binarize image button to apply the thresholding.")
         mbox.exec_()
+        

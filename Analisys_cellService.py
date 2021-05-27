@@ -44,6 +44,8 @@ class Ui_Analisys_cellService(QMainWindow):
             self.image_size(self.parent.green_mask)
         elif self.parent.blue_mask is not None:
             self.image_size(self.parent.blue_mask)
+            
+        self.setWindowIcon(QtGui.QIcon(self.parent.resource_path('Icon/CellService_icon.ico')))
     
     def setupUi(self):
         # set the window's style
@@ -265,7 +267,6 @@ class Ui_Analisys_cellService(QMainWindow):
             "}"
             "QPushButton:pressed {\n"
             "    background-color: rgb(180, 180, 180);\n"
-            "    border-style: inset;\n"
             "}")
         self.blue_buttonBC.clicked.connect(self.set_biologicalBLUE)
         self.blue_buttonBC.setGraphicsEffect(self.applyShadow())
@@ -283,8 +284,9 @@ class Ui_Analisys_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 8pt \"Arial\";\n"
+            "font: 9pt \"Arial\";\n"
             "color: rgb(255, 255, 255);")
+        self.Red_PercentBC_edit.setAlignment(QtCore.Qt.AlignCenter) 
         self.Red_PercentBC_edit.setReadOnly(True)
         self.Red_PercentBC_edit.setObjectName("Red_PercentBC_edit")
         self.Blue_PercentBC_edit = QtWidgets.QLineEdit(self.biological_widget)
@@ -293,9 +295,10 @@ class Ui_Analisys_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 8pt \"Arial\";\n"
+            "font: 9pt \"Arial\";\n"
             "color: rgb(255, 255, 255);")
         self.Blue_PercentBC_edit.setReadOnly(True)
+        self.Blue_PercentBC_edit.setAlignment(QtCore.Qt.AlignCenter) 
         self.Blue_PercentBC_edit.setObjectName("Blue_PercentBC_edit")
         self.compensate_edit2 = QtWidgets.QLineEdit(self.biological_widget)
         self.compensate_edit2.setGeometry(QtCore.QRect(0, 20, 200, 16))
@@ -326,9 +329,10 @@ class Ui_Analisys_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 8pt \"Arial\";\n"
+            "font: 9pt \"Arial\";\n"
             "color: rgb(255, 255, 255);")
         self.Green_PercentBC_edit.setText("")
+        self.Green_PercentBC_edit.setAlignment(QtCore.Qt.AlignCenter) 
         self.Green_PercentBC_edit.setReadOnly(True)
         self.Green_PercentBC_edit.setObjectName("Green_PercentBC_edit")
         self.green_biological_title = QtWidgets.QLineEdit(self.biological_widget)
@@ -481,9 +485,10 @@ class Ui_Analisys_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 8pt \"Arial\";\n"
+            "font: 9pt \"Arial\";\n"
             "color: rgb(255, 255, 255);")
         self.RB_PercentS_edit.setText("")
+        self.RB_PercentS_edit.setAlignment(QtCore.Qt.AlignCenter)
         self.RB_PercentS_edit.setReadOnly(True)
         self.RB_PercentS_edit.setObjectName("RB_PercentS_edit")
         self.RG_PercentS_edit = QtWidgets.QLineEdit(self.similarity_widget)
@@ -491,28 +496,31 @@ class Ui_Analisys_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 8pt \"Arial\";\n"
+            "font: 9pt \"Arial\";\n"
             "color: rgb(255, 255, 255);")
         self.RG_PercentS_edit.setReadOnly(True)
+        self.RG_PercentS_edit.setAlignment(QtCore.Qt.AlignCenter)
         self.RG_PercentS_edit.setObjectName("RG_PercentS_edit")
         self.BG_PercentS_edit = QtWidgets.QLineEdit(self.similarity_widget)
         self.BG_PercentS_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 8pt \"Arial\";\n"
+            "font: 9pt \"Arial\";\n"
             "color: rgb(255, 255, 255);")
         self.BG_PercentS_edit.setReadOnly(True)
         self.BG_PercentS_edit.setObjectName("BG_PercentS_edit")
+        self.BG_PercentS_edit.setAlignment(QtCore.Qt.AlignCenter)
         self.RGB_PercentS_edit = QtWidgets.QLineEdit(self.similarity_widget)
         self.RGB_PercentS_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 8pt \"Arial\";\n"
+            "font: 9pt \"Arial\";\n"
             "color: rgb(255, 255, 255);")
         self.RGB_PercentS_edit.setReadOnly(True)
         self.RGB_PercentS_edit.setObjectName("RGB_PercentS_edit")
+        self.RGB_PercentS_edit.setAlignment(QtCore.Qt.AlignCenter)
         self.compensate_edit = QtWidgets.QLineEdit(self.similarity_widget)
         self.compensate_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
             "\n"
@@ -671,19 +679,21 @@ class Ui_Analisys_cellService(QMainWindow):
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 8pt \"Arial\";\n"
+"font: 9pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.Red_number_edit.setReadOnly(True)
+        self.Red_number_edit.setAlignment(QtCore.Qt.AlignCenter)
         self.Red_number_edit.setObjectName("Red_number_edit")
         self.Blue_number_edit = QtWidgets.QLineEdit(self.number_widget)
         self.Blue_number_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 8pt \"Arial\";\n"
+"font: 9pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.Blue_number_edit.setReadOnly(True)
         self.Blue_number_edit.setObjectName("Blue_number_edit")
+        self.Blue_number_edit.setAlignment(QtCore.Qt.AlignCenter)
         self.compensate_edit2_2 = QtWidgets.QLineEdit(self.number_widget)
         self.compensate_edit2_2.setStyleSheet("background-color: rgb(19, 82, 255);\n"
 "\n"
@@ -723,10 +733,11 @@ class Ui_Analisys_cellService(QMainWindow):
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 8pt \"Arial\";\n"
+"font: 9pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.Green_number_edit.setText("")
         self.Green_number_edit.setReadOnly(True)
+        self.Green_number_edit.setAlignment(QtCore.Qt.AlignCenter)
         self.Green_number_edit.setObjectName("Green_number_edit")
         self.green_number_title = QtWidgets.QLineEdit(self.number_widget)
         
@@ -848,27 +859,30 @@ class Ui_Analisys_cellService(QMainWindow):
         self.intensity_button_blue.setObjectName("intensity_button_blue")
         self.intensity_button_blue.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">BLUE image min and max intensity</span></p></body></html>")
         self.intensity_button_blue.setStatusTip("BLUE image min and max intensity")
-        self.Red_intensity_edit_min = QtWidgets.QLineEdit(self.intensity_widget)
         
+        self.Red_intensity_edit_min = QtWidgets.QLineEdit(self.intensity_widget)
         self.Red_intensity_edit_min.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 6.5pt \"Arial\";\n"
+"font: 8.5pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.Red_intensity_edit_min.setReadOnly(True)
         self.Red_intensity_edit_min.setObjectName("Red_intensity_edit_min")
+        self.Red_intensity_edit_min.setAlignment(QtCore.Qt.AlignCenter)
+        
         self.Blue_intensity_edit_min = QtWidgets.QLineEdit(self.intensity_widget)
         self.Blue_intensity_edit_min.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 6.5pt \"Arial\";\n"
+"font: 8.5pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.Blue_intensity_edit_min.setReadOnly(True)
         self.Blue_intensity_edit_min.setObjectName("Blue_intensity_edit_min")
-        self.compensate_edit2_3 = QtWidgets.QLineEdit(self.intensity_widget)
+        self.Blue_intensity_edit_min.setAlignment(QtCore.Qt.AlignCenter)
         
+        self.compensate_edit2_3 = QtWidgets.QLineEdit(self.intensity_widget)
         self.compensate_edit2_3.setStyleSheet("background-color: rgb(19, 82, 255);\n"
 "\n"
 "    font: bold 14px;\n"
@@ -906,11 +920,13 @@ class Ui_Analisys_cellService(QMainWindow):
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 6.5pt \"Arial\";\n"
+"font: 8.5pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.Green_intensity_edit_min.setText("")
         self.Green_intensity_edit_min.setReadOnly(True)
         self.Green_intensity_edit_min.setObjectName("Green_intensity_edit_min")
+        self.Green_intensity_edit_min.setAlignment(QtCore.Qt.AlignCenter)
+        
         self.intensity_green_title = QtWidgets.QLineEdit(self.intensity_widget)
         self.intensity_green_title.setStyleSheet("font: 9pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
@@ -922,28 +938,34 @@ class Ui_Analisys_cellService(QMainWindow):
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 6.5pt \"Arial\";\n"
+"font: 8.5pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.Red_intensity_edit_max.setReadOnly(True)
         self.Red_intensity_edit_max.setObjectName("Red_intensity_edit_max")
+        self.Red_intensity_edit_max.setAlignment(QtCore.Qt.AlignCenter)
+        
         self.Green_intensity_edit_max = QtWidgets.QLineEdit(self.intensity_widget)
         self.Green_intensity_edit_max.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 6.5pt \"Arial\";\n"
+"font: 8.5pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.Green_intensity_edit_max.setReadOnly(True)
         self.Green_intensity_edit_max.setObjectName("Green_intensity_edit_max")
+        self.Green_intensity_edit_max.setAlignment(QtCore.Qt.AlignCenter)
+        
         self.Blue_intensity_edit_max = QtWidgets.QLineEdit(self.intensity_widget)
         self.Blue_intensity_edit_max.setStyleSheet("background-color: rgb(128, 183, 255);\n"
 "    border-radius: 15px;\n"
 "    font: bold 14px;\n"
 "    padding: 6px;\n"
-"font: 6.5pt \"Arial\";\n"
+"font: 8.5pt \"Arial\";\n"
 "color: rgb(255, 255, 255);")
         self.Blue_intensity_edit_max.setReadOnly(True)
         self.Blue_intensity_edit_max.setObjectName("Blue_intensity_edit_max")
+        self.Blue_intensity_edit_max.setAlignment(QtCore.Qt.AlignCenter)
+        
         self.setCentralWidget(self.principal_widget)
         
         self.intensity_widget.setGeometry(QtCore.QRect(920, 400, 191, 261))

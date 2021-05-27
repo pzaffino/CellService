@@ -27,7 +27,7 @@ class CellService(QMainWindow):
         self.blue_mask = None
         
         self.maximize_window()
-        self.setWindowIcon(QtGui.QIcon('Icon/CellService_icon.ico'))
+        self.setWindowIcon(QtGui.QIcon(self.resource_path("Icon/CellService_icon.ico")))
     
     def resource_path(self, relative_path):
         try:
@@ -236,15 +236,15 @@ class CellService(QMainWindow):
         self.help_button.clicked.connect(self.help_message)
         
         self.open_title = QtWidgets.QLineEdit(self.option_widget)
-        self.open_title.setGeometry(QtCore.QRect(10, 80, 141, 20))
-        self.open_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(23, 23, 23);")
+        self.open_title.setGeometry(QtCore.QRect(20, 80, 141, 20))
+        self.open_title.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(23, 23, 23);")
         self.open_title.setAlignment(QtCore.Qt.AlignCenter)
         self.open_title.setReadOnly(True)
         self.open_title.setText("Open RGB image")
         
         self.openSingle_title = QtWidgets.QLineEdit(self.option_widget)
         self.openSingle_title.setGeometry(QtCore.QRect(10, 190, 161, 16))
-        self.openSingle_title.setStyleSheet("font: 7pt \"Arial\";\n" "color: rgb(0, 0, 0);")
+        self.openSingle_title.setStyleSheet("font: 8.6pt \"Arial\";\n" "color: rgb(0, 0, 0);")
         self.openSingle_title.setAlignment(QtCore.Qt.AlignCenter)
         self.openSingle_title.setReadOnly(True)
         self.openSingle_title.setText("Open single channels image")
@@ -252,14 +252,14 @@ class CellService(QMainWindow):
         self.analisys_title = QtWidgets.QLineEdit(self.option_widget)
         self.analisys_title.setGeometry(QtCore.QRect(20, 410, 131, 16))
         self.analisys_title.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.analisys_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(0, 0, 0);")
+        self.analisys_title.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(0, 0, 0);")
         self.analisys_title.setAlignment(QtCore.Qt.AlignCenter)
         self.analisys_title.setReadOnly(True)
         self.analisys_title.setText("Analisys")
          
         self.processing_title = QtWidgets.QLineEdit(self.option_widget)
         self.processing_title.setGeometry(QtCore.QRect(20, 300, 131, 20))
-        self.processing_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(0, 0, 0);")
+        self.processing_title.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(0, 0, 0);")
         self.processing_title.setAlignment(QtCore.Qt.AlignCenter)
         self.processing_title.setReadOnly(True)
         self.processing_title.setText("Processing")
@@ -267,7 +267,7 @@ class CellService(QMainWindow):
         self.help_title = QtWidgets.QLineEdit(self.option_widget)
         self.help_title.setGeometry(QtCore.QRect(30, 510, 111, 16))
         self.help_title.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.help_title.setStyleSheet("font: 8pt \"Arial\";\n" "color: rgb(0, 0, 0);")
+        self.help_title.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(0, 0, 0);")
         self.help_title.setAlignment(QtCore.Qt.AlignCenter)
         self.help_title.setReadOnly(True)
         self.help_title.setText("Help")
@@ -433,7 +433,7 @@ class CellService(QMainWindow):
         mbox.setIcon(QMessageBox.Information)
         mbox.setWindowTitle("Help")
         mbox.setText("Cell Service")
-        mbox.setInformativeText ("Authors: Alessia Gallo, Giuseppe Timpano, Paolo Zaffino, Maria Francesca Spadea")
+        mbox.setInformativeText ("Application for image analysis. Insert the image in RGB format or the individual channels (red, green and blue) to continue. Alternatively, you can also open a single channel but you can only take advantage of the intensity, percentage of biological content and count functions. Remember that before the analysis you have to do the processing operation.")
         mbox.exec_()
 
 if __name__ == "__main__":
