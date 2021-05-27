@@ -433,7 +433,7 @@ class CellService(QMainWindow):
         mbox.setIcon(QMessageBox.Information)
         mbox.setWindowTitle("Help")
         mbox.setText("Cell Service")
-        mbox.setInformativeText ("Application for image analysis. Insert the image in RGB format or the individual channels (red, green and blue) to continue. Alternatively, you can also open a single channel but you can only take advantage of the intensity, percentage of biological content and count functions. Remember that before the analysis you have to do the processing operation.")
+        mbox.setInformativeText ("Authors: Alessia Gallo, Giuseppe Timpano, Paolo Zaffino, Maria Francesca Spadea")
         mbox.exec_()
 
 if __name__ == "__main__":
