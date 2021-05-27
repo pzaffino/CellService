@@ -1052,10 +1052,10 @@ class Ui_Analisys_cellService(QMainWindow):
         self.Blue_number_edit.setGeometry(QtCore.QRect(screen_height*1.3*0.053, screen_height*1.3*0.186, screen_height*1.3*0.0886, screen_height*1.3*0.0275))
         self.compensate_edit2_2.setGeometry(QtCore.QRect(0, screen_height*1.3*0.0177, screen_height*1.3*0.1692, screen_height*1.3*0.0142))
         self.number_edit.setGeometry(QtCore.QRect(0, 0, screen_height*1.3*0.1692, screen_height*1.3*0.0275))
-        self.red_number_title.setGeometry(QtCore.QRect(screen_height*1.3*0.0443, screen_height*1.3*0.0443, screen_height*1.3*0.124, screen_height*1.3*0.0177))
-        self.blue_number_title.setGeometry(QtCore.QRect(screen_height*1.3*0.0443, screen_height*1.3*0.1683, screen_height*1.3*0.124, screen_height*1.3*0.0177))
+        self.red_number_title.setGeometry(QtCore.QRect(screen_height*1.3*0.047, screen_height*1.3*0.044, screen_height*1.3*0.124, screen_height*1.3*0.0177))
+        self.blue_number_title.setGeometry(QtCore.QRect(screen_height*1.3*0.047, screen_height*1.3*0.167, screen_height*1.3*0.124, screen_height*1.3*0.0177))
         self.Green_number_edit.setGeometry(QtCore.QRect(screen_height*1.3*0.053, screen_height*1.3*0.124, screen_height*1.3*0.0886, screen_height*1.3*0.0275))
-        self.green_number_title.setGeometry(QtCore.QRect(screen_height*1.3*0.043, screen_height*1.3*0.1063, screen_height*1.3*0.13, screen_height*1.3*0.0177))
+        self.green_number_title.setGeometry(QtCore.QRect(screen_height*1.3*0.046, screen_height*1.3*0.106, screen_height*1.3*0.13, screen_height*1.3*0.0177))
     
     def maximize_intensityWidget(self):
         if ((self.screen.height()*1.3)<=1920):
@@ -1280,6 +1280,14 @@ class Ui_Analisys_cellService(QMainWindow):
             self.total_buttonS.setEnabled(False)
             self.blue_buttonBC.setEnabled(False)
             self.number_button_blue.setEnabled(False)
+        
+        if (self.parent.red_image is None):
+            self.intensity_button_red.setEnabled(False)    
+        if (self.parent.green_image is None):
+            self.intensity_button_green.setEnabled(False)
+        if (self.parent.blue_image is None):
+            self.intensity_button_blue.setEnabled(False)
+        
     
     def help_message(self):
         msg = QMessageBox()

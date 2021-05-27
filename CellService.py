@@ -82,7 +82,7 @@ class CellService(QMainWindow):
         self.option_widget.setGraphicsEffect(self.applyShadow())
         
         self.open_file_button = QtWidgets.QPushButton(self.option_widget)
-        self.open_file_button.setGeometry(QtCore.QRect(60, 20, 51, 51))
+        self.open_file_button.setGeometry(QtCore.QRect(65, 20, 51, 51))
         self.open_file_button.setMouseTracking(True)
         self.open_file_button.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.open_file_button.setToolTipDuration(-1)
@@ -114,7 +114,7 @@ class CellService(QMainWindow):
         self.ctrl_open.activated.connect(self.openRGBCall)
         
         self.openSingle_button = QtWidgets.QPushButton(self.option_widget)
-        self.openSingle_button.setGeometry(QtCore.QRect(60, 130, 51, 51))
+        self.openSingle_button.setGeometry(QtCore.QRect(65, 130, 51, 51))
         self.openSingle_button.setMouseTracking(True)
         self.openSingle_button.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.openSingle_button.setToolTipDuration(-1)
@@ -146,7 +146,7 @@ class CellService(QMainWindow):
         self.ctrl_openSingle.activated.connect(self.openSingleChannelsCall)
         
         self.processing_button = QtWidgets.QPushButton(self.option_widget)
-        self.processing_button.setGeometry(QtCore.QRect(60, 240, 51, 51))
+        self.processing_button.setGeometry(QtCore.QRect(65, 240, 51, 51))
         self.processing_button.setMouseTracking(True)
         self.processing_button.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.processing_button.setToolTipDuration(-1)
@@ -176,7 +176,7 @@ class CellService(QMainWindow):
         self.processing_button.clicked.connect(self.processingWindow)
         
         self.analisys_button = QtWidgets.QPushButton(self.option_widget)
-        self.analisys_button.setGeometry(QtCore.QRect(60, 350, 51, 51))
+        self.analisys_button.setGeometry(QtCore.QRect(65, 350, 51, 51))
         self.analisys_button.setMouseTracking(True)
         self.analisys_button.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.analisys_button.setToolTipDuration(-1)
@@ -206,7 +206,7 @@ class CellService(QMainWindow):
         self.analisys_button.clicked.connect(self.analisysWindow)
         
         self.help_button = QtWidgets.QPushButton(self.option_widget)
-        self.help_button.setGeometry(QtCore.QRect(60, 450, 51, 51))
+        self.help_button.setGeometry(QtCore.QRect(65, 450, 51, 51))
         self.help_button.setMouseTracking(True)
         self.help_button.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.help_button.setToolTipDuration(-1)
@@ -236,21 +236,21 @@ class CellService(QMainWindow):
         self.help_button.clicked.connect(self.help_message)
         
         self.open_title = QtWidgets.QLineEdit(self.option_widget)
-        self.open_title.setGeometry(QtCore.QRect(20, 80, 141, 20))
+        self.open_title.setGeometry(QtCore.QRect(25, 80, 141, 20))
         self.open_title.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(23, 23, 23);")
         self.open_title.setAlignment(QtCore.Qt.AlignCenter)
         self.open_title.setReadOnly(True)
         self.open_title.setText("Open RGB image")
         
         self.openSingle_title = QtWidgets.QLineEdit(self.option_widget)
-        self.openSingle_title.setGeometry(QtCore.QRect(10, 190, 161, 16))
-        self.openSingle_title.setStyleSheet("font: 8.6pt \"Arial\";\n" "color: rgb(0, 0, 0);")
+        self.openSingle_title.setGeometry(QtCore.QRect(9, 190, 182, 16))
+        self.openSingle_title.setStyleSheet("font: 8.1pt \"Arial\";\n" "color: rgb(0, 0, 0);")
         self.openSingle_title.setAlignment(QtCore.Qt.AlignCenter)
         self.openSingle_title.setReadOnly(True)
         self.openSingle_title.setText("Open single channels image")
         
         self.analisys_title = QtWidgets.QLineEdit(self.option_widget)
-        self.analisys_title.setGeometry(QtCore.QRect(20, 410, 131, 16))
+        self.analisys_title.setGeometry(QtCore.QRect(25, 410, 131, 16))
         self.analisys_title.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.analisys_title.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(0, 0, 0);")
         self.analisys_title.setAlignment(QtCore.Qt.AlignCenter)
@@ -258,14 +258,14 @@ class CellService(QMainWindow):
         self.analisys_title.setText("Analisys")
          
         self.processing_title = QtWidgets.QLineEdit(self.option_widget)
-        self.processing_title.setGeometry(QtCore.QRect(20, 300, 131, 20))
+        self.processing_title.setGeometry(QtCore.QRect(25, 300, 131, 20))
         self.processing_title.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(0, 0, 0);")
         self.processing_title.setAlignment(QtCore.Qt.AlignCenter)
         self.processing_title.setReadOnly(True)
         self.processing_title.setText("Processing")
         
         self.help_title = QtWidgets.QLineEdit(self.option_widget)
-        self.help_title.setGeometry(QtCore.QRect(30, 510, 111, 16))
+        self.help_title.setGeometry(QtCore.QRect(35, 510, 111, 16))
         self.help_title.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.help_title.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(0, 0, 0);")
         self.help_title.setAlignment(QtCore.Qt.AlignCenter)
@@ -297,7 +297,7 @@ class CellService(QMainWindow):
         self.GREEN_QLabel.setFixedSize(int(screen_height*0.45),int(screen_height*0.35))
         self.BLUE_QLabel.setFixedSize(int(screen_height*0.45),int(screen_height*0.35))
         self.RGB_QLabel.setFixedSize(int(screen_height*0.45),int(screen_height*0.35))
-        self.option_widget.setGeometry(QtCore.QRect(40, int(screen_height*0.1), 180, 551))
+        self.option_widget.setGeometry(QtCore.QRect(40, int(screen_height*0.1), 190, 551))
     
     def processingWindow(self):
         if (self.red_image is None and self.green_image is None and self.blue_image is None):
@@ -347,14 +347,17 @@ class CellService(QMainWindow):
     def openRGBCall(self):
         # see https://gist.github.com/smex/5287589
         file_name = QFileDialog.getOpenFileName(self, 'Open RGB Image')
-        if file_name:
+        if file_name[0]:
             self.rgb_image = skimage.io.imread(file_name[0]).astype(np.uint8)
             self.red_image = deepcopy(self.rgb_image[:,:,0])
             self.green_image = deepcopy(self.rgb_image[:,:,1])
             self.blue_image = deepcopy(self.rgb_image[:,:,2])
-
+        
+        if self.rgb_image is None:
+            self.error_message('Insert an image')
+        else:
             self.set_all_images()
-
+        
     def openSingleChannelsCall(self):
         # RED
         red_channel_file_name = QFileDialog.getOpenFileName(self, 'Open red channel')
@@ -433,7 +436,7 @@ class CellService(QMainWindow):
         mbox.setIcon(QMessageBox.Information)
         mbox.setWindowTitle("Help")
         mbox.setText("Cell Service")
-        mbox.setInformativeText ("Application for image analysis. Insert the image in RGB format or the individual channels (red, green and blue) to continue. Alternatively, you can also open a single channel but you can only take advantage of the intensity, percentage of biological content and count functions. Remember that before the analysis you have to do the processing operation.")
+        mbox.setInformativeText ("Authors: Alessia Gallo, Giuseppe Timpano, Paolo Zaffino, Maria Francesca Spadea")
         mbox.exec_()
 
 if __name__ == "__main__":

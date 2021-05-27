@@ -74,12 +74,12 @@ class Processing_cellService(QMainWindow):
         self.radioRed = QtWidgets.QRadioButton(self.principal_widget)
         self.radioRed.setText("Red Image")
         self.radioRed.setChecked(True)
-        self.radioRed.setStyleSheet("font: 9pt \"Arial\";\n" "color: red;\n")
+        self.radioRed.setStyleSheet("font: 12pt \"Arial\";\n" "color: red;\n")
         self.radioGreen = QtWidgets.QRadioButton(self.principal_widget)
         self.radioGreen.setText("Green Image")
-        self.radioGreen.setStyleSheet("font: 9pt \"Arial\";\n" "color: Green;")
+        self.radioGreen.setStyleSheet("font: 12pt \"Arial\";\n" "color: Green;")
         self.radioBlue = QtWidgets.QRadioButton(self.principal_widget)
-        self.radioBlue.setStyleSheet("font: 9pt \"Arial\";\n" "color: Blue;")
+        self.radioBlue.setStyleSheet("font: 12pt \"Arial\";\n" "color: Blue;")
         self.radioBlue.setText("Blue Image")
         if (self.parent.red_image is None):
             self.radioRed.setEnabled(False)
@@ -137,7 +137,7 @@ class Processing_cellService(QMainWindow):
         icon3 = QtGui.QIcon()
         icon3.addPixmap(QtGui.QPixmap(self.parent.resource_path("Icon/conferma.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.save_button.setIcon(icon3)
-        self.save_button.setIconSize(QtCore.QSize(65, 30))
+        self.save_button.setIconSize(QtCore.QSize(40, 40))
         self.save_button.clicked.connect(self.save)
         self.save_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Save all changes</span></p></body></html>")
         self.save_button.setStatusTip("Save all changes")
@@ -575,7 +575,7 @@ class Processing_cellService(QMainWindow):
         self.segmentation_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
             "border-radius:15px;\n"
             "    padding: 6px;\n"
-            "font: 14pt \"Arial\";\n"
+            "font: 12.5pt \"Arial\";\n"
             "color: rgb(255, 255, 255);")
         self.segmentation_edit.setAlignment(QtCore.Qt.AlignCenter)
         self.segmentation_edit.setReadOnly(True)
@@ -585,7 +585,7 @@ class Processing_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 7pt \"Varela\";\n"
+            "font: 12.5pt \"Arial\";\n"
             "color: rgb(255, 255, 255);")
         self.Remove_edit.setReadOnly(True)
         self.Erosion_edit = QtWidgets.QLineEdit(self.segmentation_widget)
@@ -593,7 +593,7 @@ class Processing_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 7pt \"Varela\";\n"
+            "font: 12.5pt \"Arial\";\n"
             "color: rgb(255, 255, 255);")
         self.Erosion_edit.setReadOnly(True)
         self.Dilation_edit = QtWidgets.QLineEdit(self.segmentation_widget)
@@ -601,7 +601,7 @@ class Processing_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 7pt \"Varela\";\n"
+            "font: 12.5pt \"Arial\";\n"
             "color: rgb(255, 255, 255);")
         self.Dilation_edit.setReadOnly(True)
         self.Open_edit = QtWidgets.QLineEdit(self.segmentation_widget)
@@ -609,7 +609,7 @@ class Processing_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 7pt \"Varela\";\n"
+            "font: 12.513pt \"Arial\";\n"
             "color: rgb(255, 255, 255);")
         self.Open_edit.setReadOnly(True)
         self.Close_edit = QtWidgets.QLineEdit(self.segmentation_widget)
@@ -617,7 +617,7 @@ class Processing_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 7pt \"Varela\";\n"
+            "font: 12.5pt \"Arial\";\n"
             "color: rgb(255, 255, 255);")
         self.Close_edit.setReadOnly(True)
         
@@ -668,6 +668,7 @@ class Processing_cellService(QMainWindow):
             "font: 10pt \"Varela\";\n"
             "color: blue;")
         self.Raggio.setMaximum(maximum)
+        self.Raggio.setMinimum(200)
         self.Radius_title = QtWidgets.QLineEdit(self.segmentation_widget)
         self.Radius_title.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.Radius_title.setReadOnly(True)
@@ -855,7 +856,7 @@ class Processing_cellService(QMainWindow):
         self.Original_Label2.setFixedSize(screen_height*1.3*0.252,screen_height*1.3*0.18)
         self.Filtred_Label2.setFixedSize(screen_height*1.3*0.252,screen_height*1.3*0.18)
         self.radioRed.setGeometry(QtCore.QRect(screen_height*1.3*0.28, screen_height*1.3*0.0088, screen_height*1.3*0.089, screen_height*1.3*0.0177))
-        self.radioGreen.setGeometry(QtCore.QRect(screen_height*1.3*0.434, screen_height*1.3*0.0088, screen_height*1.3*0.089, screen_height*1.3*0.0177))
+        self.radioGreen.setGeometry(QtCore.QRect(screen_height*1.3*0.434, screen_height*1.3*0.0088, screen_height*1.3*0.1, screen_height*1.3*0.0177))
         self.radioBlue.setGeometry(QtCore.QRect(screen_height*1.3*0.593, screen_height*1.3*0.0088, screen_height*1.3*0.089, screen_height*1.3*0.0177))
         self.help_button.setGeometry(QtCore.QRect(screen_height*1.3*0.83, screen_height*1.3*0.553, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
         self.save_button.setGeometry(QtCore.QRect(screen_height*1.3*0.93, screen_height*1.3*0.553, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
@@ -874,7 +875,7 @@ class Processing_cellService(QMainWindow):
         self.fontSizeSpinBox2.setGeometry(QtCore.QRect(screen_height*1.3*0.0088, screen_height*1.3*0.062, screen_height*1.3*0.0805, screen_height*1.3*0.0274))
         self.automatic_button.setGeometry(QtCore.QRect(screen_height*1.3*0.08, screen_height*1.3*0.24, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
         self.apply.setGeometry(QtCore.QRect(screen_height*1.3*0.08, screen_height*1.3*0.177, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
-        self.Automatic_title.setGeometry(QtCore.QRect(screen_height*1.3*0.044, screen_height*1.3*0.2787, screen_height*1.3*0.1159, screen_height*1.3*0.0186))
+        self.Automatic_title.setGeometry(QtCore.QRect(screen_height*1.3*0.05, screen_height*1.3*0.2787, screen_height*1.3*0.1159, screen_height*1.3*0.0186))
         self.Apply_title.setGeometry(QtCore.QRect(screen_height*1.3*0.062, screen_height*1.3*0.214, screen_height*1.3*0.089, screen_height*1.3*0.0186))
         self.binary_edit.setGeometry(QtCore.QRect(0, 0, screen_height*1.3*0.21, screen_height*1.3*0.0363))
     
