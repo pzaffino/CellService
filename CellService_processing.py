@@ -581,6 +581,7 @@ class Processing_cellService(QMainWindow):
         self.segmentation_edit.setReadOnly(True)
         self.segmentation_edit.setText("Segmentation")
         self.Remove_edit = QtWidgets.QLineEdit(self.segmentation_widget)
+        self.Remove_edit.setAlignment(QtCore.Qt.AlignCenter) 
         self.Remove_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
@@ -589,6 +590,7 @@ class Processing_cellService(QMainWindow):
             "color: rgb(255, 255, 255);")
         self.Remove_edit.setReadOnly(True)
         self.Erosion_edit = QtWidgets.QLineEdit(self.segmentation_widget)
+        self.Erosion_edit.setAlignment(QtCore.Qt.AlignCenter) 
         self.Erosion_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
@@ -597,6 +599,7 @@ class Processing_cellService(QMainWindow):
             "color: rgb(255, 255, 255);")
         self.Erosion_edit.setReadOnly(True)
         self.Dilation_edit = QtWidgets.QLineEdit(self.segmentation_widget)
+        self.Dilation_edit.setAlignment(QtCore.Qt.AlignCenter) 
         self.Dilation_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
@@ -605,6 +608,7 @@ class Processing_cellService(QMainWindow):
             "color: rgb(255, 255, 255);")
         self.Dilation_edit.setReadOnly(True)
         self.Open_edit = QtWidgets.QLineEdit(self.segmentation_widget)
+        self.Open_edit.setAlignment(QtCore.Qt.AlignCenter)
         self.Open_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
@@ -613,6 +617,7 @@ class Processing_cellService(QMainWindow):
             "color: rgb(255, 255, 255);")
         self.Open_edit.setReadOnly(True)
         self.Close_edit = QtWidgets.QLineEdit(self.segmentation_widget)
+        self.Close_edit.setAlignment(QtCore.Qt.AlignCenter)
         self.Close_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
