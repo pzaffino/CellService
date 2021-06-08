@@ -284,7 +284,7 @@ class Ui_Analisys_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 9pt \"Arial\";\n"
+            "font: 8pt \"Arial\";\n"
             "color: rgb(255, 255, 255);")
         self.Red_PercentBC_edit.setAlignment(QtCore.Qt.AlignCenter) 
         self.Red_PercentBC_edit.setReadOnly(True)
@@ -295,7 +295,7 @@ class Ui_Analisys_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 9pt \"Arial\";\n"
+            "font: 8pt \"Arial\";\n"
             "color: rgb(255, 255, 255);")
         self.Blue_PercentBC_edit.setReadOnly(True)
         self.Blue_PercentBC_edit.setAlignment(QtCore.Qt.AlignCenter) 
@@ -329,7 +329,7 @@ class Ui_Analisys_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 9pt \"Arial\";\n"
+            "font: 8pt \"Arial\";\n"
             "color: rgb(255, 255, 255);")
         self.Green_PercentBC_edit.setText("")
         self.Green_PercentBC_edit.setAlignment(QtCore.Qt.AlignCenter) 
@@ -485,7 +485,7 @@ class Ui_Analisys_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 9pt \"Arial\";\n"
+            "font: 8pt \"Arial\";\n"
             "color: rgb(255, 255, 255);")
         self.RB_PercentS_edit.setText("")
         self.RB_PercentS_edit.setAlignment(QtCore.Qt.AlignCenter)
@@ -496,7 +496,7 @@ class Ui_Analisys_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 9pt \"Arial\";\n"
+            "font: 8pt \"Arial\";\n"
             "color: rgb(255, 255, 255);")
         self.RG_PercentS_edit.setReadOnly(True)
         self.RG_PercentS_edit.setAlignment(QtCore.Qt.AlignCenter)
@@ -506,7 +506,7 @@ class Ui_Analisys_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 9pt \"Arial\";\n"
+            "font: 8pt \"Arial\";\n"
             "color: rgb(255, 255, 255);")
         self.BG_PercentS_edit.setReadOnly(True)
         self.BG_PercentS_edit.setObjectName("BG_PercentS_edit")
@@ -516,7 +516,7 @@ class Ui_Analisys_cellService(QMainWindow):
             "    border-radius: 15px;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 9pt \"Arial\";\n"
+            "font: 8pt \"Arial\";\n"
             "color: rgb(255, 255, 255);")
         self.RGB_PercentS_edit.setReadOnly(True)
         self.RGB_PercentS_edit.setObjectName("RGB_PercentS_edit")
