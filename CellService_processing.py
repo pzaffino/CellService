@@ -233,7 +233,7 @@ class Processing_cellService(QMainWindow):
         self.filtred_button_title = QtWidgets.QLineEdit(self.all_Image_widget)
         self.filtred_button_title.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(19, 82, 255);")
         self.filtred_button_title.setReadOnly(True)
-        self.filtred_button_title.setText("Filtred blue channel")
+        self.filtred_button_title.setText("Master mask")
         
         self.all_Image_edit = QtWidgets.QLineEdit(self.all_Image_widget)
         self.all_Image_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
@@ -245,6 +245,21 @@ class Processing_cellService(QMainWindow):
         self.all_Image_edit.setAlignment(QtCore.Qt.AlignCenter)
         self.all_Image_edit.setReadOnly(True)
         self.all_Image_edit.setText("Additional Options")
+        
+        self.type_combo = QtWidgets.QComboBox(self.all_Image_widget)
+        if (self.parent.red_image is not None):
+            self.type_combo.addItems(["Red Channel"])
+        if (self.parent.green_image is not None):
+            self.type_combo.addItems(["Green Channel"])
+        if (self.parent.blue_image is not None):
+            self.type_combo.addItems(["Blue Channel"])
+        self.type_combo.setStyleSheet("background-color: white;\n"
+            "border: 2px solid rgb(128, 183, 255);\n"
+            "    border-radius: 15px;\n"
+            "    font: bold 14px;\n"
+            "    padding: 6px;\n"
+            "font: 10pt \"Varela\";\n"
+            "color: blue;")
         
         self.gridLayoutWidget.setGeometry(QtCore.QRect(280, 40, 521, 630))
         self.Original_Label.setFixedSize(245,205)
@@ -265,6 +280,7 @@ class Processing_cellService(QMainWindow):
         self.valore=0
         self.set_all_images()
         self.all_connect=False
+        self.master_mask=False
 
     def set_segmentation(self):
         self.segmentation_widget = QtWidgets.QWidget(self.principal_widget)
@@ -958,7 +974,8 @@ class Processing_cellService(QMainWindow):
         self.all_Image_edit.setGeometry(QtCore.QRect(0, 0, screen_height*1.3*0.21, screen_height*1.3*0.0363))
         self.all_button_title.setGeometry(QtCore.QRect(screen_height*1.3*0.07, screen_height*1.3*0.06, screen_height*1.3*0.124, screen_height*1.3*0.0177))
         self.filtred_button.setGeometry(QtCore.QRect(screen_height*1.3*0.03, screen_height*1.3*0.1, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
-        self.filtred_button_title.setGeometry(QtCore.QRect(screen_height*1.3*0.07, screen_height*1.3*0.11, screen_height*1.3*0.124, screen_height*1.3*0.0177))
+        self.filtred_button_title.setGeometry(QtCore.QRect(screen_height*1.3*0.075, screen_height*1.3*0.09, screen_height*1.3*0.124, screen_height*1.3*0.0177))
+        self.type_combo.setGeometry(QtCore.QRect(screen_height*1.3*0.07, screen_height*1.3*0.11, screen_height*1.3*0.124, screen_height*1.3*0.027))
         
     def maximize_binary_processing(self):
         if ((self.screen.height()*1.3)<=1920):
@@ -1033,7 +1050,21 @@ class Processing_cellService(QMainWindow):
     
     def runIntensityBinarization(self):
         if self.all_connect is True:
-            self.error_message("Binarization can only be done for one channel at a time. Disconnect all channels to continue!")
+            if (self.parent.red_image is not None):
+                self.mask=self.binarizeImage(self.parent.red_image)
+                if (self.mask is not None):
+                    self.parent.red_mask = self.mask
+                    self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
+            if (self.parent.green_image is not None):
+                self.mask=self.binarizeImage(self.parent.green_image)
+                if (self.mask is not None):
+                    self.parent.green_mask = self.mask
+                    self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
+            if (self.parent.blue_image is not None):
+                self.mask=self.binarizeImage(self.parent.blue_image)
+                if (self.mask is not None):
+                    self.parent.blue_mask = self.mask
+                    self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
         else:
             if self.radioRed.isChecked():
                 if (self.parent.red_image is None):
@@ -1043,7 +1074,7 @@ class Processing_cellService(QMainWindow):
                     if (self.mask is not None):
                         self.parent.red_mask = self.mask
                         self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
-                        self.filtred_button.setEnabled(True)
+                        self.master_mask=False
             elif self.radioGreen.isChecked():
                 if (self.parent.green_image is None):
                     self.error_message("Missing green image! Insert an image")
@@ -1052,7 +1083,7 @@ class Processing_cellService(QMainWindow):
                     if (self.mask is not None):
                         self.parent.green_mask = self.mask
                         self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
-                        self.filtred_button.setEnabled(True)
+                        self.master_mask=False
             elif self.radioBlue.isChecked():
                 if (self.parent.blue_image is None):
                     self.error_message("Missing blue image! Insert an image")
@@ -1061,7 +1092,7 @@ class Processing_cellService(QMainWindow):
                     if (self.mask is not None):
                         self.parent.blue_mask = self.mask
                         self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
-                        self.filtred_button.setEnabled(True)
+                        self.master_mask=False
             else:
                 pass
     
@@ -1102,19 +1133,36 @@ class Processing_cellService(QMainWindow):
                 mask=img>valore1
                 binarymat[mask]=1
             return binarymat
-        
+    
     def filtred_blue_channel(self):
-        if self.parent.red_mask is not None and self.parent.blue_mask is not None:
-            mask=np.logical_and(self.parent.blue_mask==0,self.parent.red_mask==1)
-            self.parent.red_mask[mask]=0
-        if self.parent.green_mask is not None and self.parent.blue_mask is not None:
-            mask2=np.logical_and(self.parent.blue_mask==0,self.parent.green_mask==1)
-            self.parent.green_mask[mask2]=0
-        self.filtred_button.setEnabled(False)
+        self.filtred_red_mask=self.parent.red_mask
+        self.filtred_green_mask=self.parent.green_mask
+        self.filtred_blue_mask=self.parent.blue_mask
+        mask=str(self.type_combo.currentText())
+        if (mask=='Red Channel'):
+            if self.parent.blue_mask is not None and self.parent.red_mask is not None:
+                self.parent.blue_mask[self.parent.red_mask==0]=0
+            if self.parent.green_mask is not None and self.parent.red_mask is not None:
+                self.parent.green_mask[self.parent.red_mask==0]=0
+            self.master_mask=True
+        if (mask=='Green Channel'):
+            if self.parent.blue_mask is not None and self.parent.green_mask is not None:
+                self.parent.blue_mask[self.parent.green_mask==0]=0
+            if self.parent.red_mask is not None and self.parent.green_mask is not None:
+                self.parent.red_mask[self.parent.green_mask==0]=0
+            self.master_mask=True
+        if (mask=='Blue Channel'):
+            if self.parent.red_mask is not None and self.parent.blue_mask is not None:
+                self.parent.red_mask[self.parent.blue_mask==0]=0
+            if self.parent.green_mask is not None and self.parent.blue_mask is not None:
+                self.parent.green_mask[self.parent.blue_mask==0]=0
+            self.master_mask=True
+        self.Undo_button.setEnabled(True)
         self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
         self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
         self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
-        
+    
+
     def control(self, number):
         error=False
         for i in range (0, self.valore):
@@ -1196,21 +1244,15 @@ class Processing_cellService(QMainWindow):
             self.all_connect=False
             self.all_button_title.setText("Connect All Channels")
             self.all_button.setIcon(self.icon_all)
-            self.radioRed.setEnabled(True)
-            self.radioGreen.setEnabled(True)
-            self.radioBlue.setEnabled(True)
             self.all_button.setStatusTip("Clicking this button changes will be made to all images at the same time")
             self.all_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">All images changed</span></p></body></html>")
         else:
             self.all_connect=True
             self.all_button_title.setText("Disconnect All Channels")
             self.all_button.setIcon(self.icon_not)
-            self.radioRed.setEnabled(False)
-            self.radioGreen.setEnabled(False)
-            self.radioBlue.setEnabled(False)
             self.all_button.setStatusTip("Clicking this button the changes will be made to the single selected channel")
             self.all_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Single selected channel changed</span></p></body></html>")
-    
+            
     #scelta immagine da segmentare, richiama le due precedenti applicandole alle immagini selezionate
     def apply_segmentation(self):
         error=False
@@ -1249,6 +1291,7 @@ class Processing_cellService(QMainWindow):
                     self.filtred_blue_mask=self.parent.blue_mask
                     self.parent.blue_mask=self.segmentation_RadioButton(self.parent.blue_mask)
                     self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
+        self.master_mask=False
         if(error==False):
             self.clear_edit_label() #ripulisce label numerazione dopo aver apportato modifiche
         self.filtred_button.setEnabled(True)
@@ -1281,16 +1324,14 @@ class Processing_cellService(QMainWindow):
         
     #back to the last segmentation
     def back(self):
-        if (self.clear or (self.all_connect is True)):#se in passato è stato cancellato tutto allora riportami al cambiamento più recente
-            if (self.filtred_red_mask is not None):
-                self.parent.red_mask=self.filtred_red_mask
-                self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
-            if (self.filtred_green_mask is not None):
-                self.parent.green_mask=self.filtred_green_mask
-                self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
-            if (self.filtred_blue_mask is not None):
-                self.parent.blue_mask=self.filtred_blue_mask
-                self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
+        if (self.clear or self.all_connect or self.master_mask):#se in passato è stato cancellato tutto allora riportami al cambiamento più recente
+            self.parent.red_mask=self.filtred_red_mask
+            self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
+            self.parent.green_mask=self.filtred_green_mask
+            self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
+            self.parent.blue_mask=self.filtred_blue_mask
+            self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
+            self.master_mask=False
             self.clear=False
         elif(self.radioRed.isChecked() and (self.filtred_red_mask is not None)):
             self.parent.red_mask=self.filtred_red_mask
