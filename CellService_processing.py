@@ -114,7 +114,7 @@ class Processing_cellService(QMainWindow):
         self.help_button.clicked.connect(self.help_message)
         self.help_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Help </span></p></body></html>")
         self.help_button.setStatusTip("Help")
-       
+        
         self.save_button = QtWidgets.QPushButton(self.principal_widget)
         self.save_button.setGraphicsEffect(self.applyShadow())
         self.save_button.setMouseTracking(True)
@@ -171,6 +171,81 @@ class Processing_cellService(QMainWindow):
         self.delete_button.clicked.connect(self.deleteall_message)
         self.setCentralWidget(self.principal_widget)
         
+        self.all_Image_widget = QtWidgets.QWidget(self.principal_widget)
+        self.all_Image_widget.setStyleSheet("background-color: rgb(255, 255, 255);\n" "border-radius: 40px;")
+        self.all_Image_widget.setGraphicsEffect(self.applyShadow())
+        
+        self.all_button = QtWidgets.QPushButton(self.all_Image_widget)
+        self.all_button.setGraphicsEffect(self.applyShadow())
+        self.all_button.setMouseTracking(True)
+        self.all_button.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.all_button.setStyleSheet("QPushButton {\n"
+            "     background-color: rgb(255, 255, 255);\n"
+            "    border-style: outset;\n"
+            "    border: 2px;\n"
+            "    border-width: 1px;\n"
+            "    border-radius: 10px;\n"
+            "    border-color: beige;\n"
+            "    font: bold 14px;\n"
+            "    padding: 6px;\n"
+            "}\n"
+            "\n"
+            "QPushButton:pressed {\n"
+            "    background-color: rgb(180, 180, 180);\n"
+            "}\n"
+            "")
+        self.icon_all = QtGui.QIcon(self.parent.resource_path("Icon/icon bio 2.png"))
+        self.all_button.setIcon(self.icon_all)
+        self.all_button.setIconSize(QtCore.QSize(60, 45))
+        self.all_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">All images changed</span></p></body></html>")
+        self.all_button.setStatusTip("Clicking this button changes will be made to all images at the same time")
+        self.all_button.clicked.connect(self.all_channels_connect)
+        
+        self.filtred_button = QtWidgets.QPushButton(self.all_Image_widget)
+        self.filtred_button.setGraphicsEffect(self.applyShadow())
+        self.filtred_button.setMouseTracking(True)
+        self.filtred_button.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.filtred_button.setStyleSheet("QPushButton {\n"
+            "     background-color: rgb(255, 255, 255);\n"
+            "    border-style: outset;\n"
+            "    border: 2px;\n"
+            "    border-width: 1px;\n"
+            "    border-radius: 10px;\n"
+            "    border-color: beige;\n"
+            "    font: bold 14px;\n"
+            "    padding: 6px;\n"
+            "}\n"
+            "\n"
+            "QPushButton:pressed {\n"
+            "    background-color: rgb(180, 180, 180);\n"
+            "}\n"
+            "")
+        self.filtred_button.setIcon(self.icon_all)
+        self.filtred_button.setIconSize(QtCore.QSize(60, 45))
+        self.filtred_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Filtred blue channel</span></p></body></html>")
+        self.filtred_button.setStatusTip("it removes everything that is not in blue from the other two channels")
+        self.filtred_button.clicked.connect(self.filtred_blue_channel)
+        
+        self.all_button_title = QtWidgets.QLineEdit(self.all_Image_widget)
+        self.all_button_title.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(19, 82, 255);")
+        self.all_button_title.setReadOnly(True)
+        self.all_button_title.setText("Connect All Channels")
+        self.filtred_button_title = QtWidgets.QLineEdit(self.all_Image_widget)
+        self.filtred_button_title.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(19, 82, 255);")
+        self.filtred_button_title.setReadOnly(True)
+        self.filtred_button_title.setText("Filtred blue channel")
+        
+        self.all_Image_edit = QtWidgets.QLineEdit(self.all_Image_widget)
+        self.all_Image_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
+            "border-radius:15px;\n"
+            "    font: bold 14px;\n"
+            "    padding: 6px;\n"
+            "font: 13pt \"Varela\" bold;\n"
+            "color: rgb(255, 255, 255);")
+        self.all_Image_edit.setAlignment(QtCore.Qt.AlignCenter)
+        self.all_Image_edit.setReadOnly(True)
+        self.all_Image_edit.setText("Additional Options")
+        
         self.gridLayoutWidget.setGeometry(QtCore.QRect(280, 40, 521, 630))
         self.Original_Label.setFixedSize(245,205)
         self.Filtred_Label.setFixedSize(245,205)
@@ -189,6 +264,7 @@ class Processing_cellService(QMainWindow):
         self.selezioni=np.array([0,0,0,0,0])
         self.valore=0
         self.set_all_images()
+        self.all_connect=False
 
     def set_segmentation(self):
         self.segmentation_widget = QtWidgets.QWidget(self.principal_widget)
@@ -218,8 +294,8 @@ class Processing_cellService(QMainWindow):
             "}")
         self.Add_button.setIcon(icon3)
         self.Add_button.setIconSize(QtCore.QSize(40, 55))
-        icon_not = QtGui.QIcon()
-        icon_not.addPixmap(QtGui.QPixmap(self.parent.resource_path("Icon/non confermare.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.icon_not = QtGui.QIcon()
+        self.icon_not.addPixmap(QtGui.QPixmap(self.parent.resource_path("Icon/non confermare.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.No_button = QtWidgets.QPushButton(self.segmentation_widget)
         self.No_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Not Changes to the filtred image</span></p></body></html>")
         self.No_button.setStatusTip("Clear Numeration Step")
@@ -239,7 +315,7 @@ class Processing_cellService(QMainWindow):
             "QPushButton:pressed {\n"
             "    background-color: rgb(180, 180, 180);\n"
             "}")
-        self.No_button.setIcon(icon_not)
+        self.No_button.setIcon(self.icon_not)
         self.No_button.setIconSize(QtCore.QSize(40, 55))
         self.Undo_button = QtWidgets.QPushButton(self.segmentation_widget)
         self.Undo_button.setGraphicsEffect(self.applyShadow())
@@ -494,9 +570,9 @@ class Processing_cellService(QMainWindow):
             "QPushButton:pressed {\n"
             "    background-color: rgb(180, 180, 180);\n"
             "}")
-        icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(self.parent.resource_path("Icon/canc icon.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.Remove_canc.setIcon(icon1)
+        self.icon1 = QtGui.QIcon()
+        self.icon1.addPixmap(QtGui.QPixmap(self.parent.resource_path("Icon/canc icon.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.Remove_canc.setIcon(self.icon1)
         self.Remove_canc.clicked.connect(self.delete_edit_remove)
         self.Erosion_canc = QtWidgets.QPushButton(self.segmentation_widget)
         self.Erosion_canc.setGraphicsEffect(self.applyShadow())
@@ -515,7 +591,7 @@ class Processing_cellService(QMainWindow):
             "QPushButton:pressed {\n"
             "    background-color: rgb(180, 180, 180);\n"
             "}")
-        self.Erosion_canc.setIcon(icon1)
+        self.Erosion_canc.setIcon(self.icon1)
         self.Dilation_canc = QtWidgets.QPushButton(self.segmentation_widget)
         self.Dilation_canc.setGraphicsEffect(self.applyShadow())
         self.Dilation_canc.setFocusPolicy(QtCore.Qt.StrongFocus)
@@ -533,7 +609,7 @@ class Processing_cellService(QMainWindow):
             "QPushButton:pressed {\n"
             "    background-color: rgb(180, 180, 180);\n"
             "}")
-        self.Dilation_canc.setIcon(icon1)
+        self.Dilation_canc.setIcon(self.icon1)
         self.Open_canc = QtWidgets.QPushButton(self.segmentation_widget)
         self.Open_canc.setGraphicsEffect(self.applyShadow())
         self.Open_canc.setFocusPolicy(QtCore.Qt.StrongFocus)
@@ -551,7 +627,7 @@ class Processing_cellService(QMainWindow):
             "QPushButton:pressed {\n"
             "    background-color: rgb(180, 180, 180);\n"
             "}")
-        self.Open_canc.setIcon(icon1)
+        self.Open_canc.setIcon(self.icon1)
         self.Close_canc = QtWidgets.QPushButton(self.segmentation_widget)
         self.Close_canc.setGraphicsEffect(self.applyShadow())
         self.Close_canc.setFocusPolicy(QtCore.Qt.StrongFocus)
@@ -569,7 +645,7 @@ class Processing_cellService(QMainWindow):
             "QPushButton:pressed {\n"
             "    background-color: rgb(180, 180, 180);\n"
             "}")
-        self.Close_canc.setIcon(icon1)
+        self.Close_canc.setIcon(self.icon1)
         
         self.segmentation_edit = QtWidgets.QLineEdit(self.segmentation_widget)
         self.segmentation_edit.setStyleSheet("background-color: rgb(19, 82, 255);\n"
@@ -731,12 +807,21 @@ class Processing_cellService(QMainWindow):
 
         self.binary_widget_3 = QtWidgets.QWidget(self.binary_widget)
         self.binary_widget_3.setGraphicsEffect(self.applyShadow())
-        self.binary_widget_3.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-            "border-radius:15px;\n"
+        self.binary_widget_3.setStyleSheet("QPushButton {\n"
+            "     background-color: rgb(255, 255, 255);\n"
+            "    border-style: outset;\n"
+            "    border: 2px;\n"
+            "    border-width: 1px;\n"
+            "    border-radius: 10px;\n"
+            "    border-color: beige;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
-            "font: 14pt \"Varela\" bold;\n"
-            "color: rgb(19, 82, 255);")
+            "}\n"
+            "\n"
+            "QPushButton:pressed {\n"
+            "    background-color: rgb(180, 180, 180);\n"
+            "}\n"
+            "")
 
         self.Min_Label = QtWidgets.QLabel(self.binary_widget_3)
         self.Min_Label.setText("Min Threshold")
@@ -774,14 +859,16 @@ class Processing_cellService(QMainWindow):
             "    border-style: outset;\n"
             "    border: 2px;\n"
             "    border-width: 1px;\n"
-            "    border-radius: 20px;\n"
+            "    border-radius: 10px;\n"
             "    border-color: beige;\n"
             "    font: bold 14px;\n"
             "    padding: 6px;\n"
             "}\n"
+            "\n"
             "QPushButton:pressed {\n"
             "    background-color: rgb(180, 180, 180);\n"
-            "}")
+            "}\n"
+            "")
         icon6 = QtGui.QIcon()
         icon6.addPixmap(QtGui.QPixmap(self.parent.resource_path("Icon/Automatic.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.automatic_button.setIcon(icon6)
@@ -866,7 +953,13 @@ class Processing_cellService(QMainWindow):
         self.help_button.setGeometry(QtCore.QRect(screen_height*1.3*0.83, screen_height*1.3*0.553, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
         self.save_button.setGeometry(QtCore.QRect(screen_height*1.3*0.93, screen_height*1.3*0.553, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
         self.delete_button.setGeometry(QtCore.QRect(screen_height*1.3*0.88, screen_height*1.3*0.553, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
-    
+        self.all_Image_widget.setGeometry(QtCore.QRect(screen_height*1.3*0.0088, screen_height*1.3*0.4, screen_height*1.3*0.21, screen_height*1.3*0.15))
+        self.all_button.setGeometry(QtCore.QRect(screen_height*1.3*0.03, screen_height*1.3*0.05, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
+        self.all_Image_edit.setGeometry(QtCore.QRect(0, 0, screen_height*1.3*0.21, screen_height*1.3*0.0363))
+        self.all_button_title.setGeometry(QtCore.QRect(screen_height*1.3*0.07, screen_height*1.3*0.06, screen_height*1.3*0.124, screen_height*1.3*0.0177))
+        self.filtred_button.setGeometry(QtCore.QRect(screen_height*1.3*0.03, screen_height*1.3*0.1, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
+        self.filtred_button_title.setGeometry(QtCore.QRect(screen_height*1.3*0.07, screen_height*1.3*0.11, screen_height*1.3*0.124, screen_height*1.3*0.0177))
+        
     def maximize_binary_processing(self):
         if ((self.screen.height()*1.3)<=1920):
             screen_height=1076
@@ -874,8 +967,8 @@ class Processing_cellService(QMainWindow):
             screen_height=1130/1.3
         self.binary_widget.setGeometry(QtCore.QRect(screen_height*1.3*0.0088, screen_height*1.3*0.053, screen_height*1.3*0.21, screen_height*1.3*0.319))
         self.binary_widget_3.setGeometry(QtCore.QRect(screen_height*1.3*0.0088, screen_height*1.3*0.053, screen_height*1.3*0.1867, screen_height*1.3*0.107))
-        self.Min_Label.setGeometry(QtCore.QRect(screen_height*1.3*0.0885, screen_height*1.3*0.0265, screen_height*1.3*0.098, screen_height*1.3*0.0274))
-        self.Max_Label.setGeometry(QtCore.QRect(screen_height*1.3*0.0885, screen_height*1.3*0.062, screen_height*1.3*0.098, screen_height*1.3*0.0274))
+        self.Min_Label.setGeometry(QtCore.QRect(screen_height*1.3*0.1, screen_height*1.3*0.0265, screen_height*1.3*0.098, screen_height*1.3*0.0274))
+        self.Max_Label.setGeometry(QtCore.QRect(screen_height*1.3*0.1, screen_height*1.3*0.062, screen_height*1.3*0.098, screen_height*1.3*0.0274))
         self.fontSizeSpinBox.setGeometry(QtCore.QRect(screen_height*1.3*0.0088, screen_height*1.3*0.0265, screen_height*1.3*0.0805, screen_height*1.3*0.0274))
         self.fontSizeSpinBox2.setGeometry(QtCore.QRect(screen_height*1.3*0.0088, screen_height*1.3*0.062, screen_height*1.3*0.0805, screen_height*1.3*0.0274))
         self.automatic_button.setGeometry(QtCore.QRect(screen_height*1.3*0.08, screen_height*1.3*0.24, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
@@ -939,32 +1032,38 @@ class Processing_cellService(QMainWindow):
         self.parent.set_image(self.parent.blue_image, self.Original_Label2, "blue", mask=False)
     
     def runIntensityBinarization(self):
-        if self.radioRed.isChecked():
-            if (self.parent.red_image is None):
-                self.error_message("Missing red image! Insert an image")
-            else:
-                self.mask=self.binarizeImage(self.parent.red_image)
-                if (self.mask is not None):
-                    self.parent.red_mask = self.mask
-                    self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
-        elif self.radioGreen.isChecked():
-            if (self.parent.green_image is None):
-                self.error_message("Missing green image! Insert an image")
-            else:
-                self.mask=self.binarizeImage(self.parent.green_image)
-                if (self.mask is not None):
-                    self.parent.green_mask = self.mask
-                    self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
-        elif self.radioBlue.isChecked():
-            if (self.parent.blue_image is None):
-                self.error_message("Missing blue image! Insert an image")
-            else:
-                self.mask=self.binarizeImage(self.parent.blue_image)
-                if (self.mask is not None):
-                    self.parent.blue_mask = self.mask
-                    self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
+        if self.all_connect is True:
+            self.error_message("Binarization can only be done for one channel at a time. Disconnect all channels to continue!")
         else:
-            pass
+            if self.radioRed.isChecked():
+                if (self.parent.red_image is None):
+                    self.error_message("Missing red image! Insert an image")
+                else:
+                    self.mask=self.binarizeImage(self.parent.red_image)
+                    if (self.mask is not None):
+                        self.parent.red_mask = self.mask
+                        self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
+                        self.filtred_button.setEnabled(True)
+            elif self.radioGreen.isChecked():
+                if (self.parent.green_image is None):
+                    self.error_message("Missing green image! Insert an image")
+                else:
+                    self.mask=self.binarizeImage(self.parent.green_image)
+                    if (self.mask is not None):
+                        self.parent.green_mask = self.mask
+                        self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
+                        self.filtred_button.setEnabled(True)
+            elif self.radioBlue.isChecked():
+                if (self.parent.blue_image is None):
+                    self.error_message("Missing blue image! Insert an image")
+                else:
+                    self.mask=self.binarizeImage(self.parent.blue_image)
+                    if (self.mask is not None):
+                        self.parent.blue_mask = self.mask
+                        self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
+                        self.filtred_button.setEnabled(True)
+            else:
+                pass
     
     def Automatic_threshold(self):
         self.soglia1=0
@@ -1003,7 +1102,19 @@ class Processing_cellService(QMainWindow):
                 mask=img>valore1
                 binarymat[mask]=1
             return binarymat
-    
+        
+    def filtred_blue_channel(self):
+        if self.parent.red_mask is not None and self.parent.blue_mask is not None:
+            mask=np.logical_and(self.parent.blue_mask==0,self.parent.red_mask==1)
+            self.parent.red_mask[mask]=0
+        if self.parent.green_mask is not None and self.parent.blue_mask is not None:
+            mask2=np.logical_and(self.parent.blue_mask==0,self.parent.green_mask==1)
+            self.parent.green_mask[mask2]=0
+        self.filtred_button.setEnabled(False)
+        self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
+        self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
+        self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
+        
     def control(self, number):
         error=False
         for i in range (0, self.valore):
@@ -1080,30 +1191,68 @@ class Processing_cellService(QMainWindow):
                 mask=morphology.binary_closing(mask)
         return mask
     
+    def all_channels_connect(self):
+        if self.all_connect is True:
+            self.all_connect=False
+            self.all_button_title.setText("Connect All Channels")
+            self.all_button.setIcon(self.icon_all)
+            self.radioRed.setEnabled(True)
+            self.radioGreen.setEnabled(True)
+            self.radioBlue.setEnabled(True)
+            self.all_button.setStatusTip("Clicking this button changes will be made to all images at the same time")
+            self.all_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">All images changed</span></p></body></html>")
+        else:
+            self.all_connect=True
+            self.all_button_title.setText("Disconnect All Channels")
+            self.all_button.setIcon(self.icon_not)
+            self.radioRed.setEnabled(False)
+            self.radioGreen.setEnabled(False)
+            self.radioBlue.setEnabled(False)
+            self.all_button.setStatusTip("Clicking this button the changes will be made to the single selected channel")
+            self.all_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Single selected channel changed</span></p></body></html>")
+    
     #scelta immagine da segmentare, richiama le due precedenti applicandole alle immagini selezionate
     def apply_segmentation(self):
         error=False
-        if self.radioRed.isChecked():
-            error=self.TrueORFalse_error(self.parent.red_mask)
-            if(error==False):
-                self.filtred_red_mask=self.parent.red_mask
-                self.parent.red_mask=self.segmentation_RadioButton(self.parent.red_mask)
-                self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
-        if self.radioGreen.isChecked():
-            error=self.TrueORFalse_error(self.parent.green_mask)
-            if(error==False):
-                self.filtred_green_mask=self.parent.green_mask
-                self.parent.green_mask=self.segmentation_RadioButton(self.parent.green_mask)
-                self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
-        if self.radioBlue.isChecked():
+        if self.all_connect is True:
             error=self.TrueORFalse_error(self.parent.blue_mask)
             if(error==False):
                 self.filtred_blue_mask=self.parent.blue_mask
                 self.parent.blue_mask=self.segmentation_RadioButton(self.parent.blue_mask)
                 self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
+            error=self.TrueORFalse_error(self.parent.red_mask)
+            if(error==False):
+                self.filtred_red_mask=self.parent.red_mask
+                self.parent.red_mask=self.segmentation_RadioButton(self.parent.red_mask)
+                self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
+            error=self.TrueORFalse_error(self.parent.green_mask)
+            if(error==False):
+                self.filtred_green_mask=self.parent.green_mask
+                self.parent.green_mask=self.segmentation_RadioButton(self.parent.green_mask)
+                self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
+        else:
+            if self.radioRed.isChecked():
+                error=self.TrueORFalse_error(self.parent.red_mask)
+                if(error==False):
+                    self.filtred_red_mask=self.parent.red_mask
+                    self.parent.red_mask=self.segmentation_RadioButton(self.parent.red_mask)
+                    self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
+            if self.radioGreen.isChecked():
+                error=self.TrueORFalse_error(self.parent.green_mask)
+                if(error==False):
+                    self.filtred_green_mask=self.parent.green_mask
+                    self.parent.green_mask=self.segmentation_RadioButton(self.parent.green_mask)
+                    self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
+            if self.radioBlue.isChecked():
+                error=self.TrueORFalse_error(self.parent.blue_mask)
+                if(error==False):
+                    self.filtred_blue_mask=self.parent.blue_mask
+                    self.parent.blue_mask=self.segmentation_RadioButton(self.parent.blue_mask)
+                    self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
         if(error==False):
             self.clear_edit_label() #ripulisce label numerazione dopo aver apportato modifiche
-    
+        self.filtred_button.setEnabled(True)
+        
     #delete numeration
     def clear_edit_label(self):
         self.valore=0
@@ -1132,21 +1281,24 @@ class Processing_cellService(QMainWindow):
         
     #back to the last segmentation
     def back(self):
-        if (self.clear): #se in passato è stato cancellato tutto allora riportami al cambiamento più recente
-            self.parent.red_mask=self.filtred_red_mask
-            self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
-            self.parent.green_mask=self.filtred_green_mask
-            self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
-            self.parent.blue_mask=self.filtred_blue_mask
-            self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
+        if (self.clear or (self.all_connect is True)):#se in passato è stato cancellato tutto allora riportami al cambiamento più recente
+            if (self.filtred_red_mask is not None):
+                self.parent.red_mask=self.filtred_red_mask
+                self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
+            if (self.filtred_green_mask is not None):
+                self.parent.green_mask=self.filtred_green_mask
+                self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
+            if (self.filtred_blue_mask is not None):
+                self.parent.blue_mask=self.filtred_blue_mask
+                self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
             self.clear=False
-        elif(self.radioRed.isChecked()):
+        elif(self.radioRed.isChecked() and (self.filtred_red_mask is not None)):
             self.parent.red_mask=self.filtred_red_mask
             self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
-        elif(self.radioGreen.isChecked()):
+        elif(self.radioGreen.isChecked() and (self.filtred_green_mask is not None)):
             self.parent.green_mask=self.filtred_green_mask
             self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
-        elif(self.radioBlue.isChecked()):
+        elif(self.radioBlue.isChecked() and (self.filtred_blue_mask is not None)):
             self.parent.blue_mask=self.filtred_blue_mask
             self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
         self.Undo_button.setEnabled(False)
