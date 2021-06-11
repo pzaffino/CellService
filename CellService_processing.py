@@ -951,10 +951,10 @@ class Processing_cellService(QMainWindow):
     
     def maximize_window(self):
         self.screen = QDesktopWidget().screenGeometry()
-        if ((self.screen.height()*1.3)<=1920):
+        if ((self.screen.height()*1.3)<=750):
             screen_height=1076
         else:
-            screen_height=1130/1.3
+            screen_height=1115/1.3
         self.setFixedSize(int(screen_height*1.35), int(screen_height*0.8))
         self.gridLayoutWidget.setGeometry(QtCore.QRect(screen_height*1.3*0.23, screen_height*1.3*0.0354, screen_height*1.3*0.54, screen_height*1.3*0.5575))
         self.Original_Label.setFixedSize(screen_height*1.3*0.252,screen_height*1.3*0.18)
@@ -978,10 +978,10 @@ class Processing_cellService(QMainWindow):
         self.type_combo.setGeometry(QtCore.QRect(screen_height*1.3*0.07, screen_height*1.3*0.11, screen_height*1.3*0.124, screen_height*1.3*0.027))
         
     def maximize_binary_processing(self):
-        if ((self.screen.height()*1.3)<=1920):
+        if ((self.screen.height()*1.3)<=750):
             screen_height=1076
         else:
-            screen_height=1130/1.3
+            screen_height=1115/1.3
         self.binary_widget.setGeometry(QtCore.QRect(screen_height*1.3*0.0088, screen_height*1.3*0.053, screen_height*1.3*0.21, screen_height*1.3*0.319))
         self.binary_widget_3.setGeometry(QtCore.QRect(screen_height*1.3*0.0088, screen_height*1.3*0.053, screen_height*1.3*0.1867, screen_height*1.3*0.107))
         self.Min_Label.setGeometry(QtCore.QRect(screen_height*1.3*0.1, screen_height*1.3*0.0265, screen_height*1.3*0.098, screen_height*1.3*0.0274))
@@ -995,10 +995,10 @@ class Processing_cellService(QMainWindow):
         self.binary_edit.setGeometry(QtCore.QRect(0, 0, screen_height*1.3*0.21, screen_height*1.3*0.0363))
     
     def maximize_set_segmentation(self):
-        if ((self.screen.height()*1.3)<=1920):
+        if ((self.screen.height()*1.3)<=750):
             screen_height=1076
         else:
-            screen_height=1130/1.3
+            screen_height=1115/1.3
         self.segmentation_widget.setGeometry(QtCore.QRect(screen_height*1.3*0.79, screen_height*1.3*0.0133, screen_height*1.3*0.2168, screen_height*1.3*0.53))
         self.Add_button.setGeometry(QtCore.QRect(screen_height*1.3*0.133, screen_height*1.3*0.416, screen_height*1.3*0.031, screen_height*1.3*0.031))
         self.No_button.setGeometry(QtCore.QRect(screen_height*1.3*0.0885, screen_height*1.3*0.47, screen_height*1.3*0.031, screen_height*1.3*0.031))

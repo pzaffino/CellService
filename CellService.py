@@ -286,10 +286,11 @@ class CellService(QMainWindow):
     
     def maximize_window(self):
         screen = QDesktopWidget().screenGeometry()
-        if ((screen.height()*1.3)<=1920):
+        if ((screen.height()*1.3)<750):
             screen_height=1076
+            print(screen.height())
         else:
-            screen_height=screen.height()
+            screen_height=screen.height()*1.1
         self.setFixedSize(int(screen_height*1.25), int(screen_height*0.8))
         print(int(screen_height*0.05), int(screen_height*0.8))
         self.gridLayoutWidget.setGeometry(QtCore.QRect(257, 30, int(screen_height*0.93), int(screen_height*0.73)))

@@ -987,7 +987,7 @@ class Ui_Analisys_cellService(QMainWindow):
     
     def maximize_window(self):
         self.screen = QDesktopWidget().screenGeometry()
-        if ((self.screen.height()*1.3)<=1920):
+        if ((self.screen.height()*1.3)<=750):
             screen_height=1076
         else:
             screen_height=1129/1.3
@@ -1001,7 +1001,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.help_button.setGeometry(QtCore.QRect(screen_height*1.3*0.8769, screen_height*1.3*0.0177, screen_height*1.3*0.0363, screen_height*1.3*0.0363))
         
     def maximize_biologicalWidget(self):
-        if ((self.screen.height()*1.3)<=1920):
+        if ((self.screen.height()*1.3)<=750):
             screen_height=1076
         else:
             screen_height=1129/1.3
@@ -1019,7 +1019,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.green_biological_title.setGeometry(QtCore.QRect(screen_height*1.3*0.0487, screen_height*1.3*0.106, screen_height*1.3*0.1258, screen_height*1.3*0.0177))
     
     def maximize_overlapWidget(self):
-        if ((self.screen.height()*1.3)<=1920):
+        if ((self.screen.height()*1.3)<=750):
             screen_height=1076
         else:
             screen_height=1129/1.3
@@ -1040,7 +1040,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.all_overlap_title.setGeometry(QtCore.QRect(screen_height*1.3*0.0487, screen_height*1.3*0.23, screen_height*1.3*0.1063, screen_height*1.3*0.0177))
     
     def maximize_numberIslands(self):
-        if ((self.screen.height()*1.3)<=1920):
+        if ((self.screen.height()*1.3)<=750):
             screen_height=1076
         else:
             screen_height=1129/1.3
@@ -1058,7 +1058,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.green_number_title.setGeometry(QtCore.QRect(screen_height*1.3*0.046, screen_height*1.3*0.106, screen_height*1.3*0.13, screen_height*1.3*0.0177))
     
     def maximize_intensityWidget(self):
-        if ((self.screen.height()*1.3)<=1920):
+        if ((self.screen.height()*1.3)<=750):
             screen_height=1076
         else:
             screen_height=1129/1.3
