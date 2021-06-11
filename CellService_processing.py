@@ -951,8 +951,8 @@ class Processing_cellService(QMainWindow):
     
     def maximize_window(self):
         self.screen = QDesktopWidget().screenGeometry()
-        if ((self.screen.height()*1.3)<=750):
-            screen_height=1076
+        if ((self.screen.height()*1.3)>1000):
+            screen_height=1080
         else:
             screen_height=1115/1.3
         self.setFixedSize(int(screen_height*1.35), int(screen_height*0.8))
@@ -978,8 +978,8 @@ class Processing_cellService(QMainWindow):
         self.type_combo.setGeometry(QtCore.QRect(screen_height*1.3*0.07, screen_height*1.3*0.11, screen_height*1.3*0.124, screen_height*1.3*0.027))
         
     def maximize_binary_processing(self):
-        if ((self.screen.height()*1.3)<=750):
-            screen_height=1076
+        if ((self.screen.height()*1.3)>1000):
+            screen_height=1080
         else:
             screen_height=1115/1.3
         self.binary_widget.setGeometry(QtCore.QRect(screen_height*1.3*0.0088, screen_height*1.3*0.053, screen_height*1.3*0.21, screen_height*1.3*0.319))
@@ -995,8 +995,8 @@ class Processing_cellService(QMainWindow):
         self.binary_edit.setGeometry(QtCore.QRect(0, 0, screen_height*1.3*0.21, screen_height*1.3*0.0363))
     
     def maximize_set_segmentation(self):
-        if ((self.screen.height()*1.3)<=750):
-            screen_height=1076
+        if ((self.screen.height()*1.3)>1000):
+            screen_height=1080
         else:
             screen_height=1115/1.3
         self.segmentation_widget.setGeometry(QtCore.QRect(screen_height*1.3*0.79, screen_height*1.3*0.0133, screen_height*1.3*0.2168, screen_height*1.3*0.53))

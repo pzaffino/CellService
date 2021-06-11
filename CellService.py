@@ -286,7 +286,7 @@ class CellService(QMainWindow):
     
     def maximize_window(self):
         screen = QDesktopWidget().screenGeometry()
-        if ((screen.height()*1.3)<750):
+        if ((screen.height()*1.3)>1000):
             screen_height=1076
             print(screen.height())
         else:
