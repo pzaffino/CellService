@@ -224,7 +224,7 @@ class Processing_cellService(QMainWindow):
         self.filtred_button.setIconSize(QtCore.QSize(60, 45))
         self.filtred_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">Filtred blue channel</span></p></body></html>")
         self.filtred_button.setStatusTip("it removes everything that is not in blue from the other two channels")
-        self.filtred_button.clicked.connect(self.filtred_blue_channel)
+        self.filtred_button.clicked.connect(self.Master_mask_function)
         
         self.all_button_title = QtWidgets.QLineEdit(self.all_Image_widget)
         self.all_button_title.setStyleSheet("font: 9pt \"Arial\";\n" "color: rgb(19, 82, 255);")
@@ -1134,10 +1134,13 @@ class Processing_cellService(QMainWindow):
                 binarymat[mask]=1
             return binarymat
     
-    def filtred_blue_channel(self):
-        self.filtred_red_mask=self.parent.red_mask
-        self.filtred_green_mask=self.parent.green_mask
-        self.filtred_blue_mask=self.parent.blue_mask
+    def Master_mask_function(self):
+        self.filtred_red_mask=np.zeros_like(self.parent.red_mask, dtype=np.uint8)
+        self.filtred_red_mask[self.parent.red_mask==1]=1
+        self.filtred_green_mask=np.zeros_like(self.parent.green_mask, dtype=np.uint8)
+        self.filtred_green_mask[self.parent.green_mask==1]=1
+        self.filtred_blue_mask=np.zeros_like(self.parent.blue_mask, dtype=np.uint8)
+        self.filtred_blue_mask[self.parent.blue_mask==1]=1
         mask=str(self.type_combo.currentText())
         if (mask=='Red Channel'):
             if self.parent.blue_mask is not None and self.parent.red_mask is not None:
@@ -1161,7 +1164,7 @@ class Processing_cellService(QMainWindow):
         self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
         self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
         self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
-    
+        
 
     def control(self, number):
         error=False
@@ -1246,7 +1249,7 @@ class Processing_cellService(QMainWindow):
             self.all_button.setIcon(self.icon_all)
             self.all_button.setStatusTip("Clicking this button changes will be made to all images at the same time")
             self.all_button.setToolTip("<html><head/><body><p><span style=\" color:#80b7ff;\">All images changed</span></p></body></html>")
-        else:
+        elif self.all_connect is False:
             self.all_connect=True
             self.all_button_title.setText("Disconnect All Channels")
             self.all_button.setIcon(self.icon_not)
@@ -1324,25 +1327,30 @@ class Processing_cellService(QMainWindow):
         
     #back to the last segmentation
     def back(self):
-        if (self.clear or self.all_connect or self.master_mask):#se in passato è stato cancellato tutto allora riportami al cambiamento più recente
+        if (self.clear):#se in passato è stato cancellato tutto allora riportami al cambiamento più recente
             self.parent.red_mask=self.filtred_red_mask
-            self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
-            self.parent.green_mask=self.filtred_green_mask
-            self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
+            self.parent.green_mask=self.filtred_green_mask  
             self.parent.blue_mask=self.filtred_blue_mask
-            self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
-            self.master_mask=False
-            self.clear=False
+        elif (self.all_connect):
+            self.parent.red_mask=self.filtred_red_mask
+            self.parent.green_mask=self.filtred_green_mask  
+            self.parent.blue_mask=self.filtred_blue_mask
+        elif (self.master_mask):
+            self.parent.red_mask=self.filtred_red_mask
+            self.parent.green_mask=self.filtred_green_mask  
+            self.parent.blue_mask=self.filtred_blue_mask
         elif(self.radioRed.isChecked() and (self.filtred_red_mask is not None)):
             self.parent.red_mask=self.filtred_red_mask
-            self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
         elif(self.radioGreen.isChecked() and (self.filtred_green_mask is not None)):
             self.parent.green_mask=self.filtred_green_mask
-            self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
         elif(self.radioBlue.isChecked() and (self.filtred_blue_mask is not None)):
             self.parent.blue_mask=self.filtred_blue_mask
-            self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
+        self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
+        self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
+        self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
         self.Undo_button.setEnabled(False)
+        self.master_mask=False
+        self.clear=False
     
     #attivare/disattivare button canc
     def setEnabled_Button(self, b):
