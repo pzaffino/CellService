@@ -387,22 +387,6 @@ class CellService(QMainWindow):
             self.error_message("Any image opened!")
             return
 
-        # if a channel was not open create zeros matrix
-        '''if self.red_image is None:
-            self.red_image = np.zeros(matrix_shape, dtype=np.uint8)
-        if self.green_image is None:
-            self.green_image = np.zeros(matrix_shape, dtype=np.uint8)
-        if self.blue_image is None:
-            self.blue_image = np.zeros(matrix_shape, dtype=np.uint8)
-
-        # Check image shape (must be equal)
-        if self.red_image.shape != self.green_image.shape or self.red_image.shape != self.blue_image.shape or self.green_image.shape != self.blue_image.shape:
-            self.error_message("The images have not the same shape!")
-            self.red_image = None
-            self.green_image = None
-            self.blue_image = None
-            return'''
-
         # RGB
         if (self.red_image is not None and self.green_image is not None and self.blue_image is not None):
             self.rgb_image = np.dstack((self.red_image, self.green_image, self.blue_image)).astype(np.uint8)

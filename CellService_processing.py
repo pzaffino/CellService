@@ -1135,12 +1135,15 @@ class Processing_cellService(QMainWindow):
             return binarymat
     
     def Master_mask_function(self):
-        self.filtred_red_mask=np.zeros_like(self.parent.red_mask, dtype=np.uint8)
-        self.filtred_red_mask[self.parent.red_mask==1]=1
-        self.filtred_green_mask=np.zeros_like(self.parent.green_mask, dtype=np.uint8)
-        self.filtred_green_mask[self.parent.green_mask==1]=1
-        self.filtred_blue_mask=np.zeros_like(self.parent.blue_mask, dtype=np.uint8)
-        self.filtred_blue_mask[self.parent.blue_mask==1]=1
+        if(self.filtred_red_mask is None and self.parent.red_image is not None):
+            self.filtred_red_mask=np.zeros_like(self.parent.red_mask, dtype=np.uint8)
+            self.filtred_red_mask[self.parent.red_mask==1]=1
+        if(self.filtred_green_mask is None and self.parent.green_image is not None):
+            self.filtred_green_mask=np.zeros_like(self.parent.green_mask, dtype=np.uint8)
+            self.filtred_green_mask[self.parent.green_mask==1]=1
+        if(self.filtred_blue_mask is None and self.parent.blue_image is not None):
+            self.filtred_blue_mask=np.zeros_like(self.parent.blue_mask, dtype=np.uint8)
+            self.filtred_blue_mask[self.parent.blue_mask==1]=1
         mask=str(self.type_combo.currentText())
         if (mask=='Red Channel'):
             if self.parent.blue_mask is not None and self.parent.red_mask is not None:
@@ -1327,18 +1330,13 @@ class Processing_cellService(QMainWindow):
         
     #back to the last segmentation
     def back(self):
-        if (self.clear):#se in passato è stato cancellato tutto allora riportami al cambiamento più recente
-            self.parent.red_mask=self.filtred_red_mask
-            self.parent.green_mask=self.filtred_green_mask  
-            self.parent.blue_mask=self.filtred_blue_mask
-        elif (self.all_connect):
-            self.parent.red_mask=self.filtred_red_mask
-            self.parent.green_mask=self.filtred_green_mask  
-            self.parent.blue_mask=self.filtred_blue_mask
-        elif (self.master_mask):
-            self.parent.red_mask=self.filtred_red_mask
-            self.parent.green_mask=self.filtred_green_mask  
-            self.parent.blue_mask=self.filtred_blue_mask
+        if (self.clear or self.all_connect or self.master_mask):
+            if(self.filtred_red_mask is not None):
+                self.parent.red_mask=self.filtred_red_mask
+            if(self.filtred_green_mask is not None):
+                self.parent.green_mask=self.filtred_green_mask
+            if(self.filtred_green_mask is not None):
+                self.parent.blue_mask=self.filtred_blue_mask
         elif(self.radioRed.isChecked() and (self.filtred_red_mask is not None)):
             self.parent.red_mask=self.filtred_red_mask
         elif(self.radioGreen.isChecked() and (self.filtred_green_mask is not None)):
