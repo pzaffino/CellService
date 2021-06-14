@@ -2,7 +2,7 @@
 
 CellService is an open source software for analyzing biological RGB images acquired by using microscopes.
 
-![screenshot](https://github.com/pzaffino/CellService/blob/main/docs/CellService_mainwindow.png?raw=true)
+![screenshot](https://raw.githubusercontent.com/pzaffino/CellService/main/docs/CellService_mainwindow.png?token=ABAP27SPP2R76R3G3WNRK23A2CTDG)
 
 
 ### Support or Contact
