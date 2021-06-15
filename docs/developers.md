@@ -9,7 +9,7 @@
 * Alessia Gallo, student
 * Giuseppe Timpano, student
 
-## With the priceless advices of
+## With the invaluable advice of
 
 * [Elvira Immacolata Parrotta](https://dsmc.unicz.it/personale/docente/elviraimmacolataparrotta)
 * Stefania Scalise
