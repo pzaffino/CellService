@@ -11,7 +11,7 @@
 
 ## With the priceless advices of
 
-* [Elvira Immacolata Parrotta] (https://dsmc.unicz.it/personale/docente/elviraimmacolataparrotta)
+* [Elvira Immacolata Parrotta](https://dsmc.unicz.it/personale/docente/elviraimmacolataparrotta)
 * Stefania Scalise
 * Valeria Lucchino
 * Michela Lo Conte
