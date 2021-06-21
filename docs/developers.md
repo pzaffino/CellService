@@ -1,6 +1,7 @@
 ### Menu
 
 * [Home](https://pzaffino.github.io/CellService/index)
+* [Download](https://pzaffino.github.io/CellService/download)
 
 # Developers:
 
