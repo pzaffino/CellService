@@ -671,7 +671,7 @@ class Processing_cellService(QMainWindow):
             "color: rgb(255, 255, 255);")
         self.segmentation_edit.setAlignment(QtCore.Qt.AlignCenter)
         self.segmentation_edit.setReadOnly(True)
-        self.segmentation_edit.setText("Segmentation")
+        self.segmentation_edit.setText("Post Processing")
         self.Remove_edit = QtWidgets.QLineEdit(self.segmentation_widget)
         self.Remove_edit.setAlignment(QtCore.Qt.AlignCenter) 
         self.Remove_edit.setStyleSheet("background-color: rgb(128, 183, 255);\n"
@@ -1263,21 +1263,24 @@ class Processing_cellService(QMainWindow):
     def apply_segmentation(self):
         error=False
         if self.all_connect is True:
-            error=self.TrueORFalse_error(self.parent.blue_mask)
-            if(error==False):
-                self.filtred_blue_mask=self.parent.blue_mask
-                self.parent.blue_mask=self.segmentation_RadioButton(self.parent.blue_mask)
-                self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
-            error=self.TrueORFalse_error(self.parent.red_mask)
-            if(error==False):
-                self.filtred_red_mask=self.parent.red_mask
-                self.parent.red_mask=self.segmentation_RadioButton(self.parent.red_mask)
-                self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
-            error=self.TrueORFalse_error(self.parent.green_mask)
-            if(error==False):
-                self.filtred_green_mask=self.parent.green_mask
-                self.parent.green_mask=self.segmentation_RadioButton(self.parent.green_mask)
-                self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
+            if(self.parent.blue_image is not None):
+                error=self.TrueORFalse_error(self.parent.blue_mask)
+                if(error==False):
+                    self.filtred_blue_mask=self.parent.blue_mask
+                    self.parent.blue_mask=self.segmentation_RadioButton(self.parent.blue_mask)
+                    self.parent.set_image(self.parent.blue_mask, self.Filtred_Label2, "blue", mask=True)
+            if(self.parent.red_image is not None):
+                error=self.TrueORFalse_error(self.parent.red_mask)
+                if(error==False):
+                    self.filtred_red_mask=self.parent.red_mask
+                    self.parent.red_mask=self.segmentation_RadioButton(self.parent.red_mask)
+                    self.parent.set_image(self.parent.red_mask, self.Filtred_Label, "red", mask=True)
+            if(self.parent.green_image is not None):
+                error=self.TrueORFalse_error(self.parent.green_mask)
+                if(error==False):
+                    self.filtred_green_mask=self.parent.green_mask
+                    self.parent.green_mask=self.segmentation_RadioButton(self.parent.green_mask)
+                    self.parent.set_image(self.parent.green_mask, self.Filtred_Label1, "green", mask=True)
         else:
             if self.radioRed.isChecked():
                 error=self.TrueORFalse_error(self.parent.red_mask)
