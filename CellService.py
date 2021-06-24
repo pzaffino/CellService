@@ -346,7 +346,6 @@ class CellService(QMainWindow):
         self.set_image(self.blue_image, self.BLUE_QLabel, "blue", mask=False)
 
     def openRGBCall(self):
-        # see https://gist.github.com/smex/5287589
         file_name = QFileDialog.getOpenFileName(self, 'Open RGB Image')
         if file_name[0]:
             self.rgb_image = skimage.io.imread(file_name[0]).astype(np.uint8)

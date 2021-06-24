@@ -716,13 +716,13 @@ class Ui_Analisys_cellService(QMainWindow):
         self.number_edit.setText("Number of islands")
         self.red_number_title = QtWidgets.QLineEdit(self.number_widget)
         
-        self.red_number_title.setStyleSheet("font: 9pt \"Arial\";\n"
+        self.red_number_title.setStyleSheet("font: 8.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.red_number_title.setReadOnly(True)
         self.red_number_title.setObjectName("red_number_title")
         self.red_number_title.setText("Red numbers of islands")
         self.blue_number_title = QtWidgets.QLineEdit(self.number_widget)
-        self.blue_number_title.setStyleSheet("font: 9pt \"Arial\";\n"
+        self.blue_number_title.setStyleSheet("font: 8.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.blue_number_title.setReadOnly(True)
         self.blue_number_title.setObjectName("blue_number_title")
@@ -741,7 +741,7 @@ class Ui_Analisys_cellService(QMainWindow):
         self.Green_number_edit.setObjectName("Green_number_edit")
         self.green_number_title = QtWidgets.QLineEdit(self.number_widget)
         
-        self.green_number_title.setStyleSheet("font: 9pt \"Arial\";\n"
+        self.green_number_title.setStyleSheet("font: 8.5pt \"Arial\";\n"
 "color: rgb(19, 82, 255);")
         self.green_number_title.setReadOnly(True)
         self.green_number_title.setObjectName("green_number_title")
@@ -1103,13 +1103,13 @@ class Ui_Analisys_cellService(QMainWindow):
         elif(overlap_type=="GB"):
             overlapping_dstack = np.dstack((np.zeros_like(image1), image1, image2))
         similarity=overlapping.sum()
-        edit.setText(str(round((similarity*100)/(image1.shape[0] 
-                                                 * image1.shape[1]), 2))
+        similarity_reference=image1.sum()
+        edit.setText(str(round((similarity*100)/(similarity_reference), 2))
                      + "% - " + str(similarity) + " pixels")
         return overlapping_dstack
     
     def similarity_buttonRB(self):
-        image = self.two_similarity_overlap(self.parent.red_mask, self.parent.blue_mask, self.RB_PercentS_edit, "RB")
+        image = self.two_similarity_overlap(self.parent.blue_mask, self.parent.red_mask, self.RB_PercentS_edit, "RB")
         image_visualize = image*255
         self.convert_npToQimage(image_visualize)
     
@@ -1165,20 +1165,9 @@ class Ui_Analisys_cellService(QMainWindow):
         self.biologicalContents(self.parent.blue_mask, self.Blue_PercentBC_edit) 
     
     def countCells(self, matrixMask, edit, color_image):
-        #imageFiltered = ndimage.gaussian_filter(matrixMask, self.parameter)
-        #cells, number_of_cells = ndimage.label(imageFiltered)
         labeled_array, num_features = label(matrixMask)
         edit.setText(str(num_features) + " islands")
         self.parent.set_image(labeled_array, self.RGB_Label, color_image, mask=True)
-        
-    def confirm_parameter(self):
-        self.buttonPressed=True
-        try:
-            self.parameter = float(self.parameter_edit.text())
-            float(self.parameter)
-            return
-        except ValueError:
-            self.error_message("Insert a number!")
     
     def set_number_RED(self):
         self.countCells(self.parent.red_mask, self.Red_number_edit, "red")
@@ -1188,6 +1177,15 @@ class Ui_Analisys_cellService(QMainWindow):
     
     def set_number_BLUE(self):
         self.countCells(self.parent.blue_mask, self.Blue_number_edit, "blue")
+        
+    def confirm_parameter(self):
+        self.buttonPressed=True
+        try:
+            self.parameter = float(self.parameter_edit.text())
+            float(self.parameter)
+            return
+        except ValueError:
+            self.error_message("Insert a number!")
         
     def set_min_max_intensityRED(self):
         self.Red_intensity_edit_min.setText("Min: " + str(np.min(self.parent.red_image)))

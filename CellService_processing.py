@@ -753,9 +753,9 @@ class Processing_cellService(QMainWindow):
         if(self.parent.red_image is not None):
             maximum=(self.parent.red_image.shape[0]*self.parent.red_image.shape[1])/5
         if(self.parent.green_image is not None):
-            maximum=(self.parent.red_image.shape[0]*self.parent.red_image.shape[1])/5
+            maximum=(self.parent.green_image.shape[0]*self.parent.green_image.shape[1])/5
         if(self.parent.blue_image is not None):
-            maximum=(self.parent.red_image.shape[0]*self.parent.red_image.shape[1])/5
+            maximum=(self.parent.blue_image.shape[0]*self.parent.blue_image.shape[1])/5
         self.Raggio = QtWidgets.QDoubleSpinBox(self.segmentation_widget)
         self.Raggio.setStyleSheet("background-color: rgb(255, 255, 255);\n"
             "border: 2px solid rgb(128, 183, 255);\n"
